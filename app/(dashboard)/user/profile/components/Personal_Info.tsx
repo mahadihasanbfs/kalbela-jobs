@@ -63,11 +63,17 @@ import TrainingSummary from "./Traning_summary"
 import AcademicQualification from "./small_components/AcademicQualification"
 import Career from "./small_components/Career"
 import ContactUpdate from "./small_components/Contact_update"
+import EmploymentHistorys from "./small_components/EmploymentHistorys"
+import EmploymentRetired from "./small_components/EmploymentRetired"
+import LanguageProficiencys from "./small_components/LanguageProficiencys"
+import LinkAccounts from "./small_components/LinkAccounts"
 import OtherRelevantInfo from "./small_components/OtherRelevantInfo"
 import PersonalDetailsEdit from "./small_components/PersonalDetailsEdit"
 import PreferredArea from "./small_components/PreferredArea"
 import ProfessionalCartifications from "./small_components/ProfessionalCartifications"
 import ProfileUpdate from "./small_components/Profile_update"
+import References from "./small_components/References"
+import Skills from "./small_components/Skills"
 import TrainingSummarys from "./small_components/TrainingSummarys"
 import { AccomplishmentDialog } from "./small_components/accomplishment-dialog"
 
@@ -172,6 +178,24 @@ function MobileProfileView({
   }
   if (activeSection === "professionalCartification") {
     return <ProfessionalCartifications setActiveSection={setActiveSection} />
+  }
+  if (activeSection === "employmentHis") {
+    return <EmploymentHistorys setActiveSection={setActiveSection} />
+  }
+  if (activeSection === "employmentRetired") {
+    return <EmploymentRetired setActiveSection={setActiveSection} />
+  }
+  if (activeSection === "languageProficiencys") {
+    return <LanguageProficiencys setActiveSection={setActiveSection} />
+  }
+  if (activeSection === "linkAccounts") {
+    return <LinkAccounts setActiveSection={setActiveSection} />
+  }
+  if (activeSection === "references") {
+    return <References setActiveSection={setActiveSection} />
+  }
+  if (activeSection === "skills") {
+    return <Skills setActiveSection={setActiveSection} />
   }
 
   const router = useRouter()
@@ -313,7 +337,7 @@ function MobileProfileView({
           <Button
             variant="outline"
             className="w-full justify-start bg-white"
-            onClick={() => {}}
+            onClick={() => setActiveSection("employmentHis")}
           >
             <Building className="mr-2 h-5 w-5 text-gray-500" />
             Employment History
@@ -322,7 +346,7 @@ function MobileProfileView({
           <Button
             variant="outline"
             className="w-full justify-start bg-white"
-            onClick={() => {}}
+            onClick={() => setActiveSection("employmentRetired")}
           >
             <Building className="mr-2 h-5 w-5 text-gray-500" />
             Employment History (Retired Army Person)
@@ -336,7 +360,7 @@ function MobileProfileView({
           <Button
             variant="outline"
             className="w-full justify-start bg-white"
-            onClick={() => {}}
+            onClick={() => setActiveSection("skills")}
           >
             <BarChart2 className="mr-2 h-5 w-5 text-gray-500" />
             Skill
@@ -345,7 +369,7 @@ function MobileProfileView({
           <Button
             variant="outline"
             className="w-full justify-start bg-white"
-            onClick={() => {}}
+            onClick={() => setActiveSection("languageProficiencys")}
           >
             <Globe className="mr-2 h-5 w-5 text-gray-500" />
             Language Proficiency
@@ -354,7 +378,7 @@ function MobileProfileView({
           <Button
             variant="outline"
             className="w-full justify-start bg-white"
-            onClick={() => {}}
+            onClick={() => setActiveSection("linkAccounts")}
           >
             <LinkIcon className="mr-2 h-5 w-5 text-gray-500" />
             Link Account
@@ -363,7 +387,7 @@ function MobileProfileView({
           <Button
             variant="outline"
             className="w-full justify-start bg-white"
-            onClick={() => {}}
+            onClick={() => setActiveSection("references")}
           >
             <Users className="mr-2 h-5 w-5 text-gray-500" />
             References
