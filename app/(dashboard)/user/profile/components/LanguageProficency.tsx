@@ -50,9 +50,10 @@ const LanguageProficiency = () => {
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {languageCards.length === 0 ? (
-                <div className="text-center text-xl bg-gray-50 py-16 text-gray-500">
+                <div className="text-center text-xl py-16 text-gray-500">
                     <Shield size={50} strokeWidth={1} className="mx-auto text-primary" />
                     <p>No data found.</p>
+                    <Button className="mt-4 !bg-primary" onClick={handleAddLanguageCard}>Add Language</Button>
                 </div>
             ) : (
                 languageCards.map(card => (
@@ -65,7 +66,6 @@ const LanguageProficiency = () => {
                     />
                 ))
             )}
-            <Button className="mt-4 !bg-primary" onClick={handleAddLanguageCard}>Add Language</Button>
         </div>
     );
 };
@@ -86,7 +86,10 @@ const LanguageCardComponent: React.FC<LanguageCardComponentProps> = ({ card, pro
 
     const handleSave = () => {
         onSave(card.id, language, reading, writing, speaking);
-        setIsEditing(false); // Switch to view mode
+        setIsEditing(false);
+
+        const obj = { language, reading, writing, speaking }
+        console.log("language data", obj);
     };
 
     return (
@@ -102,7 +105,8 @@ const LanguageCardComponent: React.FC<LanguageCardComponentProps> = ({ card, pro
                             id="language"
                             value={language}
                             onChange={(e) => setLanguage(e.target.value)}
-                            className="mb-4"
+                            placeholder="Enter language"
+                            className="mb-4 !bg-white"
                         />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="reading">Reading</label>

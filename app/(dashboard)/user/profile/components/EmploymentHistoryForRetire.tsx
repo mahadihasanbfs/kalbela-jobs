@@ -5,11 +5,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DateInput, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select as SelectComponent, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useQuery } from '@tanstack/react-query';
 import { GraduationCap, Plus } from 'lucide-react';
 import React, { useState } from 'react';
-import Select from 'react-select';
-import { boolean } from 'zod';
 import { EditModal } from './CommonModal';
 
 interface TrainingSummaryType {
@@ -27,8 +24,16 @@ const EmploymentHistoryForRetired = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [trainings, setTrainings] = useState<TrainingSummaryType[]>([]);
-    const [selectedSkills, setSelectedSkills] = useState<any[]>([]);
-    const [currentWork, setCurrentWork] = useState(false);
+    const [errors, setErrors] = useState({
+        trade: '',
+        course: '',
+        commission_date: '',
+        retirement_date: '',
+        companyName: '',
+        rank: '',
+        type: '',
+        arms: '',
+    });
 
     const [currentTraining, setCurrentTraining] = useState<TrainingSummaryType>({
         trade: '',
@@ -52,7 +57,6 @@ const EmploymentHistoryForRetired = () => {
             type: '',
             arms: '',
         });
-        setSelectedSkills([]);
         setIsEditMode(false);
         setIsDialogOpen(true);
     };
@@ -73,7 +77,7 @@ const EmploymentHistoryForRetired = () => {
         setIsDialogOpen(false);
     };
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setCurrentTraining((prev) => ({ ...prev, [name]: value }));
     };
@@ -82,37 +86,66 @@ const EmploymentHistoryForRetired = () => {
         setCurrentTraining((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        const form = e.target;
+    const validateInputs = () => {
+        const newErrors = {
+            trade: currentTraining.trade ? '' : 'Trade is required',
+            course: currentTraining.course ? '' : 'Course is required',
+            commission_date: currentTraining.commission_date ? '' : 'Date of Commission is required',
+            retirement_date: currentTraining.retirement_date ? '' : 'Date of Retirement is required',
+            companyName: currentTraining.companyName ? '' : 'Company Name is required',
+            rank: currentTraining.rank ? '' : 'Rank is required',
+            type: currentTraining.type ? '' : 'Type is required',
+            arms: currentTraining.arms ? '' : 'Arms is required',
+        };
+        setErrors(newErrors);
+        return !Object.values(newErrors).some(error => error);
+    };
 
-        const newTraining: TrainingSummaryType = {
-            trade: form.trade.value,
-            course: form.course.value,
-            commission_date: form.commission_date.value,
-            retirement_date: form.retirement_date.value,
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (validateInputs()) {
+            const newTraining: TrainingSummaryType = {
+                trade: currentTraining.trade,
+                course: currentTraining.course,
+                commission_date: currentTraining.commission_date,
+                retirement_date: currentTraining.retirement_date,
+                companyName: currentTraining.companyName,
+                rank: currentTraining.rank,
+                type: currentTraining.type,
+                arms: currentTraining.arms,
+            };
+
+            if (isEditMode) {
+                const updatedTrainings = trainings.map((training) =>
+                    training === currentTraining ? newTraining : training
+                );
+                setTrainings(updatedTrainings);
+            } else {
+                setTrainings([...trainings, newTraining]);
+            }
+
+            setIsDialogOpen(false);
+        }
+
+        const obj = {
+            trade: currentTraining.trade,
+            course: currentTraining.course,
+            commission_date: currentTraining.commission_date,
+            retirement_date: currentTraining.retirement_date,
             companyName: currentTraining.companyName,
             rank: currentTraining.rank,
             type: currentTraining.type,
-            arms: currentTraining.arms,
-        };
-
-        if (isEditMode) {
-            const updatedTrainings = trainings.map((training) =>
-                training === currentTraining ? newTraining : training
-            );
-            setTrainings(updatedTrainings);
-        } else {
-            setTrainings([...trainings, newTraining]);
+            arms: currentTraining.arms
         }
 
-        setIsDialogOpen(false);
+        console.log("employee history--->", obj);
     };
 
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {trainings.length === 0 ? (
-                <div className="text-center text-xl flex flex-col justify-center items-center bg-gray-50 py-16 text-gray-500">
+                <div className="text-center text-xl flex flex-col justify-center items-center py-4 text-gray-500">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width={58}
@@ -150,15 +183,11 @@ const EmploymentHistoryForRetired = () => {
                                 <p className="text-gray-500 mt-2">{training.companyName}</p>
                             </div>
                             <div>
-                                <h3 className="text-md font-semibold">Company Business</h3>
-                                <p className="text-gray-500 mt-2">{training.course}</p>
-                            </div>
-                            <div>
-                                <h3 className="text-md font-semibold">Designation</h3>
+                                <h3 className="text-md font-semibold">Rank</h3>
                                 <p className="text-gray-500 mt-2">{training.rank}</p>
                             </div>
                             <div>
-                                <h3 className="text-md font-semibold">Department</h3>
+                                <h3 className="text-md font-semibold">Type</h3>
                                 <p className="text-gray-500 mt-2">{training.type}</p>
                             </div>
                             <div>
@@ -211,6 +240,7 @@ const EmploymentHistoryForRetired = () => {
                                     </SelectGroup>
                                 </SelectContent>
                             </SelectComponent>
+                            {errors.companyName && <p className="text-red-500">{errors.companyName}</p>}
                         </div>
 
                         <div className="space-y-2 col-span-2 flex flex-col">
@@ -233,6 +263,7 @@ const EmploymentHistoryForRetired = () => {
                                 </SelectGroup>
                             </SelectContent>
                         </SelectComponent>
+                        {errors.rank && <p className="text-red-500">{errors.rank}</p>}
                     </div>
 
                     <div className="space-y-2 flex flex-col">
@@ -249,6 +280,7 @@ const EmploymentHistoryForRetired = () => {
                                 </SelectGroup>
                             </SelectContent>
                         </SelectComponent>
+                        {errors.type && <p className="text-red-500">{errors.type}</p>}
                     </div>
 
                     <div className="space-y-2 flex flex-col">
@@ -265,30 +297,36 @@ const EmploymentHistoryForRetired = () => {
                                 </SelectGroup>
                             </SelectContent>
                         </SelectComponent>
+                        {errors.arms && <p className="text-red-500">{errors.arms}</p>}
                     </div>
 
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="trade">Trade</Label>
-                        <Input id="trade" name="trade" type="text" defaultValue={currentTraining.trade} onChange={handleInputChange} />
+                        <Input id="trade" name="trade" type="text" value={currentTraining.trade} onChange={handleInputChange} />
+                        {errors.trade && <p className="text-red-500">{errors.trade}</p>}
                     </div>
 
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="course">Course</Label>
-                        <Input id="course" name="course" type="text" defaultValue={currentTraining.course} onChange={handleInputChange} />
+                        <Input id="course" name="course" type="text" value={currentTraining.course} onChange={handleInputChange} />
+                        {errors.course && <p className="text-red-500">{errors.course}</p>}
                     </div>
 
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="commission_date">Date of Commission</Label>
-                        <DateInput id="commission_date" type={"date"} name="commission_date" defaultValue={currentTraining.commission_date} onChange={handleInputChange} />
+                        <DateInput id="commission_date" type={"date"} name="commission_date" value={currentTraining.commission_date} onChange={handleInputChange} />
+                        {errors.commission_date && <p className="text-red-500">{errors.commission_date}</p>}
                     </div>
 
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="retirement_date">Date of Retirement</Label>
-                        <DateInput id="retirement_date" type={"date"} name="retirement_date" defaultValue={currentTraining.retirement_date} onChange={handleInputChange} />
+                        <DateInput id="retirement_date" type={"date"} name="retirement_date" value={currentTraining.retirement_date} onChange={handleInputChange} />
+                        {errors.retirement_date && <p className="text-red-500">{errors.retirement_date}</p>}
                     </div>
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-end gap-2">
                         <Button type="submit">Submit</Button>
+                        <Button type="button" onClick={handleDialogClose} className="!bg-red-500">Cancel</Button>
                     </div>
                 </form>
             </EditModal>

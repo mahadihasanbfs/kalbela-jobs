@@ -54,9 +54,10 @@ const ReferenceInput = () => {
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {referenceCards.length === 0 ? (
-                <div className="text-center text-xl bg-gray-50 py-16 text-gray-500">
+                <div className="text-center text-xl py-8 text-gray-500">
                     <Shield size={50} strokeWidth={1} className="mx-auto text-primary" />
                     <p>No data found.</p>
+                    <Button className="mt-4 !bg-primary" onClick={handleAddReferenceCard}>Add Reference</Button>
                 </div>
             ) : (
                 referenceCards.map(card => (
@@ -69,7 +70,7 @@ const ReferenceInput = () => {
                     />
                 ))
             )}
-            <Button className="mt-4 !bg-primary" onClick={handleAddReferenceCard}>Add Reference</Button>
+
         </div>
     );
 };
@@ -93,7 +94,10 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
 
     const handleSave = () => {
         onSave(card.id, name, designation, organization, email, relation, phone, address);
-        setIsEditing(false); // Switch to view mode
+        setIsEditing(false);
+
+        const obj = { name, designation, organization, email, relation, phone, address }
+        console.log("reference data", obj);
     };
 
     return (
@@ -109,7 +113,7 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
                         />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="designation">Designation</label>
@@ -117,7 +121,7 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
                             id="designation"
                             value={designation}
                             onChange={(e) => setDesignation(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
                         />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="organization">Organization</label>
@@ -125,7 +129,7 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
                             id="organization"
                             value={organization}
                             onChange={(e) => setOrganization(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
                         />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="email">Email</label>
@@ -134,7 +138,7 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
                         />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="relation">Relation</label>
@@ -157,7 +161,7 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
                             id="phone"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
                         />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2 mt-4" htmlFor="address">Address</label>
@@ -165,7 +169,7 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
                             id="address"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
                         />
                     </div>
                 ) : (

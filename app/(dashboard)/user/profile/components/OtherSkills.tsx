@@ -58,9 +58,11 @@ const OtherSkills = () => {
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {skillCards.length === 0 ? (
-                <div className="text-center text-xl bg-gray-50 py-16 text-gray-500">
+                <div className="text-center text-xl py-16 text-gray-500">
                     <Shield size={50} strokeWidth={1} className="mx-auto text-primary" />
                     <p>No data found.</p>
+
+                    <Button className="mt-4 !bg-primary " onClick={handleAddSkillCard}>Add Skill</Button>
                 </div>
             ) : (
                 skillCards.map(card => (
@@ -74,7 +76,7 @@ const OtherSkills = () => {
                     />
                 ))
             )}
-            <Button className="mt-4 !bg-primary" onClick={handleAddSkillCard}>Add Skill</Button>
+
         </div>
     );
 };
@@ -106,7 +108,10 @@ const SkillCardComponent: React.FC<SkillCardComponentProps> = ({ card, skillsOpt
     const handleSave = () => {
         // @ts-ignore
         onSave(card.id, selectedSkills, ntvq, company, learningMethods);
-        setIsEditing(false); // Switch to view mode
+        setIsEditing(false);
+
+        const obj = { selectedSkills, ntvq, company, learningMethods }
+        console.log("skill data", obj);
     };
 
     return (

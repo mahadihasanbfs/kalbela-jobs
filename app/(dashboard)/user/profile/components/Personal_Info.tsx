@@ -357,20 +357,23 @@ function DesktopProfileView({
                                                       <div className="flex items-center gap-2">
                                                             <svg
                                                                   xmlns="http://www.w3.org/2000/svg"
-                                                                  width={28}
-                                                                  height={28}
+                                                                  width={30}
+                                                                  height={30}
                                                                   viewBox="0 0 24 24"
                                                                   fill="none"
                                                                   stroke="currentColor"
-                                                                  strokeWidth={1}
-                                                                  strokeLinecap="round"
-                                                                  strokeLinejoin="round"
-                                                                  className="lucide lucide-shield-user"
+                                                                  //      @ts-ignore
+                                                                  strokewidth={1}
+                                                                  strokelinecap="round"
+                                                                  strokelinejoin="round"
+                                                                  classname="lucide lucide-house-plus"
                                                             >
-                                                                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                                                                  <path d="M6.376 18.91a6 6 0 0 1 11.249.003" />
-                                                                  <circle cx={12} cy={11} r={4} />
+                                                                  <path d="M13.22 2.416a2 2 0 0 0-2.511.057l-7 5.999A2 2 0 0 0 3 10v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7.354" />
+                                                                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                                                                  <path d="M15 6h6" />
+                                                                  <path d="M18 3v6" />
                                                             </svg>
+
 
 
                                                             Address Details
@@ -387,20 +390,30 @@ function DesktopProfileView({
                                                       <div className="flex items-center gap-2">
                                                             <svg
                                                                   xmlns="http://www.w3.org/2000/svg"
-                                                                  width={28}
-                                                                  height={28}
+                                                                  width={30}
+                                                                  height={30}
                                                                   viewBox="0 0 24 24"
                                                                   fill="none"
                                                                   stroke="currentColor"
                                                                   strokeWidth={1}
                                                                   strokeLinecap="round"
                                                                   strokeLinejoin="round"
-                                                                  className="lucide lucide-shield-user"
+                                                                  className="lucide lucide-user-round-cog"
                                                             >
-                                                                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                                                                  <path d="M6.376 18.91a6 6 0 0 1 11.249.003" />
-                                                                  <circle cx={12} cy={11} r={4} />
+                                                                  <path d="M2 21a8 8 0 0 1 10.434-7.62" />
+                                                                  <circle cx={10} cy={8} r={5} />
+                                                                  <circle cx={18} cy={18} r={3} />
+                                                                  <path d="m19.5 14.3-.4.9" />
+                                                                  <path d="m16.9 20.8-.4.9" />
+                                                                  <path d="m21.7 19.5-.9-.4" />
+                                                                  <path d="m15.2 16.9-.9-.4" />
+                                                                  <path d="m21.7 16.5-.9.4" />
+                                                                  <path d="m15.2 19.1-.9.4" />
+                                                                  <path d="m19.5 21.7-.4-.9" />
+                                                                  <path d="m16.9 15.2-.4-.9" />
                                                             </svg>
+
+
                                                             Career and Application Information
                                                       </div>
                                                 </AccordionTrigger>
@@ -414,19 +427,20 @@ function DesktopProfileView({
                                                       <div className="flex items-center gap-2">
                                                             <svg
                                                                   xmlns="http://www.w3.org/2000/svg"
-                                                                  width={28}
-                                                                  height={28}
+                                                                  width={30}
+                                                                  height={30}
                                                                   viewBox="0 0 24 24"
                                                                   fill="none"
                                                                   stroke="currentColor"
                                                                   strokeWidth={1}
                                                                   strokeLinecap="round"
                                                                   strokeLinejoin="round"
-                                                                  className="lucide lucide-shield-user"
+                                                                  className="lucide lucide-map-pin-house"
                                                             >
-                                                                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                                                                  <path d="M6.376 18.91a6 6 0 0 1 11.249.003" />
-                                                                  <circle cx={12} cy={11} r={4} />
+                                                                  <path d="M15 22a1 1 0 0 1-1-1v-4a1 1 0 0 1 .445-.832l3-2a1 1 0 0 1 1.11 0l3 2A1 1 0 0 1 22 17v4a1 1 0 0 1-1 1z" />
+                                                                  <path d="M18 10a8 8 0 0 0-16 0c0 4.993 5.539 10.193 7.399 11.799a1 1 0 0 0 .601.2" />
+                                                                  <path d="M18 22v-3" />
+                                                                  <circle cx={10} cy={10} r={3} />
                                                             </svg>
                                                             Preferred Areas
                                                       </div>
@@ -450,12 +464,13 @@ function DesktopProfileView({
                                                                   strokeWidth={1}
                                                                   strokeLinecap="round"
                                                                   strokeLinejoin="round"
-                                                                  className="lucide lucide-shield-user"
+                                                                  className="lucide lucide-info"
                                                             >
-                                                                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                                                                  <path d="M6.376 18.91a6 6 0 0 1 11.249.003" />
-                                                                  <circle cx={12} cy={11} r={4} />
+                                                                  <circle cx={12} cy={12} r={10} />
+                                                                  <path d="M12 16v-4" />
+                                                                  <path d="M12 8h.01" />
                                                             </svg>
+
                                                             Other Relevant Information
                                                       </div>
                                                 </AccordionTrigger>
