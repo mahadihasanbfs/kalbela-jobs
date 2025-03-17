@@ -117,8 +117,23 @@ const UserAssets = () => {
                     {
                         publications?.map((data, index) => (
                             <li key={index} className="md:grid grid-cols-6 gap-2 p-4 border hover:shadow-md duration-300 rounded">
-                                <div className="bg-[#001968] rounded !w-[100px] !h-[100px] flex items-center justify-center text-white">
-                                    <Code size={50} />
+                                <div className="bg-[#006868] rounded !w-[100px] !h-[100px] flex items-center justify-center text-white">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width={52}
+                                        height={52}
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth={1.5}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-book-check"
+                                    >
+                                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+                                        <path d="m9 9.5 2 2 4-4" />
+                                    </svg>
+
                                 </div>
                                 <div className="col-span-5">
                                     <div className="flex justify-between">

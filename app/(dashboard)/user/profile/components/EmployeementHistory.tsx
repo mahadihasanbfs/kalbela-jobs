@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
 import Select from 'react-select';
-import { boolean } from 'zod';
 import { EditModal } from './CommonModal';
 
 interface TrainingSummaryType {
@@ -29,6 +28,16 @@ const EmploymentHistory = () => {
     const [trainings, setTrainings] = useState<TrainingSummaryType[]>([]);
     const [selectedSkills, setSelectedSkills] = useState<any[]>([]);
     const [currentWork, setCurrentWork] = useState(false);
+    const [errors, setErrors] = useState({
+        companyName: '',
+        companyBusiness: '',
+        designation: '',
+        department: '',
+        employmentFrom: '',
+        employmentTo: '',
+        responsibilities: '',
+        skills: ''
+    });
 
     const {
         data: skillsOptions = [],
@@ -74,6 +83,7 @@ const EmploymentHistory = () => {
             skills: []
         });
         setSelectedSkills([]);
+        setCurrentWork(false);
         setIsEditMode(false);
         setIsDialogOpen(true);
     };
@@ -103,6 +113,8 @@ const EmploymentHistory = () => {
     const handleCheckboxChange = (e: any) => {
         setCurrentWork(e.target.checked);
         if (e.target.checked) {
+            setCurrentTraining((prev) => ({ ...prev, employmentTo: 'Present' }));
+        } else {
             setCurrentTraining((prev) => ({ ...prev, employmentTo: '' }));
         }
     };
@@ -111,38 +123,56 @@ const EmploymentHistory = () => {
         setSelectedSkills(selectedOptions);
     };
 
+    const validateInputs = () => {
+        const newErrors = {
+            companyName: currentTraining.companyName ? '' : 'Company Name is required',
+            companyBusiness: currentTraining.companyBusiness ? '' : 'Company Business is required',
+            designation: currentTraining.designation ? '' : 'Designation is required',
+            department: currentTraining.department ? '' : 'Department is required',
+            employmentFrom: currentTraining.employmentFrom ? '' : 'Employment From date is required',
+            employmentTo: currentTraining.employmentTo || currentWork ? '' : 'Employment To date is required',
+            responsibilities: currentTraining.responsibilities ? '' : 'Responsibilities are required',
+            skills: selectedSkills.length > 0 ? '' : 'At least one skill is required'
+        };
+        setErrors(newErrors);
+        return !Object.values(newErrors).some(error => error);
+    };
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        const form = e.target;
 
-        const data: TrainingSummaryType = {
-            companyName: form.companyName.value,
-            companyBusiness: form.companyBusiness.value,
-            designation: form.designation.value,
-            department: form.department.value,
-            employmentFrom: form.employmentFrom.value,
-            employmentTo: currentWork ? 'Present' : form.employmentTo.value,
-            responsibilities: form.responsibilities.value,
-            skills: selectedSkills.map(skill => skill.value),
-        };
+        if (validateInputs()) {
+            const data: TrainingSummaryType = {
+                companyName: currentTraining.companyName,
+                companyBusiness: currentTraining.companyBusiness,
+                designation: currentTraining.designation,
+                department: currentTraining.department,
+                employmentFrom: currentTraining.employmentFrom,
+                employmentTo: currentTraining.employmentTo,
+                responsibilities: currentTraining.responsibilities,
+                skills: selectedSkills.map(skill => skill.value),
+            };
 
-        if (isEditMode && currentTraining.index !== undefined) {
-            const updatedTrainings = trainings.map((training, index) =>
-                index === currentTraining.index ? data : training
-            );
-            setTrainings(updatedTrainings);
-        } else {
-            setTrainings([...trainings, data]);
+            if (isEditMode && currentTraining.index !== undefined) {
+                const updatedTrainings = trainings.map((training, index) =>
+                    index === currentTraining.index ? data : training
+                );
+                setTrainings(updatedTrainings);
+            } else {
+                setTrainings([...trainings, data]);
+            }
+
+            setIsDialogOpen(false);
         }
 
-        console.log("submited data....", data);
-        setIsDialogOpen(false);
+        const obj = { ...currentTraining, skills: selectedSkills.map(skill => skill.value) };
+        console.log("employee history--->", obj);
     };
 
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {trainings.length === 0 ? (
-                <div className="text-center text-xl flex flex-col justify-center items-center bg-gray-50 py-16 text-gray-500">
+                <div className="text-center text-xl flex flex-col justify-center items-center  py-8 text-gray-500">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width={58}
@@ -227,24 +257,29 @@ const EmploymentHistory = () => {
                 <form onSubmit={handleSubmit} className="space-y-4 pt-6">
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="companyName">Company Name</Label>
-                        <Input id="companyName" name="companyName" type="text" defaultValue={currentTraining.companyName} />
+                        <Input id="companyName" name="companyName" type="text" value={currentTraining.companyName} onChange={handleInputChange} />
+                        {errors.companyName && <p className="text-red-500">{errors.companyName}</p>}
                     </div>
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="companyBusiness">Company Business</Label>
-                        <Input id="companyBusiness" name="companyBusiness" type="text" defaultValue={currentTraining.companyBusiness} />
+                        <Input id="companyBusiness" name="companyBusiness" type="text" value={currentTraining.companyBusiness} onChange={handleInputChange} />
+                        {errors.companyBusiness && <p className="text-red-500">{errors.companyBusiness}</p>}
                     </div>
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="designation">Designation</Label>
-                        <Input id="designation" name="designation" type="text" defaultValue={currentTraining.designation} />
+                        <Input id="designation" name="designation" type="text" value={currentTraining.designation} onChange={handleInputChange} />
+                        {errors.designation && <p className="text-red-500">{errors.designation}</p>}
                     </div>
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="department">Department</Label>
-                        <Input id="department" name="department" type="text" defaultValue={currentTraining.department} />
+                        <Input id="department" name="department" type="text" value={currentTraining.department} onChange={handleInputChange} />
+                        {errors.department && <p className="text-red-500">{errors.department}</p>}
                     </div>
                     <div className="md:flex w-full items-center gap-4">
                         <div className="space-y-2 flex flex-col w-full">
                             <Label htmlFor="employmentFrom">Employment From</Label>
-                            <DateInput className='!w-full' id="employmentFrom" name="employmentFrom" type="date" defaultValue={currentTraining.employmentFrom} />
+                            <DateInput className='!w-full' id="employmentFrom" name="employmentFrom" type="date" value={currentTraining.employmentFrom} onChange={handleInputChange} />
+                            {errors.employmentFrom && <p className="text-red-500">{errors.employmentFrom}</p>}
                         </div>
                         <div className="space-y-2 flex flex-col w-full">
                             <Label htmlFor="employmentTo">Employment To</Label>
@@ -253,24 +288,27 @@ const EmploymentHistory = () => {
                                 id="employmentTo"
                                 name="employmentTo"
                                 type="date"
-                                defaultValue={currentTraining.employmentTo}
+                                value={currentTraining.employmentTo}
+                                onChange={handleInputChange}
                                 disabled={currentWork} // Disable when checkbox is checked
                             />
+                            {errors.employmentTo && <p className="text-red-500">{errors.employmentTo}</p>}
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2 mt-2">
-                        <Checkbox
+                        <input
+                            type='checkbox'
                             id="currentlyEmployed"
                             checked={currentWork}
-                            // @ts-ignore
-                            onCheckedChange={(checked) => setCurrentWork(checked)}
+                            onChange={handleCheckboxChange}
                         />
                         <Label htmlFor="currentlyEmployed">Currently Employed</Label>
                     </div>
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="responsibilities">Responsibilities</Label>
-                        <textarea id="responsibilities" name="responsibilities" className="border !border-gray-300 focus:outline-none rounded-md p-2" rows={3} defaultValue={currentTraining.responsibilities}></textarea>
+                        <textarea id="responsibilities" name="responsibilities" className="border !border-gray-300 focus:outline-none rounded-md p-2" rows={3} value={currentTraining.responsibilities} onChange={handleInputChange}></textarea>
+                        {errors.responsibilities && <p className="text-red-500">{errors.responsibilities}</p>}
                     </div>
                     <div className="space-y-2 flex flex-col">
                         <Label htmlFor="skills">Skills</Label>
@@ -300,8 +338,10 @@ const EmploymentHistory = () => {
                             className="basic-multi-select"
                             classNamePrefix="select"
                         />
+                        {errors.skills && <p className="text-red-500">{errors.skills}</p>}
                     </div>
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 gap-2 flex justify-end">
+                        <Button onClick={() => setIsDialogOpen(false)} className='!bg-red-500 text-white '>Cancel</Button>
                         <Button type="submit">Submit</Button>
                     </div>
                 </form>

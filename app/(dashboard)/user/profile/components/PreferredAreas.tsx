@@ -1,15 +1,13 @@
+'use client';
 import { Button } from '@/components/ui/button';
-import { Pencil, Plus, X } from 'lucide-react';
+import { useUserData } from '@/utils/encript_decript';
+import { useQuery } from '@tanstack/react-query';
+import { Pencil, Plus, PlusIcon, X } from 'lucide-react';
 import React, { useState } from 'react';
 import Select from 'react-select';
 
 const PreferredAreas: React.FC = () => {
-    const locations = [
-        "Location 1", "Location 2", "Location 3", "Location 4", "Location 5",
-        "Location 6", "Location 7", "Location 8", "Location 9", "Location 10",
-        "Location 11", "Location 12", "Location 13", "Location 14", "Location 15",
-        "Location 16", "Location 17", "Location 18", "Location 19", "Location 20"
-    ];
+
 
     const categories = [
         "Category 1", "Category 2", "Category 3", "Category 4", "Category 5",
@@ -35,12 +33,47 @@ const PreferredAreas: React.FC = () => {
         "Organization Type 9", "Organization Type 10", "Organization Type 11", "Organization Type 12"
     ];
 
+
+    const [user] = useUserData();
+
+    const { data: demoLocations = [], isLoading, refetch } = useQuery({
+        queryKey: ["demoLocations"],
+        queryFn: async () => {
+            const res = await fetch(
+                `${process.env.NEXT_APP_BASE_URL}/api/v1/config/locations?token=${user._id}`
+            );
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
+
+    const { data: categoriesList = [], isLoading: categoryLoading, refetch: categoryRefetch } = useQuery({
+        queryKey: ["categoriesList"],
+        queryFn: async () => {
+            const res = await fetch(
+                `${process.env.NEXT_APP_BASE_URL}/api/v1/category?token=${user._id}`
+            );
+            const data = await res.json();
+            return data.data;
+        },
+    });
+    console.log(categoriesList, "location : ");
+
     const [checkedLocations, setCheckedLocations] = useState<string[]>([]);
     const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
     const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
     const [selectedOrganizationTypes, setSelectedOrganizationTypes] = useState<string[]>([]);
     const [isEditing, setIsEditing] = useState(false);
+
+    const [errors, setErrors] = useState({
+        locations: '',
+        categories: '',
+        districts: '',
+        countries: '',
+        organizationTypes: ''
+    });
 
     const handleLocationChange = (location: string) => {
         if (checkedLocations.includes(location)) {
@@ -87,26 +120,41 @@ const PreferredAreas: React.FC = () => {
         }
     }
 
+    const validateInputs = () => {
+        const newErrors = {
+            locations: checkedLocations.length === 0 ? 'Please select at least one location' : '',
+            categories: checkedCategories.length === 0 ? 'Please select at least one category' : '',
+            districts: selectedDistricts.length === 0 ? 'Please select at least one district' : '',
+            countries: selectedCountries.length === 0 ? 'Please select at least one country' : '',
+            organizationTypes: selectedOrganizationTypes.length === 0 ? 'Please select at least one organization type' : ''
+        };
+        setErrors(newErrors);
+        return !Object.values(newErrors).some(error => error);
+    };
+
     const handleSave = () => {
-        console.log("Selected Locations:", checkedLocations);
-        console.log("Selected Categories:", checkedCategories);
-        console.log("Selected Districts:", selectedDistricts);
-        console.log("Selected Countries:", selectedCountries);
-        console.log("Selected Organization Types:", selectedOrganizationTypes);
+        if (!validateInputs()) {
+            return;
+        }
+
+        const data = {
+            locations: checkedLocations,
+            categories: checkedCategories,
+            districts: selectedDistricts,
+            countries: selectedCountries,
+            organizationTypes: selectedOrganizationTypes
+        }
+
+        console.log("data : ", data);
         setIsEditing(false);
     }
 
     const handleCancel = () => {
-        setCheckedLocations([]);
-        setCheckedCategories([]);
-        setSelectedDistricts([]);
-        setSelectedCountries([]);
-        setSelectedOrganizationTypes([]);
         setIsEditing(false);
     }
 
     return (
-        <div className='mb-4 px-4 py-2 w-full'>
+        <div className='mb-4 px-4 py-2 w-full relative'>
             {isEditing ? (
                 <>
                     <div className="mt-4 grid grid-cols-2 gap-6">
@@ -140,6 +188,7 @@ const PreferredAreas: React.FC = () => {
                                 maxMenuHeight={150}
                                 closeMenuOnSelect={false}
                             />
+                            {errors.districts && <p className="text-red-500">{errors.districts}</p>}
                         </div>
 
                         <div>
@@ -172,6 +221,7 @@ const PreferredAreas: React.FC = () => {
                                 maxMenuHeight={150}
                                 closeMenuOnSelect={false}
                             />
+                            {errors.countries && <p className="text-red-500">{errors.countries}</p>}
                         </div>
                     </div>
 
@@ -206,6 +256,7 @@ const PreferredAreas: React.FC = () => {
                             maxMenuHeight={150}
                             closeMenuOnSelect={false}
                         />
+                        {errors.organizationTypes && <p className="text-red-500">{errors.organizationTypes}</p>}
                     </div>
 
                     <br />
@@ -215,18 +266,18 @@ const PreferredAreas: React.FC = () => {
                                 <h2 className="text-lg font-semibold mb-4">Select Locations (max 3)</h2>
                                 <div className="h-[200px] overflow-y-auto border-t pt-2 chat-box">
                                     <ul className="space-y-2">
-                                        {locations.map((location, index) => (
+                                        {demoLocations?.map((location: any, index: any) => (
                                             <li key={index} className="flex items-center space-x-2">
                                                 <input
                                                     type="checkbox"
                                                     id={`location-${index}`}
-                                                    checked={checkedLocations.includes(location)}
-                                                    onChange={() => handleLocationChange(location)}
+                                                    checked={checkedLocations.includes(location?.name)}
+                                                    onChange={() => handleLocationChange(location?.name)}
                                                     className="form-checkbox h-5 w-5 text-blue-900 !accent-blue-900"
-                                                    disabled={!checkedLocations.includes(location) && checkedLocations.length >= 3}
+                                                    disabled={!checkedLocations.includes(location?.name) && checkedLocations.length >= 3}
                                                 />
                                                 <label htmlFor={`location-${index}`} className="text-lg">
-                                                    {location}
+                                                    {location?.name}
                                                 </label>
                                             </li>
                                         ))}
@@ -244,6 +295,7 @@ const PreferredAreas: React.FC = () => {
                                         ))}
                                     </ul>
                                 </div>
+                                {errors.locations && <p className="text-red-500">{errors.locations}</p>}
                             </div>
                         </div>
                         <div>
@@ -251,18 +303,18 @@ const PreferredAreas: React.FC = () => {
                                 <h2 className="text-lg font-semibold mb-4">Select Categories (max 3)</h2>
                                 <div className="h-[200px] overflow-y-auto border-t pt-2 chat-box">
                                     <ul className="space-y-2">
-                                        {categories.map((category, index) => (
+                                        {categoriesList?.map((category: any, index: any) => (
                                             <li key={index} className="flex items-center space-x-2">
                                                 <input
                                                     type="checkbox"
                                                     id={`category-${index}`}
-                                                    checked={checkedCategories.includes(category)}
-                                                    onChange={() => handleCategoryChange(category)}
+                                                    checked={checkedCategories.includes(category?.name)}
+                                                    onChange={() => handleCategoryChange(category?.name)}
                                                     className="form-checkbox h-5 w-5 text-blue-600 !accent-blue-900"
-                                                    disabled={!checkedCategories.includes(category) && checkedCategories.length >= 3}
+                                                    disabled={!checkedCategories.includes(category?.name) && checkedCategories.length >= 3}
                                                 />
                                                 <label htmlFor={`category-${index}`} className="text-lg">
-                                                    {category}
+                                                    {category?.name}
                                                 </label>
                                             </li>
                                         ))}
@@ -280,6 +332,7 @@ const PreferredAreas: React.FC = () => {
                                         ))}
                                     </ul>
                                 </div>
+                                {errors.categories && <p className="text-red-500">{errors.categories}</p>}
                             </div>
                         </div>
                     </div>
@@ -292,17 +345,37 @@ const PreferredAreas: React.FC = () => {
             ) : (
                 <div className="mt-4">
                     {checkedLocations.length === 0 && checkedCategories.length === 0 && selectedDistricts.length === 0 && selectedCountries.length === 0 && selectedOrganizationTypes.length === 0 ? (
-                        <div className='text-center'>
-                            <h1 className="text-lg font-semibold">
-                                No data selected
+                        <div className='text-center py-6'>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={64}
+                                height={64}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="lucide m-auto lucide-map-pin-house"
+                            >
+                                <path d="M15 22a1 1 0 0 1-1-1v-4a1 1 0 0 1 .445-.832l3-2a1 1 0 0 1 1.11 0l3 2A1 1 0 0 1 22 17v4a1 1 0 0 1-1 1z" />
+                                <path d="M18 10a8 8 0 0 0-16 0c0 4.993 5.539 10.193 7.399 11.799a1 1 0 0 0 .601.2" />
+                                <path d="M18 22v-3" />
+                                <circle cx={10} cy={10} r={3} />
+                            </svg>
+
+                            <h1 className="text-lg mt-2 font-semibold">
+                                No data found
                             </h1>
                             <p className="text-gray-500">
                                 Please select at least one location, category, district, country, or organization type.
                             </p>
-                            <Button className="!bg-primary px-6 text-white mt-3" onClick={() => setIsEditing(true)}> Add</Button>
+                            <Button className="!bg-primary px-6 text-white mt-4" onClick={() => setIsEditing(true)}> <PlusIcon /> Add</Button>
                         </div>
                     ) : (
                         <>
+                            <Button className="mt-4 !bg-primary absolute right-8 top-3 text-white px-4 py-4 rounded-md" onClick={() => setIsEditing(true)}>Edit</Button>
+
                             <div className="space-y-8 max-w-3xl">
                                 <div>
                                     <h2 className="text-lg font-medium text-gray-700 mb-4">Preferred Job Categories</h2>
@@ -356,7 +429,7 @@ const PreferredAreas: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Button className="mt-4 !bg-primary  text-white px-4 py-4 rounded-md" onClick={() => setIsEditing(true)}>Edit</Button>
+
                         </>
                     )}
                 </div>

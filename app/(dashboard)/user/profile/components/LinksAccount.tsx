@@ -49,9 +49,10 @@ const LinkAccounts = () => {
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {linkAccountCards.length === 0 ? (
-                <div className="text-center text-xl bg-gray-50 py-16 text-gray-500">
+                <div className="text-center text-xl py-16 text-gray-500">
                     <Shield size={50} strokeWidth={1} className="mx-auto text-primary" />
                     <p>No data found.</p>
+                    <Button className="mt-4 !bg-primary" onClick={handleAddLinkAccountCard}>Add Account</Button>
                 </div>
             ) : (
                 linkAccountCards.map(card => (
@@ -64,7 +65,7 @@ const LinkAccounts = () => {
                     />
                 ))
             )}
-            <Button className="mt-4 !bg-primary" onClick={handleAddLinkAccountCard}>Add Account</Button>
+
         </div>
     );
 };
@@ -83,7 +84,10 @@ const LinkAccountCardComponent: React.FC<LinkAccountCardComponentProps> = ({ car
 
     const handleSave = () => {
         onSave(card.id, accountType, url);
-        setIsEditing(false); // Switch to view mode
+        setIsEditing(false);
+
+        const obj = { accountType, url }
+        console.log("link data", obj);
     };
 
     return (
@@ -114,7 +118,8 @@ const LinkAccountCardComponent: React.FC<LinkAccountCardComponentProps> = ({ car
                             id="url"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className="mb-4"
+                            className="mb-4 !bg-white"
+                            placeholder="Enter URL"
                         />
                     </div>
                 ) : (
