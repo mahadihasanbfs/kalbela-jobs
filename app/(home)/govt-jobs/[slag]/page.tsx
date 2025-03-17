@@ -1,41 +1,51 @@
-"use client"
+'use client'
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowUpRight, BookmarkPlus, Calendar, CheckCircle, Download, Eye, Globe, Share2, X, } from "lucide-react"
-import { format } from "date-fns"
+import { ArrowUpRight, BookmarkPlus, Share2, Eye, Download } from "lucide-react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import useApiRequest from "@/app/hooks/useApiRequest"
-import { Badge } from "@/components/ui/badge"
-import ShareButton from "@/components/ShareButton"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useRouter } from "next/navigation"
-import { ImageCarousel } from "./components/Carousel"
 import GovmentJobCategory from "./components/GovmentJobCategory"
 import GovJobHeadLine from "./components/GovJobHeadLine"
 import GovJobList from "./components/GovJobList"
-import Image from "next/image"
 import GovJobHeader from "./components/GovJobHeader"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
+type JobData = {
+      id: string;
+      title: string;
+      organization: {
+            id: string;
+            name: string;
+      };
+      pdf_url: string;
+      hyperlink: string;
+      image_url: string;
+      views: number;
+};
+
+type AllOrgJobs = {
+      vacancy: number;
+};
+
 const Page = ({ params }: { params: { slag: string } }) => {
-      const { data: singleJobData, loading: singleJobLoading } = useApiRequest<Record<string, any>>(
+      const { data: singleJobData, loading: singleJobLoading } = useApiRequest<{ data: JobData }>(
             `jobs/get-single-govt-job?job_id=${params.slag}`,
             "GET"
       );
 
-      const { data: all_org_jobs, loading: all_org_jobs_loading, error: all_org_jobs_error } = useApiRequest<any>("jobs/get-all-org-jobs", "GET")
+      const { data: all_org_jobs, loading: all_org_jobs_loading } = useApiRequest<{ data: AllOrgJobs[] }>("jobs/get-all-org-jobs", "GET");
 
-      const [relatedJobs, setRelatedJobs] = React.useState<any>(null);
-      const [relatedJobsLoading, setRelatedJobsLoading] = React.useState(false);
-      const [applyModalOpen, setApplyModalOpen] = React.useState(false);
+      const [relatedJobs, setRelatedJobs] = useState<any>(null);
+      const [relatedJobsLoading, setRelatedJobsLoading] = useState(false);
+      const [applyModalOpen, setApplyModalOpen] = useState(false);
+      const [pdfModalOpen, setPdfModalOpen] = useState(false);
 
-      React.useEffect(() => {
+      useEffect(() => {
             const fetchRelatedJobs = async () => {
                   if (singleJobData?.data?.organization?.id) {
                         setRelatedJobsLoading(true);
@@ -56,7 +66,6 @@ const Page = ({ params }: { params: { slag: string } }) => {
             fetchRelatedJobs();
       }, [singleJobData?.data?.organization?.id, params.slag]);
 
-      const [pdfModalOpen, setPdfModalOpen] = useState(false)
       const handleShare = async () => {
             if (singleJobData?.data && navigator.share) {
                   try {
@@ -64,26 +73,24 @@ const Page = ({ params }: { params: { slag: string } }) => {
                               title: singleJobData?.data?.title,
                               text: `${singleJobData?.data?.title} - ${singleJobData?.data?.organization?.name}`,
                               url: window.location.href,
-                        })
+                        });
                   } catch (error) {
-                        console.error("Error sharing:", error)
+                        console.error("Error sharing:", error);
                   }
             } else {
-                  // Fallback for browsers that don't support the Web Share API
-                  navigator.clipboard.writeText(window.location.href)
-                  alert("Link copied to clipboard!")
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Link copied to clipboard!");
             }
-      }
+      };
 
+      const get_org_all_jobs = (jobs: AllOrgJobs[]) => {
+            return jobs.reduce((acc, job) => acc + job.vacancy, 0);
+      };
 
-      const get_org_all_jobs = (jobs: any) => {
-            return jobs.reduce((acc: number, job: any) => acc + job.vacancy, 0)
-      }
-
-      const router = useRouter()
+      const router = useRouter();
       const handleJobSelect = (orgId: string, jobId: string) => {
-            router.push(`/govt-jobs/${jobId}`)
-      }
+            router.push(`/govt-jobs/${jobId}`);
+      };
 
       const addItem: any[] = [
             {
@@ -94,11 +101,11 @@ const Page = ({ params }: { params: { slag: string } }) => {
                   id: 2,
                   addBanner: "https://img.freepik.com/free-vector/hand-drawn-electronics-store-facebook-template_23-2151138109.jpg?t=st=1741585315~exp=1741588915~hmac=ba44f066a6eb427204b27c141b4e3cf6bdbea43669c69fd6a8c8fa005689bb70&w=1380"
             }
-      ]
+      ];
 
       const handleDownload = () => {
-            window.open(singleJobData?.data?.pdf_url, "_blank")
-      }
+            window.open(singleJobData?.data?.pdf_url, "_blank");
+      };
 
       return (
             <section className="">
@@ -108,22 +115,22 @@ const Page = ({ params }: { params: { slag: string } }) => {
                   </MaxWidthWrapper>
                   <MaxWidthWrapper>
                         <div className="mt-3">
-                              <div className=" grid md:grid-cols-4 gap-2">
+                              <div className="grid md:grid-cols-4 gap-2">
                                     {/* aside */}
                                     <div className="">
                                           <GovJobList
                                                 all_org_jobs_loading={all_org_jobs_loading}
-                                                all_org_jobs={all_org_jobs}
+                                                all_org_jobs={all_org_jobs?.data}
                                                 get_org_all_jobs={get_org_all_jobs}
-                                                handleJobSelect={handleJobSelect} />
+                                                handleJobSelect={handleJobSelect}
+                                          />
                                     </div>
                                     {/* content */}
-                                    <div className={`md:col-span-3 ${addItem.length > 0 ? 'grid' : ''} md:grid-cols-4 gap-2  `}>
-                                          <div className="md:col-span-3 ">
-                                                {singleJobData?.data && <GovJobHeader data={singleJobData?.data} />}
-                                                {console.log(singleJobData?.data)}
-                                                <div className="grid grid-cols-5 my-2 gap-3 w-full ">
-                                                      <Link href={singleJobData?.data.hyperlink || "#"} className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-white bg-[#001968]">
+                                    <div className={`md:col-span-3 ${addItem.length > 0 ? 'grid' : ''} md:grid-cols-4 gap-2`}>
+                                          <div className="md:col-span-3">
+                                                {singleJobData?.data && <GovJobHeader data={singleJobData.data} />}
+                                                <div className="grid md:grid-cols-5 my-2 gap-3 w-full">
+                                                      <Link href={singleJobData?.data.hyperlink || "#"} className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 py-3 text-white bg-[#001968]">
                                                             <ArrowUpRight className="h-4 w-4" />
                                                             <span>Apply</span>
                                                       </Link>
@@ -139,46 +146,42 @@ const Page = ({ params }: { params: { slag: string } }) => {
                                                       </Button>
 
                                                       <Button onClick={() => setPdfModalOpen(true)} variant="secondary" className="w-full flex items-center justify-center gap-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-down-to-line h-4 w-4"><path d="M12 17V3" /><path d="m6 11 6 6 6-6" /><path d="M19 21H5" /></svg>
+                                                            <Download className="h-4 w-4" />
                                                             <span>Download Pdf</span>
                                                       </Button>
-                                                      <Button variant="secondary" className="w-full flex items-center justify-center gap-2">
+                                                      <Button variant="secondary" className="w-full flex items-center justify-center gap-2 text-gray-700">
                                                             <Eye className="h-4 w-4" />
-                                                            <span>{singleJobData?.data?.views}</span>
+                                                            <span>{singleJobData?.data?.views || 0}</span>
                                                       </Button>
                                                 </div>
-                                                <div className=" mb-4">
-
+                                                <div className="mb-4">
                                                       <Image
+                                                            // @ts-ignore
                                                             src={singleJobData?.data?.image_url}
                                                             alt=""
                                                             width={400}
                                                             height={500}
-                                                            className="w-full mt-4 h-full "
+                                                            className="w-full mt-4 h-full"
                                                       />
-
-
-
                                                 </div>
                                           </div>
-                                          {addItem.length > 0 && <div className="space-y-4 ">
-                                                {addItem?.map((item) => (
-                                                      <Image
-                                                            key={item.id}
-                                                            src={item.addBanner}
-                                                            alt="adds"
-                                                            width={400}
-                                                            height={500}
-                                                      />
-                                                ))}
-                                          </div>}
-
-
+                                          {addItem.length > 0 && (
+                                                <div className="space-y-4">
+                                                      {addItem?.map((item) => (
+                                                            <Image
+                                                                  key={item.id}
+                                                                  src={item.addBanner}
+                                                                  alt="adds"
+                                                                  width={400}
+                                                                  height={500}
+                                                            />
+                                                      ))}
+                                                </div>
+                                          )}
                                     </div>
                               </div>
                         </div>
                   </MaxWidthWrapper>
-
 
                   <Dialog open={pdfModalOpen} onOpenChange={setPdfModalOpen}>
                         <DialogContent className="max-w-4xl w-[90vw] h-[90vh] p-0 gap-0">
@@ -186,18 +189,16 @@ const Page = ({ params }: { params: { slag: string } }) => {
                                     {/* Header */}
                                     <div className="flex items-center justify-between p-4 border-b">
                                           <h2 className="text-lg font-semibold truncate max-w-[60%]">Pdf view and download</h2>
-                                          <div className="flex items-center mr-8  gap-2">
+                                          <div className="flex items-center mr-8 gap-2">
                                                 <Button onClick={handleDownload} className="flex items-center gap-2" variant="outline">
                                                       <Download className="h-4 w-4" />
                                                       <span className="hidden sm:inline">Download</span>
                                                 </Button>
-
                                           </div>
                                     </div>
 
                                     {/* PDF Content */}
                                     <div className="relative flex-1">
-
                                           <iframe
                                                 src={`${singleJobData?.data?.pdf_url}#toolbar=0`}
                                                 className="w-full h-full"
@@ -207,266 +208,8 @@ const Page = ({ params }: { params: { slag: string } }) => {
                               </div>
                         </DialogContent>
                   </Dialog>
-
-
-
             </section>
       )
 }
 
 export default Page
-
-
-
-//       < MaxWidthWrapper className = "grid gap-6 py-6 md:grid-cols-[350px,1fr] md:py-10" >
-
-//             <div className="space-y-4 h-screen md:sticky md:top-20 overflow-y-auto">
-//                   {all_org_jobs_loading
-//                         ? Array.from({ length: 4 }).map((_, index) => (
-//                               <Card key={index} className="p-4">
-//                                     <div className="flex gap-4">
-//                                           <Skeleton className="h-16 w-16 rounded-full" />
-//                                           <div className="flex-1 space-y-2">
-//                                                 <Skeleton className="h-4 w-3/4" />
-//                                                 <Skeleton className="h-4 w-1/2" />
-//                                                 <Skeleton className="h-4 w-1/4" />
-//                                           </div>
-//                                     </div>
-//                               </Card>
-//                         ))
-//                         :
-//                         all_org_jobs?.data?.map((org: any) => (
-//                               <div
-//                                     key={org._id}
-//                                     className="flex flex-col justify-between rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow-md"
-//                               >
-//                                     <div className="flex items-start gap-4">
-//                                           <Avatar className="h-16 w-16 rounded-lg border bg-gray-100 p-2 transition-transform group-hover:scale-110">
-//                                                 <AvatarImage src={org.logo} alt={org.name} className="object-contain" />
-//                                                 <AvatarFallback>{org.name.substring(0, 2).toUpperCase()}</AvatarFallback>
-//                                           </Avatar>
-//                                           <div className="flex-1">
-//                                                 <h3 className="font-semibold capitalize leading-tight line-clamp-2">{org.name}</h3>
-//                                                 <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-600">
-//                                                       <span className="flex items-center">
-//                                                             <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
-//                                                             {org.job_count} Openings
-//                                                       </span>
-//                                                       <span className="flex items-center">
-//                                                             <User className="mr-1 h-4 w-4 text-blue-500" />
-//                                                             {get_org_all_jobs(org.jobs)} Vacancies
-//                                                       </span>
-//                                                 </div>
-//                                           </div>
-//                                     </div>
-//                                     <div className="group relative">
-//                                           <Select>
-//                                                 <SelectTrigger className="mt-4 w-full">
-//                                                       <SelectValue placeholder="View Jobs" />
-//                                                 </SelectTrigger>
-//                                           </Select>
-//                                           <div
-//                                                 className="w-full absolute top-[3.6rem] z-40 left-0 p-2 border bg-white rounded-md shadow-lg hidden group-hover:block"
-//                                           >
-//                                                 {org.jobs.length > 0 ? (
-//                                                       org.jobs.map((job: any) => (
-//                                                             <div
-//                                                                   key={job._id}
-//                                                                   onClick={() => handleJobSelect(org._id, job._id)}
-//                                                                   className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer rounded-md"
-//                                                             >
-//                                                                   {job.title}
-//                                                             </div>
-//                                                       ))
-//                                                 ) : (
-//                                                       <p className="text-gray-500 text-sm text-center">No jobs available</p>
-//                                                 )}
-//                                           </div>
-//                                     </div>
-//                               </div>
-//                         ))}
-//             </div>
-
-// {/* Right Content - Job Details */ }
-// <div className="space-y-6">
-//       {singleJobLoading ? (
-//             <Card className="p-6">
-//                   <div className="flex gap-6">
-//                         <Skeleton className="h-24 w-24 rounded-xl" />
-//                         <div className="flex-1 space-y-4">
-//                               <Skeleton className="h-8 w-3/4" />
-//                               <Skeleton className="h-4 w-1/2" />
-//                               <Skeleton className="h-4 w-1/4" />
-//                         </div>
-//                   </div>
-//             </Card>
-//       ) : (
-//             singleJobData?.data && (
-//                   <div >
-//                         {/* <div>
-//                                                       <ImageCarousel
-//                                                             images={[
-//                                                                   "https://i.ibb.co.com/R4VMkhCG/image.png",
-//                                                                   "https://nilg.gov.bd/sites/default/files/files/nilg.portal.gov.bd/top_banner/582a54bf_ccea_4247_99ed_0ba278ddf46e/2024-08-11-08-23-c1e2b6583951ae03beb38f57795c9e03.jpg",
-//                                                             ]}
-//                                                             orgName={singleJobData.data.organization.name}
-//                                                             orgLogo={singleJobData.data.organization.logo}
-//                                                       />
-//                                                 </div> */}
-
-//                         <Card className="overflow-hidden">
-//                               <div className="border-b p-6">
-//                                     <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-
-//                                           <div className="flex gap-6">
-//                                                 <Avatar className="h-24 w-24 rounded-xl">
-//                                                       <AvatarImage
-//                                                             className="object-cover rounded-xl"
-//                                                             src={singleJobData.data.organization.logo}
-//                                                             alt={singleJobData.data.organization.name}
-//                                                       />
-//                                                       <AvatarFallback>
-//                                                             {singleJobData.data.organization.name[0]}
-//                                                       </AvatarFallback>
-//                                                 </Avatar>
-//                                                 <div>
-//                                                       <h1 className="text-2xl font-bold">
-//                                                             {singleJobData.data.organization.name}
-
-//                                                       </h1>
-//                                                       <div className="">
-//                                                             <div className="text-sm text-muted-foreground">
-//                                                                   Website: <a href={singleJobData.data.organization.website} target="_blank" rel="noopener noreferrer" className="hover:underline">
-//                                                                         {singleJobData.data.organization.website}
-//                                                                   </a>
-//                                                             </div>
-//                                                       </div>
-//                                                       <p className="text-lg text-muted-foreground">
-//                                                             {singleJobData.data.title}
-//                                                       </p>
-//                                                       <div className="mt-2 flex items-center gap-2">
-//                                                             <Badge variant="outline" className="bg-green-500">
-//                                                                   Status: {singleJobData.data.status ? "Live" : "Closed"}
-//                                                             </Badge>
-//                                                             <p className="text-sm text-muted-foreground">
-//                                                                   ADV NO: {singleJobData.data.advertisementNo}
-//                                                             </p>
-//                                                             {singleJobData.data.publicationDate && <p className="text-sm text-muted-foreground">
-//                                                                   Published Date: {format(new Date(singleJobData.data.publicationDate), "dd MMM yyyy")}
-//                                                             </p>}
-//                                                       </div>
-
-//                                                 </div>
-//                                           </div>
-//                                           <div className="flex flex-col gap-2">
-//                                                 <ShareButton
-//                                                       url={String(`${window.location.origin}${window.location.pathname}`)}
-//                                                       title={String(`${singleJobData?.data?.title || 'Job'} on ${singleJobData?.data?.organization?.name || 'Company'}`)}
-//                                                 />
-
-
-//                                                 <a href={singleJobData.data.hyperlink} target="_blank" rel="noopener noreferrer">
-//                                                       <Button className="bg-primary hover:bg-primary-dark">
-//                                                             Apply Online
-//                                                       </Button>
-//                                                 </a>
-//                                           </div>
-//                                     </div>
-//                               </div>
-//                               <div className="grid gap-6 p-6 md:grid-cols-3">
-//                                     <Card className="p-4">
-//                                           <div className="flex items-center gap-2">
-//                                                 <Calendar className="h-5 w-5 text-muted-foreground" />
-//                                                 <div>
-//                                                       <p className="text-sm font-medium">Start Date</p>
-//                                                       <p className="text-sm text-muted-foreground">
-//                                                             {format(new Date(singleJobData.data.applicationStartDate), "dd MMM yyyy hh:mm a")}
-//                                                       </p>
-//                                                 </div>
-//                                           </div>
-//                                     </Card>
-//                                     <Card className="p-4">
-//                                           <div className="flex items-center gap-2">
-//                                                 <Calendar className="h-5 w-5 text-muted-foreground" />
-//                                                 <div>
-//                                                       <p className="text-sm font-medium">Deadline</p>
-//                                                       <p className="text-sm text-muted-foreground">
-//                                                             {format(new Date(singleJobData.data.applicationDeadline), "dd MMM yyyy hh:mm a")}
-//                                                       </p>
-//                                                 </div>
-//                                           </div>
-//                                     </Card>
-//                                     <Card className="p-4">
-//                                           <div className="flex items-center gap-2">
-//                                                 <Eye className="h-5 w-5 text-muted-foreground" />
-//                                                 <div>
-//                                                       <p className="text-sm font-medium">Viewed By</p>
-//                                                       <p className="text-sm text-muted-foreground">{singleJobData.data.views ?? 1}</p>
-//                                                 </div>
-//                                           </div>
-//                                     </Card>
-//                               </div>
-//                               <div className="px-6 pb-6">
-
-//                                     <div
-//                                           dangerouslySetInnerHTML={{ __html: singleJobData?.data?.description }}
-//                                           className="jodit-editor text-muted-foreground whitespace-break-spaces w-auto dark:prose-invert"
-//                                     />
-//                                     <div className="aspect-[16/9] w-full rounded-lg bg-zinc-700 flex  items-center justify-center">
-//                                           {singleJobData.data.uploadDocument ? (
-//                                                 singleJobData.data.uploadDocument.endsWith(".pdf") ? (
-//                                                       <iframe src={singleJobData.data.uploadDocument} className="w-full  rounded h-full" />
-//                                                 ) : (
-//                                                       <img
-//                                                             src={singleJobData.data.uploadDocument}
-//                                                             alt="Advertisement Document"
-//                                                             className="w-full h-full object-cover"
-//                                                       />
-//                                                 )
-//                                           ) : (
-//                                                 <p className="text-center text-white">No document available</p>
-//                                           )}
-//                                     </div>
-//                               </div>
-//                         </Card>
-
-//                         <div className="grid grid-cols-3 gap-2 mt-4">
-//                               {relatedJobsLoading
-//                                     ? Array.from({ length: 4 }).map((_, index) => (
-//                                           <Card key={index} className="p-4">
-//                                                 <div className="flex gap-4">
-//                                                       <Skeleton className="h-16 w-16 rounded-full" />
-//                                                       <div className="flex-1 space-y-2">
-//                                                             <Skeleton className="h-4 w-3/4" />
-//                                                             <Skeleton className="h-4 w-1/2" />
-//                                                             <Skeleton className="h-4 w-1/4" />
-//                                                       </div>
-//                                                 </div>
-//                                           </Card>
-//                                     ))
-//                                     : relatedJobs?.data?.map((job: any) => (
-//                                           <Link href={`/govt-jobs/${job._id}`} key={job._id}>
-//                                                 <Card
-//                                                       className={`transition-all hover:shadow-md mb-2 ${job._id === params.slag ? "border-2 bg-blue-100" : ""}`}
-//                                                 >
-//                                                       <div className="space-y-4 p-4">
-//                                                             <div className="flex items-center gap-4">
-//                                                                   <Avatar className="size-10">
-//                                                                         <AvatarImage src={job?.organization?.logo} alt={job?.organization?.name} className="object-scale-down h-full bg-white w-full" />
-//                                                                         <AvatarFallback>{job?.organization?.name?.[0]}</AvatarFallback>
-//                                                                   </Avatar>
-//                                                                   <div className="flex-1">
-//                                                                         <h3 className="font-semibold">{job.title}</h3>
-
-//                                                                   </div>
-//                                                             </div>
-//                                                       </div>
-//                                                 </Card>
-//                                           </Link>
-//                                     ))}
-//                         </div>
-//                   </div>
-//             )
-//       )}
-// </div>
-//                   </ >

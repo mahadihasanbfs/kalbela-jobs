@@ -25,6 +25,13 @@ const CertificationSummary = () => {
         from: '',
         to: ''
     });
+    const [errors, setErrors] = useState({
+        certification: '',
+        institute: '',
+        location: '',
+        from: '',
+        to: ''
+    });
 
     const handleAddClick = () => {
         currentCertificationRef.current = {
@@ -54,45 +61,57 @@ const CertificationSummary = () => {
         setIsDialogOpen(false);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        currentCertificationRef.current = { ...currentCertificationRef.current, [name]: value };
+    };
+
+    const validateInputs = () => {
+        const newErrors = {
+            certification: currentCertificationRef.current.certification ? '' : 'Certification is required',
+            institute: currentCertificationRef.current.institute ? '' : 'Institute is required',
+            location: currentCertificationRef.current.location ? '' : 'Location is required',
+            from: currentCertificationRef.current.from ? '' : 'From date is required',
+            to: currentCertificationRef.current.to ? '' : 'To date is required'
+        };
+        setErrors(newErrors);
+        return !Object.values(newErrors).some(error => error);
+    };
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const certification = form.certification.value;
-        const institute = form.institute.value;
-        const location = form.location.value;
-        const from = form.fromDate.value;
-        const to = form.toDate.value;
 
-        const currentCertification = {
-            certification,
-            institute,
-            location,
-            from,
-            to
-        };
-
-        console.log("------- + = + ", currentCertification);
-
-        if (isEditMode && (currentCertificationRef.current as any).index !== undefined) {
-            const updatedCertifications = certifications.map((cert, index) =>
-                index === (currentCertificationRef.current as any).index ? currentCertification : cert
-            );
-            setCertifications(updatedCertifications);
-        } else {
-            setCertifications([...certifications, currentCertification]);
+        if (validateInputs()) {
+            if (isEditMode && (currentCertificationRef.current as any).index !== undefined) {
+                const updatedCertifications = certifications.map((cert, index) =>
+                    index === (currentCertificationRef.current as any).index ? currentCertificationRef.current : cert
+                );
+                setCertifications(updatedCertifications);
+            } else {
+                setCertifications([...certifications, currentCertificationRef.current]);
+            }
+            setIsDialogOpen(false);
         }
 
-        setIsDialogOpen(false);
+        const obj = {
+            certification: currentCertificationRef.current.certification,
+            institute: currentCertificationRef.current.institute,
+            location: currentCertificationRef.current.location,
+            from: currentCertificationRef.current.from,
+            to: currentCertificationRef.current.to
+        }
+
+        console.log("cirtification : ", obj);
     };
 
     return (
         <div className='mb-4 px-4 py-2 w-full space-y-6'>
             {certifications.length === 0 ? (
-                <div className="text-center text-xl bg-gray-50  py-16 text-gray-500">
+                <div className="text-center text-xl py-8 text-gray-500">
                     <GraduationCap size={50} strokeWidth={1} className="mx-auto text-primary" />
                     <p>No certifications found.</p>
                     <br />
-                    {certifications.length === 0 && <Button className='px-6' onClick={handleAddClick}><Plus size={16} /> Add Certification</Button>}
+                    <Button className='px-6' onClick={handleAddClick}><Plus size={16} /> Add Certification</Button>
                 </div>
             ) : (
                 certifications.map((certification, index) => (
@@ -137,15 +156,18 @@ const CertificationSummary = () => {
                     <div className="space-y-4">
                         <div className="space-y-2 flex flex-col">
                             <label className='font-semibold' htmlFor="certification">Certification</label>
-                            <Input name="certification" defaultValue={currentCertificationRef.current.certification} onChange={(e) => currentCertificationRef.current.certification = e.target.value} type="text" />
+                            <Input name="certification" defaultValue={currentCertificationRef.current.certification} onChange={handleInputChange} type="text" />
+                            {errors.certification && <p className="text-red-500">{errors.certification}</p>}
                         </div>
                         <div className="space-y-2 flex flex-col">
                             <label className='font-semibold' htmlFor="institute">Institute</label>
-                            <Input name="institute" defaultValue={currentCertificationRef.current.institute} onChange={(e) => currentCertificationRef.current.institute = e.target.value} type="text" />
+                            <Input name="institute" defaultValue={currentCertificationRef.current.institute} onChange={handleInputChange} type="text" />
+                            {errors.institute && <p className="text-red-500">{errors.institute}</p>}
                         </div>
                         <div className="space-y-2 flex flex-col">
                             <label className='font-semibold' htmlFor="location">Location</label>
-                            <Input name="location" defaultValue={currentCertificationRef.current.location} onChange={(e) => currentCertificationRef.current.location = e.target.value} type="text" />
+                            <Input name="location" defaultValue={currentCertificationRef.current.location} onChange={handleInputChange} type="text" />
+                            {errors.location && <p className="text-red-500">{errors.location}</p>}
                         </div>
                         <div className="space-y-2 flex flex-col">
                             <label className='font-semibold' htmlFor="from">From</label>
@@ -155,6 +177,7 @@ const CertificationSummary = () => {
                                 onChange={(e) => currentCertificationRef.current.from = e.target.value}
                                 type="date"
                             />
+                            {errors.from && <p className="text-red-500">{errors.from}</p>}
                         </div>
                         <div className="space-y-2 flex flex-col">
                             <label className='font-semibold' htmlFor="to">To</label>
@@ -165,10 +188,13 @@ const CertificationSummary = () => {
                                 onChange={(e) => currentCertificationRef.current.to = e.target.value}
                                 type="date"
                             />
+                            {errors.to && <p className="text-red-500">{errors.to}</p>}
                         </div>
                     </div>
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-end gap-2">
+                        <Button type='button' onClick={handleDialogClose} className="!bg-red-500">Cancel</Button>
+
                         <Button type='submit'>{isEditMode ? 'Update' : 'Add'}</Button>
                     </div>
                 </form>
