@@ -13,6 +13,7 @@ import "react-phone-input-2/lib/style.css"
 import PhoneInput from "react-phone-input-2"
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import useApiRequest from '@/app/hooks/useApiRequest';
 
 interface PersonalDetailsContentProps {
     isEditing: boolean;
@@ -100,13 +101,97 @@ const PersonalDetailsContent: React.FC<PersonalDetailsContentProps> = ({
         }));
     };
 
-    const saveData = (data: any) => {
-        const finalData = { ...formData, ...data, profile_picture: file ? file : formData.profile_picture };
+    const saveData = async (data: any) => {
+        const finalData = { ...formData, ...data }
         console.log('Updated data:', finalData);
-        handleSave(finalData);
+        // handleSave(finalData);
+
+        setLoading(true)
+        const res = await fetch(`${process.env.NEXT_APP_BASE_URL}/api/v2/user/update-profile?id=${user?._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                alternateEmail: finalData?.alternateEmail,
+                dateOfBirth: finalData?.dateOfBirth,
+                email: finalData?.email,
+                fatherName: finalData?.fatherName,
+                fullName: finalData?.fullName,
+                gender: finalData?.gender,
+                height: finalData?.height,
+                motherName: finalData?.motherName,
+                nId: finalData?.email,
+                nationality: finalData?.nationality,
+                passportIssueDate: finalData?.passportIssueDate,
+                passportNumber: finalData?.passportNumber,
+                primaryMobile: finalData?.primaryMobile,
+                religion: finalData?.religion,
+                secondaryMobile: finalData?.secondaryMobile,
+                weight: finalData?.weight,
+
+
+            }),
+        });
+
+        const responseData = await res.json();
+
+        if (res.ok) {
+            alert(responseData.message)
+            setLoading(false)
+            handleSave(finalData);
+        }
+
+
+        // const { data: updatedData, error } = await useApiRequest<any>(
+        //     `api/v1/user/update-profile?id=${user?._id}`,
+        //     "PUT",
+        // {
+        //     alternateEmail: finalData?.alternateEmail,
+        //     dateOfBirth: finalData?.dateOfBirth,
+        //     email: finalData?.email,
+        //     fatherName: finalData?.fatherName,
+        //     fullName: finalData?.fullName,
+        //     gender: finalData?.gender,
+        //     height: finalData?.height,
+        //     motherName: finalData?.motherName,
+        //     nId: finalData?.email,
+        //     nationality: finalData?.nationality,
+        //     passportIssueDate: finalData?.passportIssueDate,
+        //     passportNumber: finalData?.passportNumber,
+        //     primaryMobile: finalData?.primaryMobile,
+        //     religion: finalData?.religion,
+        //     secondaryMobile: finalData?.secondaryMobile,
+        //     weight: finalData?.weight,
+        //     // height: finalData?.height
+
+
+        // }
+        // )
+
+        // setLoading(false)
+        // if (error) {
+        //     //@ts-ignore
+        //     set_error_message(error.message)
+        //     return
+        // }
+        // if (updatedData) {
+        //     console.log('update user data : ', updatedData);
+        //     // @ts-ignore
+        //     // set_user_data(data.data)
+        //     // setUserData(data.data)
+        //     set_error_message("")
+        //     // setEditNameOpen(false)
+        // }
+
+
     };
 
     const religionOptions = ['Muslim', 'Christian', 'Hindu', 'Sikh', 'Buddhist', 'Other'];
+
+    const [loading, setLoading] = useState(false);
+    const [error_message, set_error_message] = useState(null);
+
 
     return (
         <div>

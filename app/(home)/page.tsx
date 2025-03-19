@@ -11,6 +11,7 @@ import NesLetter from "./components/NesLetter"
 import Testimonial from "./components/Testimonial"
 import TopCompanies from "./components/TopCompanies"
 import VerticalMarquee from "./components/VerticalMarquee"
+import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 
 export const metadata: Metadata = {
       title: "Kalbela Jobs || Find Your Dream Job Today",
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
       return (
             <Fragment>
-                  <div className="relative">
+                  <div className="relative z-10">
                         <div className="z-50">
                               <HeroSection />
                               {/* <Job_type_tag /> */}
@@ -42,14 +43,13 @@ const HomePage = () => {
                         <div className="pointer-events-none absolute right-0 top-0 z-0 w-full">
                               <VerticalMarquee />
                         </div>
-
-                        <FeaturedJobs />
-
-
+                        <MaxWidthWrapper className="py-0 md:py-2 md:mt-[30px] mt-[25px]">
+                              <FeaturedJobs />
+                        </MaxWidthWrapper>
                   </div>
+                  <div className="bg-gradient-to-t from-[transparent] to-[#cfe1ffa4] absolute top-0 left-0 right-0 h-[680px] w-full" />
 
                   <TopCompanies />
-
                   {/* <InterviewQuestions /> */}
                   <Testimonial />
                   <NesLetter />

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Fragment, useEffect, useState } from "react"
 import Link from "next/link"
@@ -22,24 +22,30 @@ import { logout } from "@/utils/encript_decript"
 import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
 import { toast } from "@/hooks/use-toast"
+import { MobileDialog, MobileDialogContent, MobileMobileDialogTrigger } from "../ui/mobileDialog"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
+import { cn } from "@/lib/utils"
 
-const BottomNavProfile = ({  user }: {  user: any }) => {
+const BottomNavProfile = ({ user }: { user: any }) => {
       const router = useRouter()
       const [alignment, setAlignment] = useState("start");
+      const [isClient, setIsClient] = useState(false);
+
       useEffect(() => {
             const handleResize = () => {
                   setAlignment(window.innerWidth >= 1024 ? "end" : "start");
             };
+
+            // Check if running in the browser (client side)
+            setIsClient(true);
 
             window.addEventListener("resize", handleResize);
             handleResize(); // Set initial alignment
             return () => window.removeEventListener("resize", handleResize);
       }, []);
 
-
       const handleLogout = () => {
             logout()
-            // router.push("/login")
 
             setTimeout(() => {
                   const get_user = Cookies.get("kalbelajobs_user");
@@ -53,95 +59,45 @@ const BottomNavProfile = ({  user }: {  user: any }) => {
             }, 500);
       }
 
-      return (
-            <DropdownMenu>
-                  <div className="flex items-center">
-                        <DropdownMenuTrigger asChild>
-                        <Button
-                                          variant="ghost"
-                                          className="group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 dark:text-black"
-                                          
+      if (!isClient) return null; // Ensures the component is rendered only on the client side
+
+      console.log('user', user);
+      return (<div>
+
+            <MobileDialog>
+                  <MobileMobileDialogTrigger asChild>
+                        <div className="flex items-center justify-center mt-[10px]">
+                              <button>
+                                    <div
+                                          data-tooltip-target="tooltip-wallet"
+                                          className={cn(
+                                                "group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 dark:text-black",
+                                          )}
                                     >
-                                          {" "}
-                                          <User className="h-[1.5rem] w-[1.5rem] text-black" />
-                                    </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                              className="w-56 mr-4 rounded-sm border border-gray-300"
-                              align={alignment as any}
-                              forceMount
-                        >
-                              {  user ? (
-                                    <Fragment>
-                                          <DropdownMenuLabel className="font-normal">
-                                                <div className="flex flex-col space-y-1">
-                                                      <p className="text-sm font-medium leading-none">
-                                                            {user?.fullName}
-                                                      </p>
-                                                      <p className="text-xs leading-none text-muted-foreground">
-                                                            {user?.email}
-                                                      </p>
-                                                </div>
-                                          </DropdownMenuLabel>
-                                          <DropdownMenuSeparator />
-                                          <DropdownMenuGroup>
-                                                <Link href="/user">
-                                                      {" "}
-                                                      <DropdownMenuItem className="cursor-pointer">
-                                                            Dashboard
-                                                      </DropdownMenuItem>
-                                                </Link>
-                                                <Link href="/user/profile">
-                                                      {" "}
-                                                      <DropdownMenuItem className="cursor-pointer">
-                                                            Profile
-                                                      </DropdownMenuItem>
-                                                </Link>
-                                                {/* <DropdownMenuItem className="cursor-pointer">
-                                                      Settings
-                                                </DropdownMenuItem> */}
-                                          </DropdownMenuGroup>
-                                          <DropdownMenuSeparator />
-                                          <DropdownMenuItem
-                                                onClick={handleLogout}
-                                                className="cursor-pointer"
-                                          >
-                                                Log out
-                                          </DropdownMenuItem>
-                                    </Fragment>
-                              ) : (
-                                    <Fragment>
-                                          <DropdownMenuLabel>Account</DropdownMenuLabel>
-                                          <DropdownMenuSeparator />
-                                          <DropdownMenuGroup>
-                                                <Link href="/login" passHref>
-                                                      <DropdownMenuItem className="cursor-pointer">
-                                                            <LogIn className="mr-2 h-4 w-4" />
-                                                            <span>Login</span>
-                                                      </DropdownMenuItem>
-                                                </Link>
-                                                <Link href="/registration" passHref>
-                                                      <DropdownMenuItem className="cursor-pointer">
-                                                            <UserPlus className="mr-2 h-4 w-4" />
-                                                            <span>Registration</span>
-                                                      </DropdownMenuItem>
-                                                </Link>
-                                          </DropdownMenuGroup>
-                                          <DropdownMenuSeparator />
-                                          <DropdownMenuGroup>
-                                                <Link href="https://app.kalbelajobs.com/admin" passHref>
-                                                      <DropdownMenuItem className="cursor-pointer">
-                                                            <Briefcase className="mr-2 h-4 w-4" />
-                                                            <span>For Employers</span>
-                                                      </DropdownMenuItem>
-                                                </Link>
-                                          </DropdownMenuGroup>
-                                    </Fragment>
-                              )}
-                        </DropdownMenuContent>
-                  </div>
-            </DropdownMenu >
-      )
+                                          <TooltipProvider>
+                                                <Tooltip>
+                                                      <TooltipTrigger>
+                                                            <User className="h-5 w-5" />
+                                                      </TooltipTrigger>
+                                                      <TooltipContent>
+                                                            <p>Dashboard</p>
+                                                      </TooltipContent>
+                                                </Tooltip>
+                                          </TooltipProvider>
+                                    </div>
+                              </button>
+                        </div>
+                  </MobileMobileDialogTrigger>
+                  <MobileDialogContent className="sm:max-w-[425px]">
+                        <div className="px-2 font-semibold text-xl font-mono">
+                              Shortcut
+                        </div>
+                        <div className=" mt-2 !max-h-full overflow-y-auto h-[60vh]">
+                              {/* Additional content */}
+                        </div>
+                  </MobileDialogContent>
+            </MobileDialog>
+      </div>);
 }
 
-export default BottomNavProfile
+export default BottomNavProfile;

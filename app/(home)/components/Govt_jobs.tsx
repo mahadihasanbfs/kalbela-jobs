@@ -21,8 +21,8 @@ const Page = () => {
 
       return (
             <div className="w-full mt-8 lg:mt-0 ">
-                  <section className="border border-gray-200 border-opacity-50 rounded-lg p-2 relative w-full">
-                        <div className="flex flex-col gap-2 max-h-[500px] overflow-y-auto pt-2">
+                  <section className=" relative w-full">
+                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-3 max-h-[500px] overflow-y-auto pt-2">
                               {loading
                                     ? Array.from({ length: 8 }).map((_, index) => (
                                           <div key={index} className="flex flex-col rounded-lg border p-4 shadow-sm">
@@ -70,10 +70,10 @@ const Page = () => {
                                                       </div>
                                                 </Link>
                                           ))}
-                              <Link href="/govt-jobs" className="flex items-center justify-center text-blue-500">
-                                    View All
-                              </Link>
                         </div>
+                        <Link href="/govt-jobs" className="flex items-center justify-center text-blue-500">
+                              View All
+                        </Link>
                   </section>
             </div>
       )
