@@ -24,6 +24,7 @@ import Image from "next/image"
 import SearchBox from "./SearchBox"
 import StatisticsList from "./StatisticsList"
 import { Button } from "@/components/ui/button"
+import { Typewriter } from "react-simple-typewriter"
 
 const locationSuggestions = ["dhaka", "chattogram", "khulna", "rajshahi", "sylhet", "barishal", "mymensingh", "rangpur"]
 
@@ -141,8 +142,9 @@ const HeroSection = () => {
             Cookies.set("search_history", JSON.stringify(updatedHistory), { expires: 7 })
       }
 
+
       return (
-            <div className="z-50">
+            <div className="z-50 ">
                   <MaxWidthWrapper className="flex flex-col  items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4">
                         <div className="rounded-md pt-4 pb-2 ">
                               <h1
@@ -170,10 +172,23 @@ const HeroSection = () => {
                                     onClick={() => setIsOpen(!isOpen)}
                                     className="flex  justify-between w-full  lg:text-xl text-xs items-center md:gap-2 font-sans">
 
-                                    <div className="flex md:ml-3 items-center gap-1">
+                                    <div className="flex md:ml-3 pl-2 items-center gap-1">
                                           <Search />
                                           <div className="flex items-center justify-between  w-full">
-                                                <div className=" border-gray-300 p-2 w-full text-gray-500 text-nowrap overflow-hidden text-sm flex items-center md:gap-2  gap-1"> Search By keyword</div>
+                                                <div className=" border-gray-300 p-2 w-full text-gray-500 text-nowrap overflow-hidden text-sm flex items-center md:gap-2  gap-1">
+                                                      <Typewriter
+                                                            words={['Search by keyword', 'Search by keyword ', 'Search by keyword']}
+                                                            loop={5}
+                                                            cursor
+                                                            cursorStyle=''
+                                                            typeSpeed={70}
+                                                            deleteSpeed={50}
+                                                            delaySpeed={1000}
+                                                      // onLoopDone={handleDone}
+                                                      // onType={handleType}
+                                                      />
+                                                </div>
+
 
                                           </div>
                                     </div>
@@ -196,26 +211,28 @@ const HeroSection = () => {
                               </div>
                         </div>
 
-                        <SearchBox
-                              searchQuery={searchQuery}
-                              handleSkillChange={handleSkillChange}
-                              handleSearch={handleSearch}
-                              filteredSkills={filteredSkills}
-                              filteredSearchHistory={filteredSearchHistory}
-                              data={data}
-                              location={location}
-                              setLocation={setLocation}
-                              showSkillDropdown={showSkillDropdown}
-                              setShowSkillDropdown={setShowSkillDropdown}
-                              theme={theme}
-                              setSearchQuery={setSearchQuery}
-                              removeFromHistory={removeFromHistory}
-                              highlightMatch={highlightMatch}
-                              isOpen={isOpen}
-                              setIsOpen={setIsOpen}
+                        <div className="">
+                              <SearchBox
+                                    searchQuery={searchQuery}
+                                    handleSkillChange={handleSkillChange}
+                                    handleSearch={handleSearch}
+                                    filteredSkills={filteredSkills}
+                                    filteredSearchHistory={filteredSearchHistory}
+                                    data={data}
+                                    location={location}
+                                    setLocation={setLocation}
+                                    showSkillDropdown={showSkillDropdown}
+                                    setShowSkillDropdown={setShowSkillDropdown}
+                                    theme={theme}
+                                    setSearchQuery={setSearchQuery}
+                                    removeFromHistory={removeFromHistory}
+                                    highlightMatch={highlightMatch}
+                                    isOpen={isOpen}
+                                    setIsOpen={setIsOpen}
 
-                        />
+                              />
 
+                        </div>
 
                         {/* <SearchModal searchQuery={searchQuery}
                               setSearchQuery={setSearchQuery}
@@ -232,9 +249,9 @@ const HeroSection = () => {
                         <div className="!mt-[3px]">
                               <Job_type_tag />
                         </div>
-                        <div className="  overflow-hidden ">
+                        {/* <div className="  overflow-hidden ">
                               <StatisticsList />
-                        </div>
+                        </div> */}
                   </MaxWidthWrapper>
             </div>
       )

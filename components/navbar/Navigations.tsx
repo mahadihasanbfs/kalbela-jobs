@@ -76,7 +76,7 @@ export function Navigations() {
                               {activeDropdown === "categories" && (
                                     <div
                                           id="categories-dropdown"
-                                          className="absolute top-full z-50 mt-2 w-[45rem] text-nowrap rounded-sm border bg-white/90 shadow-lg dark:bg-slate-700"
+                                          className="absolute top-full z-50 mt-2 w-[45rem] text-nowrap rounded-sm border bg-white shadow-lg dark:bg-slate-700"
                                     >
                                           <ul
                                                 className="grid max-h-[19rem] grid-cols-3 overflow-y-auto px-4 py-1"

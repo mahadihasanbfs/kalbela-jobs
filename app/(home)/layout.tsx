@@ -98,7 +98,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </head>
                   <body className="min-h-screen bg-background font-sans">
                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                              <div className="relative flex min-h-screen flex-col justify-between bg-light-theme dark:bg-dark-theme">
+                              <div className="relative flex min-h-screen flex-col justify-between ">
                                     <header className="sticky top-0 z-50">
                                           <Navbar />
                                     </header>

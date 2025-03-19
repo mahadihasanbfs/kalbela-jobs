@@ -60,7 +60,7 @@ module.exports = {
       },
       backgroundImage: {
         "light-theme":
-          "linear-gradient(181.07deg, #CFE1FF -5.43%, rgba(255, 255, 255, 0.50) 24rem)",
+          "linear-gradient(181.07deg, #CFE1FF -5.83%, rgba(255, 255, 255, 0.50) 24rem)",
         "dark-theme": "none",
       },
       borderRadius: {

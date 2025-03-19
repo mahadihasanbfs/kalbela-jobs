@@ -27,6 +27,10 @@ import SecondaryBtn from "../SecondaryBtn"
 import { ThemeToggle } from "../ThemeToggle"
 import { Skeleton } from "../ui/skeleton"
 import { Navigations } from "./Navigations"
+import UserMegaMenuDropdown from "./UserMegaMenuDropdown"
+import { SheetContentSideBar, SheetDescriptionSideBar, SheetHeaderSideBar, SheetSideBar, SheetTitleSideBar, SheetTriggerSideBar } from "../ui/shetSideBar"
+
+
 
 const UserNav = dynamic(() => import("./UserNav"), { ssr: false })
 const Navbar: React.FC = () => {
@@ -101,7 +105,7 @@ const Navbar: React.FC = () => {
                                     <UserNav loading={loading} user={user} />
                               </div>
 
-                              {!user && !loading && (
+                              {/* {!user && !loading && (
                                     <div className="hidden items-center justify-between space-x-4 md:me-0 lg:flex">
                                           <PrimaryBtn
                                                 className="px-4 py-2"
@@ -124,8 +128,12 @@ const Navbar: React.FC = () => {
                                                 For Employers
                                           </PrimaryBtn>
                                     </div>
-                              )}
+                              )} */}
 
+
+                              {!user && !loading && (
+                                    <UserMegaMenuDropdown />
+                              )}
 
 
                               <div className="ml-2">
@@ -136,32 +144,34 @@ const Navbar: React.FC = () => {
 
                   {/* Mobile Nav */}
                   <div className="md:hidden">
-                        <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
-                              <SheetTrigger asChild>
-                                    <div />
-                              </SheetTrigger>
+                        <div className="md:hidden">
+                              <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
+                                    <SheetTrigger asChild>
+                                          <div />
+                                    </SheetTrigger>
 
-                              <SheetContent
-                                    side="left"
-                                    className={`h-full w-[75%] overflow-y-auto pt-[14px] text-gray-800 dark:bg-gray-900 dark:text-slate-200`}
-                              >
-                                    <SheetHeader>
-                                          <SheetTitle className="text-start">
-                                                <Link href="/">
-                                                      <img
-                                                            className="h-auto w-36"
-                                                            src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
-                                                            alt="logo"
-                                                      />
-                                                </Link>
-                                          </SheetTitle>
-                                          <SheetDescription className="sr-only">
-                                                Mobile navigation for Kalbela jobs
-                                          </SheetDescription>
-                                    </SheetHeader>
-                                    <MobileNav setIsMobileNavOpen={setIsMobileNavOpen} />
-                              </SheetContent>
-                        </Sheet>
+                                    <SheetContent
+                                          side="left"
+                                          className={`h-full w-[75%] overflow-y-auto pt-[14px] text-gray-800 dark:bg-gray-900 dark:text-slate-200`}
+                                    >
+                                          <SheetHeader>
+                                                <SheetTitle className="text-start">
+                                                      <Link href="/">
+                                                            <img
+                                                                  className="h-auto w-36"
+                                                                  src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
+                                                                  alt="logo"
+                                                            />
+                                                      </Link>
+                                                </SheetTitle>
+                                                <SheetDescription className="sr-only">
+                                                      Mobile navigation for Kalbela jobs
+                                                </SheetDescription>
+                                          </SheetHeader>
+                                          <MobileNav setIsMobileNavOpen={setIsMobileNavOpen} />
+                                    </SheetContent>
+                              </Sheet>
+                        </div>
                   </div>
             </section>
       )

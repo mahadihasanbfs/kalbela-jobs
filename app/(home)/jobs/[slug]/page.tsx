@@ -26,6 +26,8 @@ import JobDetailsSkeleton from "./components/JobDetailsSkeleton"
 import React from 'react'; // Added import for React
 import useJobsSearch from "@/app/hooks/useJobSearch"
 import Link from "next/link"
+import { SimilarJobslG, SimilarJobsSM } from "./components/SimilarJobs"
+import RelatedCompanyJob from "./components/RelatedCompanyJob"
 
 const JobsDetails = () => {
       const { slug } = useParams()
@@ -44,10 +46,8 @@ const JobsDetails = () => {
             job_type: data?.data?.job_type,
             category: '',
             salary_range: '',
-            limit: 3,
+            limit: 10,
       })
-
-      console.log(jobs);
 
 
       const { apiRequest } = useApiForPost()
@@ -112,6 +112,7 @@ const JobsDetails = () => {
                   .filter(Boolean)
                   .join(", ");
       };
+
 
 
       return (
@@ -331,51 +332,7 @@ const JobsDetails = () => {
                                           </div>
                                     </Card>
 
-                                    <div className="hidden lg:block">
-                                          <CardTitle className="my-5 text-2xl font-bold">
-                                                Similar Jobs
-                                          </CardTitle>
-                                          <div className="grid gap-4 grid-cols-1 ">
-                                                {/* is array */}
-                                                {Array.isArray(jobs) && jobs?.map((jobPost: any) => (
-                                                      <Card
-                                                            key={jobPost?._id}
-                                                            className="p-4 transition-shadow hover:shadow-md"
-                                                      >
-
-                                                            <CardContent className="p-0">
-                                                                  <h3 className="mb-2 text-lg font-semibold">
-                                                                        {jobPost?.job_title}
-                                                                  </h3>
-                                                                  <div className="mb-2 flex  gap-2 overflow-x-auto scrollbar-hide whitespace-nowrap ">
-                                                                        {jobPost?.skills?.map((skill: string, index: number) => (
-                                                                              <Badge key={index} variant="outline" className="text-xs whitespace-nowrap">
-                                                                                    {skill}
-                                                                              </Badge>
-                                                                        ))}
-                                                                        <Badge variant="outline" className="text-xs bg-gray-100">
-                                                                              {jobPost?.job_type}
-                                                                        </Badge>
-                                                                  </div>
-                                                                  <p className="mb-2 text-sm text-muted-foreground">
-                                                                        Salary:  {jobPost?.salary_negotiable || jobPost?.negotiable_note
-                                                                              ? "Negotiable"
-                                                                              : `${jobPost?.salary_range?.min}${jobPost?.salary_range?.max ? ` - ${jobPost?.salary_range.max}` : ""} ${jobPost?.salary_range?.currency || ""}`} | Deadline:{" "}
-                                                                        {formatDate(jobPost?.expiry_date || new Date())}
-                                                                  </p>
-                                                                  <p className="mb-4 text-sm" dangerouslySetInnerHTML={{ __html: jobPost?.description }}></p>
-
-                                                                  <SecondaryBtn
-                                                                        onClick={() => save_jobs(jobPost?._id)}
-                                                                        className="w-full"
-                                                                  >
-                                                                        Save Job
-                                                                  </SecondaryBtn>
-                                                            </CardContent>
-                                                      </Card>
-                                                ))}
-                                          </div>
-                                    </div>
+                                    <SimilarJobslG jobs={jobs} save_jobs={save_jobs} />
                               </div>
 
                               {/* Right Column - Job Details */}
@@ -422,62 +379,21 @@ const JobsDetails = () => {
                                           )}
 
                                           {jobData?.cvEmailSent && (
-                                                <section>
+                                                <section className="md:w-auto w-[300px]">
                                                       <h3 className="mb-4 text-xl font-semibold">Apply Procedure</h3>
-                                                      <p className="text-base text-primary">
-                                                            Email Your CV to: {jobData?.cvEmailAddress}
-                                                      </p>
+                                                      <div className="text-base text-primary break-words">
+                                                            Email Your CV to: <span className="break-all">{jobData?.cvEmailAddress}</span>
+                                                      </div>
                                                 </section>
+
                                           )}
                                     </div>
+                                    <br />
+                                    {/* @ts-ignore */}
+                                    <RelatedCompanyJob company={jobData?.company_info?.website} save_jobs={save_jobs} />
                               </div>
                         </div>
-
-                        <div className="my-12 md:hidden block">
-                              <CardTitle className="mb-5 text-2xl font-bold">
-                                    Similar Jobs
-                              </CardTitle>
-                              <div className="grid gap-4 grid-cols-1 ">
-                                    {/* is array */}
-                                    {Array.isArray(jobs) && jobs?.map((jobPost: any) => (
-                                          <Card
-                                                key={jobPost?._id}
-                                                className="p-4 transition-shadow hover:shadow-md"
-                                          >
-
-                                                <CardContent className="p-0">
-                                                      <h3 className="mb-2 text-lg font-semibold">
-                                                            {jobPost?.job_title}
-                                                      </h3>
-                                                      <div className="mb-2 flex  gap-2 overflow-x-auto scrollbar-hide whitespace-nowrap ">
-                                                            {jobPost?.skills?.map((skill: string, index: number) => (
-                                                                  <Badge key={index} variant="outline" className="text-xs whitespace-nowrap">
-                                                                        {skill}
-                                                                  </Badge>
-                                                            ))}
-                                                            <Badge variant="outline" className="text-xs bg-gray-100">
-                                                                  {jobPost?.job_type}
-                                                            </Badge>
-                                                      </div>
-                                                      <p className="mb-2 text-sm text-muted-foreground">
-                                                            Salary:  {jobPost?.salary_negotiable || jobPost?.negotiable_note
-                                                                  ? "Negotiable"
-                                                                  : `${jobPost?.salary_range?.min}${jobPost?.salary_range?.max ? ` - ${jobPost?.salary_range.max}` : ""} ${jobPost?.salary_range?.currency || ""}`} | Deadline:{" "}
-                                                            {formatDate(jobPost?.expiry_date || new Date())}
-                                                      </p>
-                                                      <p className="mb-4 text-sm" dangerouslySetInnerHTML={{ __html: jobPost?.description }}></p>
-
-                                                      <SecondaryBtn
-                                                            onClick={() => save_jobs(jobPost?._id)}
-                                                            className="w-full"
-                                                      >
-                                                            Save Job
-                                                      </SecondaryBtn>
-                                                </CardContent>
-                                          </Card>
-                                    ))}
-                              </div>
-                        </div>
+                        <SimilarJobsSM jobs={jobs} save_jobs={save_jobs} />
 
                   </div>
             </MaxWidthWrapper>

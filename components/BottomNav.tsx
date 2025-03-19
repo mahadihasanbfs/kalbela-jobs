@@ -28,22 +28,23 @@ import BottomSearch from "./BottomSearch"
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
 import { Button } from "./ui/button"
 import ShortCutMenu from "./ShortCutMenu"
-import { 
+import {
       DropdownMenu,
-       DropdownMenuContent,
-        DropdownMenuGroup,
-         DropdownMenuItem,
-       DropdownMenuLabel,
+      DropdownMenuContent,
+      DropdownMenuGroup,
+      DropdownMenuItem,
+      DropdownMenuLabel,
       DropdownMenuSeparator,
-       DropdownMenuShortcut,
-        DropdownMenuSubTrigger,
-         DropdownMenuTrigger 
-      } from "./ui/dropdown-menu"
+      DropdownMenuShortcut,
+      DropdownMenuSubTrigger,
+      DropdownMenuTrigger
+} from "./ui/dropdown-menu"
 import UserNav from "./navbar/UserNav"
 import Cookies from "js-cookie"
 import { toast } from "@/hooks/use-toast"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import BottomNavProfile from "./navbar/BottomNavUserProfile"
+import { SheetContentSideBar, SheetDescriptionSideBar, SheetHeaderSideBar, SheetSideBar, SheetTitleSideBar, SheetTriggerSideBar } from "./ui/shetSideBar"
 
 const BottomNav: React.FC = () => {
       const [isDashboardSidebarOpen, setIsDashboardSidebarOpen] = useState(false)
@@ -137,58 +138,35 @@ const BottomNav: React.FC = () => {
                                     <BottomSearch />
                                     {/* Profile */}
                                     <div className="flex items-center justify-center">
-                                    <BottomNavProfile user={user} />
-                                         {/* <Link href={"/user/profile"}>
-                                                <div
-                                                      data-tooltip-target="tooltip-profile"
-                                                      className={cn(
-                                                            "group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full",
-                                                            pathname === "/user/profile"
-                                                                  ? "bg-blue-600 text-white"
-                                                                  : "bg-gray-200 hover:bg-gray-300 dark:text-black"
-                                                      )}
-                                                >
-                                                      <TooltipProvider>
-                                                            <Tooltip>
-                                                                  <TooltipTrigger>
-                                                                        <User className="h-5 w-5" />
-                                                                  </TooltipTrigger>
-                                                                  <TooltipContent>
-                                                                        <p>Profile</p>
-                                                                  </TooltipContent>
-                                                            </Tooltip>
-                                                      </TooltipProvider>
-                                                </div>
-                                          </Link> */}
-                                          
+                                          <BottomNavProfile user={user} />
                                     </div>
                               </div>
                         </div>
 
                         {/* Dashboard sidebar */}
                         <div className="md:hidden">
-                              <Sheet
+                              <SheetSideBar
                                     open={isDashboardSidebarOpen}
                                     onOpenChange={setIsDashboardSidebarOpen}
                               >
-                                    <SheetTrigger asChild>
+                                    <SheetTriggerSideBar asChild>
                                           <div />
-                                    </SheetTrigger>
+                                    </SheetTriggerSideBar>
 
-                                    <SheetContent
+                                    <SheetContentSideBar
                                           side="left"
                                           className={`h-full w-[73%] overflow-y-auto bg-white pt-[14px] text-gray-800 dark:bg-gray-900 dark:text-slate-200`}
                                     >
-                                          <SheetHeader>
-                                                <SheetTitle className="text-start">
+                                          <SheetHeaderSideBar>
+                                                <SheetTitleSideBar className="text-start">
                                                       <Link href="/">
                                                             <img className="h-auto w-48" src="/logo.png" alt="logo" />
                                                       </Link>
-                                                </SheetTitle>
-                                                <SheetDescription className="sr-only">
+                                                </SheetTitleSideBar>
+                                                <SheetDescriptionSideBar className="sr-only">
                                                       Dasboard Didebar Navigations
-                                                </SheetDescription>
-                                          </SheetHeader>
+                                                </SheetDescriptionSideBar>
+                                          </SheetHeaderSideBar>
                                           {
 
                                                 !user
@@ -198,8 +176,8 @@ const BottomNav: React.FC = () => {
                                                       />
                                           }
 
-                                    </SheetContent>
-                              </Sheet>
+                                    </SheetContentSideBar>
+                              </SheetSideBar>
                         </div>
                   </Fragment>
             </div>
