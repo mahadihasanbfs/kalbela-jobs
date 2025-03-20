@@ -64,13 +64,32 @@ const EmploymentRetired = ({
   const [objective, setObjective] = useState("")
   const [error, setError] = useState(false)
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const [formData, setFormData] = useState({
+    bAType: "",
+    ranks: "",
+    selectType: "",
+    Arms: "",
+  })
+
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    // console.log({ ...formData, [field]: value }) // Logs the updated state
   }
 
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
+  // only input feild Collection
+
+  const [employmentRetired, setEmploymentRetired] = useState({
+    num: "",
+    trade: "",
+    course: "",
+    startDate: "",
+    endDate: "",
+  })
+
+  const handleSaved = () => {
+    console.log(employmentRetired, "checked", formData)
+  }
+
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -112,20 +131,23 @@ const EmploymentRetired = ({
 
       {isEditing ? (
         <div className="mx-auto space-y-4 px-2 py-4">
-          {/* Certification Title */}
+          {/*  BA Type Title */}
           <div className="flex w-full items-center gap-3">
-            <Select>
+            <Select
+              onValueChange={(value) => handleSelectChange(" bAType", value)}
+            >
               <SelectTrigger className="w-1/2">
                 <SelectValue placeholder="BA *" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Select BA Type</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="BA">BA</SelectItem>
+                  <SelectItem value="BSS">BSS</SelectItem>
+                  <SelectItem value="JSS">JSS</SelectItem>
+                  <SelectItem value="BSP">BSP</SelectItem>
+                  <SelectItem value="BJO">BJO</SelectItem>
+                  <SelectItem value="NO">NO</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -134,57 +156,70 @@ const EmploymentRetired = ({
               id="functionalCate"
               placeholder="No *"
               className={`mt-1 w-1/2 border border-gray-300`}
-              onBlur={handleBlur}
+              onChange={(e) =>
+                setEmploymentRetired((prev) => ({
+                  ...prev,
+                  num: e.target.value,
+                }))
+              }
             />
           </div>
 
-          {/* Institute Name  */}
-          <Select>
+          {/* Ranks  */}
+          <Select onValueChange={(value) => handleSelectChange("ranks", value)}>
             <SelectTrigger>
               <SelectValue placeholder="Ranks *" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Select Ranks</SelectLabel>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
+                <SelectItem value="2Lt">2Lt</SelectItem>
+                <SelectItem value="Lt">Lt</SelectItem>
+                <SelectItem value="Capt">Capt</SelectItem>
+                <SelectItem value="Maj">Maj</SelectItem>
+                <SelectItem value="Col">Col</SelectItem>
+                <SelectItem value="Lt Gen">Lt Gen</SelectItem>
+                <SelectItem value="Gen">Gen</SelectItem>
+                <SelectItem value="Snk">Snk</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
 
-          {/* Location */}
-          <Select>
+          {/* Type */}
+          <Select
+            onValueChange={(value) => handleSelectChange("selectType", value)}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Type *" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Select Type</SelectLabel>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
+                <SelectItem value="Officer">Officer</SelectItem>
+                <SelectItem value="JCO">JCO</SelectItem>
+                <SelectItem value="NCO">NCO</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
 
-          {/* Location */}
-          <Select>
+          {/* Arms */}
+          <Select onValueChange={(value) => handleSelectChange("Arms", value)}>
             <SelectTrigger>
               <SelectValue placeholder="Arms *" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Select ARMS</SelectLabel>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
+                <SelectItem value="AC">AC</SelectItem>
+                <SelectItem value="Arty">Arty</SelectItem>
+                <SelectItem value="EB">EB</SelectItem>
+                <SelectItem value="BIR">BIR</SelectItem>
+                <SelectItem value="Sigs">Sigs</SelectItem>
+                <SelectItem value="Ord">Ord</SelectItem>
+                <SelectItem value="AMC">AMC</SelectItem>
+                <SelectItem value="AEC">AEC</SelectItem>
+                <SelectItem value="CMP">CMP</SelectItem>
+                <SelectItem value="ADC">ADC</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -194,73 +229,66 @@ const EmploymentRetired = ({
             id="functionalCate"
             placeholder="Trade *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentRetired((prev) => ({
+                ...prev,
+                trade: e.target.value,
+              }))
+            }
           />
 
           {/* Course */}
           <Input
             id="functionalCate"
-            placeholder="Trade *"
+            placeholder="Course *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentRetired((prev) => ({
+                ...prev,
+                course: e.target.value,
+              }))
+            }
           />
 
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon />
-                {date ? (
-                  format(date, "PPP")
-                ) : (
-                  <span> Date of Commission *</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                initialFocus
+          <div className="flex w-full items-center gap-2">
+            <div className="w-1/2">
+              <Label className="pl-1">Start Date</Label>
+              <Input
+                id="functionalCate"
+                placeholder="Start Date*"
+                defaultValue={"Start Date"}
+                type="date"
+                className={`mt-1 border border-gray-300`}
+                onChange={(e) =>
+                  setEmploymentRetired((prev) => ({
+                    ...prev,
+                    startDate: e.target.value,
+                  }))
+                }
               />
-            </PopoverContent>
-          </Popover>
+            </div>
 
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !endDate && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon />
-                {endDate ? (
-                  format(endDate, "PPP")
-                ) : (
-                  <span> Date of Retirement *</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={endDate}
-                onSelect={setEndDate}
-                initialFocus
+            <div className="w-1/2">
+              <Label className="pl-1">End Date</Label>
+              <Input
+                id="functionalCate"
+                defaultValue={"End Date"}
+                type="date"
+                className={`mt-1 border border-gray-300`}
+                onChange={(e) =>
+                  setEmploymentRetired((prev) => ({
+                    ...prev,
+                    endDate: e.target.value,
+                  }))
+                }
               />
-            </PopoverContent>
-          </Popover>
+            </div>
+          </div>
 
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
+          <div>
+            <Button onClick={handleSaved} className="mb-11 mt-4 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (

@@ -39,6 +39,7 @@ const OtherRelevantInfo = ({
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEditMode = () => setIsEditing(!isEditing)
+
   const handleSave = () => {
     // Handle save logic here
     setIsEditing(false)
@@ -49,9 +50,15 @@ const OtherRelevantInfo = ({
   const [objective, setObjective] = useState("")
   const [error, setError] = useState(false)
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  // const [error, setError] = useState(false)
+  const [relevantData, setRelevantData] = useState({
+    CareerSummary: "",
+    qualification: "",
+    keywords: "",
+  })
+
+  const handleSummit = async () => {
+    console.log("checked", relevantData)
   }
   return (
     <div className="text-3xl text-black">
@@ -99,9 +106,12 @@ const OtherRelevantInfo = ({
               id="functionalCate"
               placeholder="Career Summary"
               className={`mt-1 border border-gray-300`}
-              value={objective}
-              onChange={(e) => setObjective(e.target.value)}
-              onBlur={handleBlur}
+              onChange={(e) =>
+                setRelevantData((prev) => ({
+                  ...prev,
+                  CareerSummary: e.target.value,
+                }))
+              }
             />
             <Label
               htmlFor="objective"
@@ -146,7 +156,12 @@ const OtherRelevantInfo = ({
               id="objective"
               placeholder="Special Qualification"
               className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
+              onChange={(e) =>
+                setRelevantData((prev) => ({
+                  ...prev,
+                  qualification: e.target.value,
+                }))
+              }
             />
             <Label
               htmlFor="objective"
@@ -194,7 +209,12 @@ const OtherRelevantInfo = ({
               id="objective"
               placeholder="Keywords *"
               className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
+              onChange={(e) =>
+                setRelevantData((prev) => ({
+                  ...prev,
+                  keywords: e.target.value,
+                }))
+              }
             />
             <Label
               htmlFor="objective"
@@ -204,7 +224,7 @@ const OtherRelevantInfo = ({
             </Label>
           </div>
 
-          <div className="py-20">
+          <div onClick={handleSummit} className="py-20">
             <Button className="w-full">Save</Button>
           </div>
         </div>

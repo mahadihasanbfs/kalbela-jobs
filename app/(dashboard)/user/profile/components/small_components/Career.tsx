@@ -41,12 +41,34 @@ const Career = ({
 
   // Career Edite
 
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
+  const [activeLevel, setActiveLevel] = useState<string | null>(null)
+  const [activeJobs, setActiveJobs] = useState<string | null>(null)
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const jobLevels = ["Entry Level Job", "Mid Level Job", "Top Level Job"]
+  const availableLevels = [
+    "Full Time",
+    "Part Time",
+    "Contact",
+    "Intership",
+    "Freelance",
+  ]
+  // const [error, setError] = useState(false)
+  const [careerData, setCareerData] = useState({
+    objectiveName: "",
+    presentSalary: "",
+    expecteSalary: "",
+  })
+
+  const handerCareer = async () => {
+    const allCareerData = {
+      objectiveName: careerData?.objectiveName,
+      presentSalary: careerData?.presentSalary,
+      expecteSalary: careerData?.expecteSalary,
+      jobLooking: activeJobs,
+      availableJobs: activeLevel,
+    }
+
+    // console.log("checked coloect", allCareerData)
   }
 
   return (
@@ -98,12 +120,17 @@ const Career = ({
               id="objective"
               placeholder="Enter your objective"
               className={`mt-1 border border-gray-300`}
-              value={objective}
-              onChange={(e) => setObjective(e.target.value)}
-              onBlur={handleBlur}
+              value={careerData?.objectiveName}
+              onChange={(e) =>
+                setCareerData((prev) => ({
+                  ...prev,
+                  objectiveName: e.target.value,
+                }))
+              }
             />
           </div>
 
+          {/* modal use eye */}
           <div>
             <Dialog>
               <DialogTrigger className="flex items-center gap-2 text-sm text-gray-600">
@@ -143,8 +170,13 @@ const Career = ({
             <Input
               id="objective"
               placeholder="Enter Present Salary"
+              onChange={(e) =>
+                setCareerData((prev) => ({
+                  ...prev,
+                  presentSalary: e.target.value,
+                }))
+              }
               className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
             />
           </div>
 
@@ -154,31 +186,50 @@ const Career = ({
               id="objective"
               placeholder="Enter Expection Salary"
               className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
+              onChange={(e) =>
+                setCareerData((prev) => ({
+                  ...prev,
+                  expecteSalary: e.target.value,
+                }))
+              }
             />
           </div>
 
+          {/* Tag Active */}
           <div className="">
             <p className="text-sm font-medium">Looking for (Job Level)</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">Entry Level Job</Button>
-              <Button variant="outline">Mid Level Job</Button>
-              <Button variant="outline">Top Level Job</Button>
+              {jobLevels.map((level) => (
+                <Button
+                  key={level}
+                  variant={activeLevel === level ? "default" : "outline"}
+                  onClick={() => {
+                    setActiveLevel(level)
+                  }}
+                >
+                  {level}
+                </Button>
+              ))}
             </div>
           </div>
 
-          <div className="pb-5 pt-2">
+          {/* Tag Active2 */}
+          <div className="">
             <p className="text-sm font-medium">Available for (Job Nature)</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">full Time</Button>
-              <Button variant="outline">Part Time</Button>
-              <Button variant="outline">Contract</Button>
-              <Button variant="outline">Internship</Button>
-              <Button variant="outline">Freelance</Button>
+              {availableLevels?.map((level) => (
+                <Button
+                  key={level}
+                  variant={activeJobs === level ? "default" : "outline"}
+                  onClick={() => setActiveJobs(level)}
+                >
+                  {level}
+                </Button>
+              ))}
             </div>
           </div>
 
-          <div className="py-20">
+          <div onClick={handerCareer} className="py-20">
             <Button className="w-full">Save</Button>
           </div>
         </div>

@@ -50,18 +50,20 @@ const ProfessionalCartifications = ({
     setIsEditing(false)
   }
 
-  // Career Edite
+  // professional cartifications
 
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
+  const [professionalCartificate, setProfessionalCartificate] = useState({
+    cartificateTitle: "",
+    instituteName: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+  })
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const handlarSave = async () => {
+    console.log("checked", professionalCartificate)
   }
 
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -108,9 +110,12 @@ const ProfessionalCartifications = ({
             id="functionalCate"
             placeholder="Certification Title *"
             className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setProfessionalCartificate((prev) => ({
+                ...prev,
+                cartificateTitle: e.target.value,
+              }))
+            }
           />
 
           {/* Institute Name  */}
@@ -118,7 +123,12 @@ const ProfessionalCartifications = ({
             id="functionalCate"
             placeholder="Institute Name *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setProfessionalCartificate((prev) => ({
+                ...prev,
+                instituteName: e.target.value,
+              }))
+            }
           />
 
           {/* Location */}
@@ -126,58 +136,52 @@ const ProfessionalCartifications = ({
             id="functionalCate"
             placeholder="Location *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setProfessionalCartificate((prev) => ({
+                ...prev,
+                location: e.target.value,
+              }))
+            }
           />
 
           <div className="flex w-full items-center gap-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-1/2 justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon />
-                  {date ? format(date, "PPP") : <span> Start Date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="w-1/2">
+              <Label className="pl-1">Start Date</Label>
+              <Input
+                id="functionalCate"
+                placeholder="Start Date*"
+                defaultValue={"Start Date"}
+                type="date"
+                className={`mt-1 border border-gray-300`}
+                onChange={(e) =>
+                  setProfessionalCartificate((prev) => ({
+                    ...prev,
+                    startDate: e.target.value,
+                  }))
+                }
+              />
+            </div>
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-1/2 justify-start text-left font-normal",
-                    !endDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon />
-                  {endDate ? format(endDate, "PPP") : <span> End Date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={endDate}
-                  onSelect={setEndDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="w-1/2">
+              <Label className="pl-1">End Date</Label>
+              <Input
+                id="functionalCate"
+                defaultValue={"End Date"}
+                type="date"
+                className={`mt-1 border border-gray-300`}
+                onChange={(e) =>
+                  setProfessionalCartificate((prev) => ({
+                    ...prev,
+                    endDate: e.target.value,
+                  }))
+                }
+              />
+            </div>
           </div>
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
+          <div>
+            <Button onClick={handlarSave} className="my-4 mb-11 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (

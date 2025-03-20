@@ -51,10 +51,29 @@ const AcademicQualification = ({
 
   const [objective, setObjective] = useState("")
   const [error, setError] = useState(false)
+  const [selectedYear, setSelectedYear] = useState("")
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const [formData, setFormData] = useState({
+    education: "",
+    exam: "",
+    result: "",
+    passingYear: "",
+  })
+
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    // console.log({ ...formData, [field]: value }) // Logs the updated state
+  }
+
+  const [academicQ, setAcademicQ] = useState({
+    concentration: "",
+    duration: "",
+    achievement: "",
+    institute: "",
+  })
+
+  const handlerSave = () => {
+    console.log("chekced", formData, academicQ)
   }
 
   //   const [isForeign, setIsForeign] = useState(false)
@@ -95,24 +114,27 @@ const AcademicQualification = ({
         )}
       </div>
 
-      {/* Career edit System */}
-
       {isEditing ? (
         <div className="mx-auto space-y-4 px-2 py-4">
           {/* Level of Education */}
           <div className="">
-            <Select>
+            <Select
+              onValueChange={(value) => handleSelectChange("education", value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Level of Education" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel> Select Level of Education *</SelectLabel>
-                  <SelectItem value="apple"> PSC/5 pass</SelectItem>
-                  <SelectItem value="banana">JSC/JDC/8 points</SelectItem>
-                  <SelectItem value="blueberry">Secondary</SelectItem>
-                  <SelectItem value="grapes">Higher Secondary</SelectItem>
-                  <SelectItem value="pineapple">Bachelor/Honors</SelectItem>
+
+                  <SelectItem value="PSC">PSC/5 pass</SelectItem>
+                  <SelectItem value="JSC">JSC/JDC/8 points</SelectItem>
+                  <SelectItem value="Secondary">Secondary</SelectItem>
+                  <SelectItem value="Higher Secondary">
+                    Higher Secondary
+                  </SelectItem>
+                  <SelectItem value="Bachelor">Bachelor/Honors</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -120,18 +142,22 @@ const AcademicQualification = ({
 
           {/* Exam/ Degree Title  */}
           <div className="">
-            <Select>
+            <Select
+              onValueChange={(value) => handleSelectChange("exam", value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Exam/ Degree Title" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel> Select Exam/ Degree Title *</SelectLabel>
-                  <SelectItem value="apple"> Bachelor of Arts(BA)</SelectItem>
-                  <SelectItem value="banana">
+                  <SelectItem value="Bachelor of Arts (BA)">
+                    Bachelor of Arts (BA)
+                  </SelectItem>
+                  <SelectItem value="Bachelor of Science (BSc)">
                     Bachelor of Science (BSc)
                   </SelectItem>
-                  <SelectItem value="blueberry">
+                  <SelectItem value="Bachelor of Law (LLB)">
                     Bachelor of Law (LLB)
                   </SelectItem>
                 </SelectGroup>
@@ -141,44 +167,32 @@ const AcademicQualification = ({
 
           {/* Concentration /Major/ Group  */}
           <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Concentration /Major/ Group" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>
-                    {" "}
-                    Select Concentration /Major/ Group *
-                  </SelectLabel>
-                  <SelectItem value="apple"> PSC/5 pass</SelectItem>
-                  <SelectItem value="banana">JSC/JDC/8 points</SelectItem>
-                  <SelectItem value="blueberry">Secondary</SelectItem>
-                  <SelectItem value="grapes">Higher Secondary</SelectItem>
-                  <SelectItem value="pineapple">Bachelor/Honors</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <Input
+              id="functionalCate"
+              placeholder="Concentration /Major/ Group "
+              className={`mt-1 border border-gray-300`}
+              onChange={(e) =>
+                setAcademicQ((prev) => ({
+                  ...prev,
+                  concentration: e.target.value,
+                }))
+              }
+            />
           </div>
 
           {/* Institute Name */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Institute Name" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Institute Name *</SelectLabel>
-                  <SelectItem value="apple"> PSC/5 pass</SelectItem>
-                  <SelectItem value="banana">JSC/JDC/8 points</SelectItem>
-                  <SelectItem value="blueberry">Secondary</SelectItem>
-                  <SelectItem value="grapes">Higher Secondary</SelectItem>
-                  <SelectItem value="pineapple">Bachelor/Honors</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+
+          <Input
+            id="functionalCate"
+            placeholder="institute Name"
+            className={`mt-1 border border-gray-300`}
+            onChange={(e) =>
+              setAcademicQ((prev) => ({
+                ...prev,
+                institute: e.target.value,
+              }))
+            }
+          />
 
           {/* Check Box Area */}
           <div className="flex items-center space-x-2">
@@ -193,18 +207,22 @@ const AcademicQualification = ({
 
           {/* Resul */}
           <div className="">
-            <Select>
+            <Select
+              onValueChange={(value) => handleSelectChange("result", value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Result *" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel> Select Result *</SelectLabel>
-                  <SelectItem value="apple"> First Devision</SelectItem>
-                  <SelectItem value="banana">Second Division </SelectItem>
-                  <SelectItem value="blueberry">Third Division</SelectItem>
-                  <SelectItem value="grapes">Grade</SelectItem>
-                  <SelectItem value="pineapple">Enrolled</SelectItem>
+                  <SelectItem value="First Division">First Division</SelectItem>
+                  <SelectItem value="Second Division">
+                    Second Division
+                  </SelectItem>
+                  <SelectItem value="Third Division">Third Division</SelectItem>
+                  <SelectItem value="Grade">Grade</SelectItem>
+                  <SelectItem value="Enrolled">Enrolled</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -212,16 +230,20 @@ const AcademicQualification = ({
 
           {/* Pssing Year */}
           <div className="">
-            <Select>
+            <Select
+              onValueChange={(value) =>
+                handleSelectChange("passingYear", value)
+              }
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Passing Year *" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel> Select Passing Year *</SelectLabel>
-                  <SelectItem value="apple"> 2025</SelectItem>
-                  <SelectItem value="banana">2026</SelectItem>
-                  <SelectItem value="blueberry">2027</SelectItem>
+                  <SelectItem value="2025"> 2025</SelectItem>
+                  <SelectItem value="2026">2026</SelectItem>
+                  <SelectItem value="2027">2027</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -232,21 +254,29 @@ const AcademicQualification = ({
             id="functionalCate"
             placeholder="Duration"
             className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setAcademicQ((prev) => ({
+                ...prev,
+                duration: e.target.value,
+              }))
+            }
           />
           {/* Achievement */}
           <Input
             id="functionalCate"
             placeholder="Achievement"
             className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setAcademicQ((prev) => ({
+                ...prev,
+                achievement: e.target.value,
+              }))
+            }
           />
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
+          <div>
+            <Button onClick={handlerSave} className="mb-10 mt-4 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (

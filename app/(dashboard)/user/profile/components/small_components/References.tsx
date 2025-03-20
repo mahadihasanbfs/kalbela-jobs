@@ -1,31 +1,5 @@
 import React, { useState } from "react"
-import { format } from "date-fns"
-import {
-  AlertCircle,
-  Award,
-  BaggageClaimIcon,
-  BarChart2,
-  Briefcase,
-  CalendarIcon,
-  ChevronLeft,
-  Eye,
-  FileBadge2,
-  Globe,
-  GraduationCap,
-  Grid,
-  Home,
-  Key,
-  LifeBuoy,
-  Link,
-  LocateIcon,
-  LucideCookie,
-  Pencil,
-  Save,
-  Star,
-  Type,
-  User,
-  X,
-} from "lucide-react"
+import { ChevronLeft, Pencil, User, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -33,16 +7,6 @@ import { Calendar } from "@/components/ui/calendar"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
 const References = ({
   setActiveSection,
@@ -58,17 +22,24 @@ const References = ({
   }
 
   // Career Edite
+  const [references, setReferences] = useState({
+    name: "",
+    organization: "",
+    designation: "",
+    address: "",
+    phoneOff: "",
+    phoneRes: "",
+    phoneNo: "",
+    email: "",
+  })
 
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
+  const [storeTag, setStoreTag] = useState<string | null>(null)
+  const levels = ["Relative", "Family Friend", "Academic", "Others"]
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const handleSaved = () => {
+    console.log("checked", references, storeTag)
   }
 
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -81,7 +52,7 @@ const References = ({
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <h1 className="ml-4 text-xl font-medium">Link Account</h1>
+          <h1 className="ml-4 text-xl font-medium">References</h1>
         </div>
         {isEditing ? (
           <div className="flex items-center space-x-2">
@@ -115,7 +86,12 @@ const References = ({
             id="functionalCate"
             placeholder="Name *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
           />
 
           {/* Organization */}
@@ -123,7 +99,12 @@ const References = ({
             id="functionalCate"
             placeholder="Organization *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                organization: e.target.value,
+              }))
+            }
           />
 
           {/* Designation  */}
@@ -131,7 +112,12 @@ const References = ({
             id="functionalCate"
             placeholder="Designation  *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                designation: e.target.value,
+              }))
+            }
           />
 
           {/* Address */}
@@ -139,7 +125,12 @@ const References = ({
             id="functionalCate"
             placeholder="Address *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                address: e.target.value,
+              }))
+            }
           />
 
           {/* Phone No */}
@@ -147,7 +138,12 @@ const References = ({
             id="functionalCate"
             placeholder="Phone No (Office)  *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                phoneOff: e.target.value,
+              }))
+            }
           />
 
           {/* Phone No Res */}
@@ -155,7 +151,12 @@ const References = ({
             id="functionalCate"
             placeholder="Phone No (Res) *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                phoneRes: e.target.value,
+              }))
+            }
           />
 
           {/* Phone No */}
@@ -163,7 +164,12 @@ const References = ({
             id="functionalCate"
             placeholder="Mobile No *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                phoneNo: e.target.value,
+              }))
+            }
           />
 
           {/* Email Addess*/}
@@ -171,21 +177,37 @@ const References = ({
             id="functionalCate"
             placeholder="Emaill Address *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setReferences((prev) => ({
+                ...prev,
+                email: e.target.value,
+              }))
+            }
           />
 
           <div className="pb-5 pt-2">
             <p className="text-sm font-medium">Relation *</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">Relative</Button>
-              <Button variant="outline">Family Friend</Button>
-              <Button variant="outline">Academic</Button>
-              <Button variant="outline">Others</Button>
-            </div>
+
+            {levels?.map((level) => (
+              <Button
+                key={level}
+                variant={storeTag === level ? "default" : "outline"}
+                onClick={() => {
+                  setStoreTag(level)
+                }}
+              >
+                {level}
+              </Button>
+            ))}
           </div>
 
-          <div className="flex gap-3 py-20">
-            <Button className="w-full !bg-blue-700">Save</Button>
+          <div className="flex">
+            <Button
+              onClick={handleSaved}
+              className="mb-11 mt-4 w-full !bg-blue-700"
+            >
+              Save
+            </Button>
           </div>
         </div>
       ) : (

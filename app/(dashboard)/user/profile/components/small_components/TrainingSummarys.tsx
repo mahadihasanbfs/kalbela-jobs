@@ -43,20 +43,22 @@ const TrainingSummarys = ({
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEditMode = () => setIsEditing(!isEditing)
-  const handleSave = () => {
-    // Handle save logic here
-    setIsEditing(false)
-  }
 
   // Career Edite
+  const [selectedYear, setSelectedYear] = useState("")
+  const [trainingSummaryData, setTrainingSummaryData] = useState({
+    trainingTitle: "",
+    institute: "",
+    countryRegion: "",
+    location: "",
+    duration: "",
+    topicCovered: "",
+  })
 
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
-
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const handlarSave = async () => {
+    console.log("checked", trainingSummaryData)
   }
+
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -69,7 +71,7 @@ const TrainingSummarys = ({
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <h1 className="ml-4 text-xl font-medium">Academic Qualification</h1>
+          <h1 className="ml-4 text-xl font-medium">Training Summary</h1>
         </div>
         {isEditing ? (
           <div className="flex items-center space-x-2">
@@ -103,9 +105,12 @@ const TrainingSummarys = ({
             id="functionalCate"
             placeholder="Training Title *"
             className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setTrainingSummaryData((prev) => ({
+                ...prev,
+                trainingTitle: e.target.value,
+              }))
+            }
           />
 
           {/* Topic Covered */}
@@ -113,7 +118,12 @@ const TrainingSummarys = ({
             id="functionalCate"
             placeholder="Topic Covered *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setTrainingSummaryData((prev) => ({
+                ...prev,
+                topicCovered: e.target.value,
+              }))
+            }
           />
 
           {/* Institute */}
@@ -121,15 +131,25 @@ const TrainingSummarys = ({
             id="functionalCate"
             placeholder="Institute *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setTrainingSummaryData((prev) => ({
+                ...prev,
+                institute: e.target.value,
+              }))
+            }
           />
 
-          {/* Institute */}
+          {/* country Region */}
           <Input
             id="functionalCate"
             placeholder="Country Region *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setTrainingSummaryData((prev) => ({
+                ...prev,
+                countryRegion: e.target.value,
+              }))
+            }
           />
 
           {/* Location */}
@@ -137,21 +157,26 @@ const TrainingSummarys = ({
             id="functionalCate"
             placeholder="Location *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setTrainingSummaryData((prev) => ({
+                ...prev,
+                location: e.target.value,
+              }))
+            }
           />
 
           {/* Training Year */}
           <div className="">
-            <Select>
+            <Select onValueChange={(value) => setSelectedYear(value)}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Training Year *" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel> Select Training Year *</SelectLabel>
-                  <SelectItem value="apple"> 2025</SelectItem>
-                  <SelectItem value="banana">2026</SelectItem>
-                  <SelectItem value="blueberry">2027</SelectItem>
+                  <SelectItem value="2025"> 2025</SelectItem>
+                  <SelectItem value="2026">2026</SelectItem>
+                  <SelectItem value="2027">2027</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -162,12 +187,15 @@ const TrainingSummarys = ({
             id="functionalCate"
             placeholder="Duration"
             className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setTrainingSummaryData((prev) => ({
+                ...prev,
+                duration: e.target.value,
+              }))
+            }
           />
 
-          <div className="py-20">
+          <div onClick={handlarSave} className="py-20">
             <Button className="w-full">Save</Button>
           </div>
         </div>

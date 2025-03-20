@@ -16,6 +16,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Popover,
   PopoverContent,
@@ -45,9 +46,23 @@ const EmploymentHistorys = ({
     else setError(false)
   }
 
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   const [arrowDown, setArrowDown] = useState(false)
+
+  const [employmentHis, setEmploymentHis] = useState({
+    companyName: "",
+    companyBus: "",
+    companyLocation: "",
+    designation: "",
+    department: "",
+    responibilities: "",
+    expertis: "",
+    startDate: "",
+    endDate: "",
+  })
+
+  const handlerSave = async () => {
+    console.log("checked", employmentHis)
+  }
 
   return (
     <div className="text-3xl text-black">
@@ -95,14 +110,24 @@ const EmploymentHistorys = ({
             id="functionalCate"
             placeholder="Company Name *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                companyName: e.target.value,
+              }))
+            }
           />
           {/* Company Business*/}
           <Input
             id="functionalCate"
             placeholder="Company Business *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                companyBus: e.target.value,
+              }))
+            }
           />
 
           {/* Company location*/}
@@ -110,7 +135,12 @@ const EmploymentHistorys = ({
             id="functionalCate"
             placeholder="Company Location "
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                companyLocation: e.target.value,
+              }))
+            }
           />
 
           {/* Company location*/}
@@ -118,7 +148,12 @@ const EmploymentHistorys = ({
             id="functionalCate"
             placeholder="Designation *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                designation: e.target.value,
+              }))
+            }
           />
 
           {/* Company location*/}
@@ -126,7 +161,12 @@ const EmploymentHistorys = ({
             id="functionalCate"
             placeholder="Department *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                department: e.target.value,
+              }))
+            }
           />
 
           {/* Company location*/}
@@ -134,55 +174,47 @@ const EmploymentHistorys = ({
             id="functionalCate"
             placeholder="Responibilities *"
             className={`mt-1 border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                responibilities: e.target.value,
+              }))
+            }
           />
 
           <div className="flex w-full items-center gap-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-1/2 justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon />
-                  {date ? format(date, "PPP") : <span> Start Date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="w-1/2">
+              <Label className="pl-1">Start Date</Label>
+              <Input
+                id="functionalCate"
+                placeholder="Start Date*"
+                defaultValue={"Start Date"}
+                type="date"
+                className={`mt-1 border border-gray-300`}
+                onChange={(e) =>
+                  setEmploymentHis((prev) => ({
+                    ...prev,
+                    startDate: e.target.value,
+                  }))
+                }
+              />
+            </div>
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-1/2 justify-start text-left font-normal",
-                    !endDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon />
-                  {endDate ? format(endDate, "PPP") : <span> End Date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={endDate}
-                  onSelect={setEndDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="w-1/2">
+              <Label className="pl-1">End Date</Label>
+              <Input
+                id="functionalCate"
+                defaultValue={"End Date"}
+                type="date"
+                className={`mt-1 border border-gray-300`}
+                onChange={(e) =>
+                  setEmploymentHis((prev) => ({
+                    ...prev,
+                    endDate: e.target.value,
+                  }))
+                }
+              />
+            </div>
           </div>
           {/* Check Box Area */}
           <div className="flex items-center space-x-2">
@@ -200,13 +232,18 @@ const EmploymentHistorys = ({
             id="functionalCate"
             placeholder="Please enter your Area of Expertis.."
             className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setEmploymentHis((prev) => ({
+                ...prev,
+                expertis: e.target.value,
+              }))
+            }
           />
 
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
+          <div>
+            <Button onClick={handlerSave} className="my-4 mb-11 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (
@@ -226,7 +263,7 @@ const EmploymentHistorys = ({
             <div>
               <p
                 onClick={() => setArrowDown(true)}
-                className={`${arrowDown ? "hidden" : ""} flex justify-end px-3 pb-1`}
+                className={`${arrowDown ? "hidden" : ""} mb-2 flex justify-end px-3 pb-1`}
               >
                 <ChevronDown />
               </p>

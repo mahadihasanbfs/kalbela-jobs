@@ -61,13 +61,19 @@ const Skills = ({
   const [objective, setObjective] = useState("")
   const [error, setError] = useState(false)
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  // only input feild Collection
+
+  const [skills, setSkills] = useState({
+    skills: "",
+    activities: "",
+  })
+
+  // console.log("checked", skills)
+
+  const handleSaved = () => {
+    console.log("checked", skills)
   }
 
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -114,7 +120,12 @@ const Skills = ({
             id="functionalCate"
             placeholder="Skill Description *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setSkills((prev) => ({
+                ...prev,
+                skills: e.target.value,
+              }))
+            }
           />
 
           {/* Extra Curricular Activities */}
@@ -122,11 +133,18 @@ const Skills = ({
             id="functionalCate"
             placeholder="Extra Curricular Activities *"
             className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
+            onChange={(e) =>
+              setSkills((prev) => ({
+                ...prev,
+                activities: e.target.value,
+              }))
+            }
           />
 
-          <div className="flex gap-3 py-20">
-            <Button className="w-full !bg-blue-700">Save</Button>
+          <div>
+            <Button onClick={handleSaved} className="mb-11 mt-4 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (
@@ -157,7 +175,6 @@ const Skills = ({
                           id="functionalCate"
                           placeholder="Add Skill *"
                           className={`mt-7 w-full border border-gray-300`}
-                          onBlur={handleBlur}
                         />
                       </DialogDescription>
                     </DialogHeader>

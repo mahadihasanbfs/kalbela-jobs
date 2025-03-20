@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   AlertCircle,
   BaggageClaimIcon,
@@ -20,6 +20,15 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const PreferredArea = ({
   setActiveSection,
@@ -34,15 +43,68 @@ const PreferredArea = ({
     setIsEditing(false)
   }
 
+  // Preferred Areas
+  const [formData, setFormData] = useState({
+    category: "",
+    jobCategory: "",
+    organizations: "",
+    district: "",
+    countries: "",
+  })
+
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    // console.log({ ...formData, [field]: value }) // Logs the updated state
+  }
+
   // Career Edite
 
   const [objective, setObjective] = useState("")
   const [error, setError] = useState(false)
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const handleSaves = async () => {
+    console.log("checked", formData)
   }
+
+  //  all Countries api
+  const [countries, setCountries] = useState<string[]>([])
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch("https://restcountries.com/v3.1/all")
+        const data = await res.json()
+
+        // Extract only country names
+        const countryNames = data.map((country: any) => country.name.common)
+        setCountries(countryNames)
+      } catch (error) {
+        console.error("Error fetching countries:", error)
+      }
+    }
+
+    fetchCountries()
+  }, [])
+
+  // All Distric
+  const [districts, setDistricts] = useState<string[]>([])
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      try {
+        const res = await fetch("https://bdapi.vercel.app/api/v.1/district")
+        const data = await res.json()
+
+        // Extract only district names
+        const districtNames = data.data.map((district: any) => district.name)
+        setDistricts(districtNames)
+      } catch (error) {
+        console.error("Error fetching districts:", error)
+      }
+    }
+
+    fetchDistricts()
+  }, [])
+
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -84,15 +146,46 @@ const PreferredArea = ({
 
       {isEditing ? (
         <div className="mx-auto space-y-4 p-4">
+          {/* category */}
           <div>
-            <Input
-              id="functionalCate"
-              placeholder="Preferred Functional job Catego.."
-              className={`mt-1 border border-gray-300`}
-              value={objective}
-              onChange={(e) => setObjective(e.target.value)}
-              onBlur={handleBlur}
-            />
+            {/* Preferred Functional */}
+            <div className="">
+              <Select
+                onValueChange={(value) => handleSelectChange("category", value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Preferred Functional Job Categori." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel> Select Preferred Functional </SelectLabel>
+
+                    <SelectItem value="Accounting/Finance">
+                      Accounting/Finance
+                    </SelectItem>
+                    <SelectItem value="IT/Telecommunication">
+                      IT/Telecommunication
+                    </SelectItem>
+                    <SelectItem value="Healthcare/Medical">
+                      Healthcare/Medical
+                    </SelectItem>
+                    <SelectItem value="NGO/Development">
+                      NGO/Development
+                    </SelectItem>
+                    <SelectItem value="Research/Consultancy">
+                      Research/Consultancy
+                    </SelectItem>
+                    <SelectItem value="Marketing/Sales">
+                      Marketing/Sales
+                    </SelectItem>
+                    <SelectItem value=" Research/Consultancy">
+                      Research/Consultancy
+                    </SelectItem>
+                    <SelectItem value="Others">Others</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
             <Label
               htmlFor="objective"
               className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
@@ -101,13 +194,39 @@ const PreferredArea = ({
             </Label>
           </div>
 
+          {/* categories */}
           <div className="">
-            <Input
-              id="objective"
-              placeholder="Preferred Functional job Catego.."
-              className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
-            />
+            <div className="">
+              <Select
+                onValueChange={(value) =>
+                  handleSelectChange("jobCategory", value)
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Special Skilled Job Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>
+                      Select Special Skilled Job Categories
+                    </SelectLabel>
+
+                    <SelectItem value="Data Antry/Computer oparator">
+                      Data Antry/Computer oparator
+                    </SelectItem>
+                    <SelectItem value="Mekanical">Mekanical</SelectItem>
+                    <SelectItem value="Nurse">Nurse</SelectItem>
+                    <SelectItem value=" Driver">Driver</SelectItem>
+                    <SelectItem value="Seph">Seph</SelectItem>
+                    <SelectItem value="Graphic Designer">
+                      Graphic Designer
+                    </SelectItem>
+
+                    <SelectItem value="Others">Others</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
             <Label
               htmlFor="objective"
               className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
@@ -116,13 +235,41 @@ const PreferredArea = ({
             </Label>
           </div>
 
+          {/* organizations*/}
           <div className="">
-            <Input
-              id="objective"
-              placeholder=" Preferred Organiztions Type"
-              className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
-            />
+            <div className="">
+              <Select
+                onValueChange={(value) =>
+                  handleSelectChange("organizations", value)
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Special Skilled Job Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>
+                      Select Special Skilled Job Categories
+                    </SelectLabel>
+
+                    <SelectItem value="Advertising Ageny">
+                      Advertising Ageny
+                    </SelectItem>
+                    <SelectItem value="Airline">Airline</SelectItem>
+                    <SelectItem value="Amusement Park">
+                      Amusement Park
+                    </SelectItem>
+                    <SelectItem value="Animal">Animal</SelectItem>
+                    <SelectItem value="Architecture Firm">
+                      Architecture Firm
+                    </SelectItem>
+                    <SelectItem value=" Automobile">Automobile</SelectItem>
+
+                    <SelectItem value="Others">Others</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
             <Label
               htmlFor="objective"
               className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
@@ -131,6 +278,7 @@ const PreferredArea = ({
             </Label>
           </div>
 
+          {/* districts */}
           <div className="">
             <p className="text-sm font-bold">Preferred Job Location*</p>
             <p className="text-[12px] font-medium"> Inside Bangladesh</p>
@@ -139,13 +287,30 @@ const PreferredArea = ({
               <Button className="bg-blue-600 text-white">Districts</Button>
             </div>
 
+            {/* districts */}
+
             <div className="pt-2">
-              <Input
-                id="objective"
-                placeholder="Add District *"
-                className={`mt-1 border border-gray-300`}
-                onBlur={handleBlur}
-              />
+              <Select
+                onValueChange={(value) => handleSelectChange("district", value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Districts" />
+                </SelectTrigger>
+                <SelectContent className="mt-10">
+                  <SelectGroup>
+                    <SelectLabel>Select Districts</SelectLabel>
+                    {districts?.map((district, index) => (
+                      <SelectItem
+                        className="space-y-2"
+                        key={index}
+                        value={district}
+                      >
+                        {district}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
               <Label
                 htmlFor="objective"
                 className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
@@ -154,14 +319,36 @@ const PreferredArea = ({
               </Label>
             </div>
 
+            {/* countries */}
             <div className="">
               <p className="text-sm">Outside Bangladesh</p>
-              <Input
-                id="objective"
-                placeholder="Add Country/Region *"
-                className={`mt-1 border border-gray-300`}
-                onBlur={handleBlur}
-              />
+              {/* countries */}
+              <div className="mt-3">
+                <Select
+                  onValueChange={(value) =>
+                    handleSelectChange("countries", value)
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Countries" />
+                  </SelectTrigger>
+                  <SelectContent className="mt-10">
+                    <SelectGroup>
+                      <SelectLabel>Select countries</SelectLabel>
+                      {countries?.map((country, index) => (
+                        <SelectItem
+                          className="space-y-2"
+                          key={index}
+                          value={country}
+                        >
+                          {country}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
               <Label
                 htmlFor="objective"
                 className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
@@ -171,8 +358,10 @@ const PreferredArea = ({
             </div>
           </div>
 
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
+          <div>
+            <Button onClick={handleSaves} className="mb-11 mt-4 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (
@@ -205,7 +394,6 @@ const PreferredArea = ({
             </div>
             <div>
               <h3 className="text-sm text-blue-800">
-                {" "}
                 Preferred Organization Type
               </h3>
             </div>

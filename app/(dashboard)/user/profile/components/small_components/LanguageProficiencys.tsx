@@ -32,20 +32,6 @@ import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
 const LanguageProficiencys = ({
   setActiveSection,
@@ -65,13 +51,24 @@ const LanguageProficiencys = ({
   const [objective, setObjective] = useState("")
   const [error, setError] = useState(false)
 
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const [activeLevel, setActiveLevel] = useState<string | null>(null)
+  const [writingLevel, setWritingLevel] = useState<string | null>(null)
+  const [speakingLevel, setSpeakingLevel] = useState<string | null>(null)
+  const [languageStore, setLanguageStore] = useState<string | null>(null)
+
+  const readings = ["High", "Medium", "Low"]
+  const writings = ["High", "Medium", "Low"]
+  const speakings = ["High", "Medium", "Low"]
+
+  const handleSaved = () => {
+    console.log("checked", {
+      languageStore,
+      activeLevel,
+      writingLevel,
+      speakingLevel,
+    })
   }
 
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   return (
     <div className="text-3xl text-black">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
@@ -119,39 +116,65 @@ const LanguageProficiencys = ({
               id="functionalCate"
               placeholder="Language *"
               className={`mt-1 w-full border border-gray-300`}
-              onBlur={handleBlur}
+              onChange={(e) => setLanguageStore(e.target.value)}
             />
           </div>
 
           <div className="">
             <p className="text-sm font-medium">Reading *</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">High</Button>
-              <Button variant="outline">Medium</Button>
-              <Button variant="outline">Low</Button>
+              {readings?.map((level) => (
+                <Button
+                  key={level}
+                  variant={activeLevel === level ? "default" : "outline"}
+                  onClick={() => {
+                    setActiveLevel(level)
+                  }}
+                >
+                  {level}
+                </Button>
+              ))}
             </div>
           </div>
 
           <div className="pb-5 pt-2">
             <p className="text-sm font-medium">Writing *</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">High</Button>
-              <Button variant="outline">Medium</Button>
-              <Button variant="outline">Low</Button>
+              {writings?.map((level) => (
+                <Button
+                  key={level}
+                  variant={writingLevel === level ? "default" : "outline"}
+                  onClick={() => {
+                    setWritingLevel(level)
+                  }}
+                >
+                  {level}
+                </Button>
+              ))}
             </div>
           </div>
 
           <div className="pb-5 pt-2">
-            <p className="text-sm font-medium">Speaking *</p>
+            <p className="text-sm font-medium">Speakings *</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">High</Button>
-              <Button variant="outline">Medium</Button>
-              <Button variant="outline">Low</Button>
+              {speakings?.map((level) => (
+                <Button
+                  key={level}
+                  variant={speakingLevel === level ? "default" : "outline"}
+                  onClick={() => {
+                    setSpeakingLevel(level)
+                  }}
+                >
+                  {level}
+                </Button>
+              ))}
             </div>
           </div>
 
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
+          <div>
+            <Button onClick={handleSaved} className="mb-11 mt-4 w-full">
+              Save
+            </Button>
           </div>
         </div>
       ) : (
