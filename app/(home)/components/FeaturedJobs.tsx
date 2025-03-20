@@ -23,21 +23,11 @@ const FeaturedJobs: React.FC = () => {
                   style={{
                         // boxShadow: '#d4cccc42 0px -20px 65px 0px'
                   }}
-                  className="px-8 py-12 rounded-[38px] 
-             bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
+                  className="">
                   <div className="space-y-6">
-                        <div className="order-1">
-                              <h2 className="md:mb-4 mb-2 md:mt-0 mt-3 flex items-center  font-bold text-[1.5rem]">
-                                    <img
-                                          src="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
-                                          alt="Government Jobs"
-                                          className="mr-2 w-6 h-6 rounded-full"
-                                    /> Government Jobs
-                              </h2>
-                              <Govt_jobs />
-                        </div>
 
-                        <div className=" col-span-3">
+
+                        <div>
                               <h2 className="mb-4 flex items-center  font-bold text-[1.5rem]">
                                     <span className="mr-2 text-red-500">🔥</span> Hot Jobs
                               </h2>
@@ -93,6 +83,16 @@ const FeaturedJobs: React.FC = () => {
                               </div>
                         </div>
 
+                        <div>
+                              <h2 className="md:mb-4 md:mt-0 mt-3 flex items-center  font-bold text-[1.5rem]">
+                                    <img
+                                          src="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
+                                          alt="Government Jobs"
+                                          className="mr-2 w-6 h-6 rounded-full"
+                                    /> Government Jobs
+                              </h2>
+                              <Govt_jobs />
+                        </div>
                   </div>
 
             </section >

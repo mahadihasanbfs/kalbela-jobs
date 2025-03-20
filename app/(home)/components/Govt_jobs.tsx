@@ -20,7 +20,7 @@ const Page = () => {
       const filteredData = data?.data?.filter((org: any) => org.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
       return (
-            <div className="w-full mt-8 lg:mt-0 ">
+            <div className="w-full mt-2 lg:mt-0 ">
                   <section className=" relative w-full">
                         <div className="grid gap-4 grid-cols-2 lg:grid-cols-3 max-h-[500px] overflow-y-auto pt-2">
                               {loading
@@ -43,7 +43,7 @@ const Page = () => {
                                                       key={org._id}
                                                       className="flex flex-col justify-between rounded-lg border px-4 py-2 shadow-sm transition-all hover:shadow-md hover:border-gray-300"
                                                 >
-                                                      <div className="flex items-center gap-4">
+                                                      <div className="flex md:flex-row flex-col justify-center md:justify-start items-center gap-4">
                                                             <Avatar className="size-12 rounded-lg">
                                                                   <AvatarImage
                                                                         src={org.logo}
@@ -52,7 +52,7 @@ const Page = () => {
                                                                   />
                                                                   <AvatarFallback>{org.name.substring(0, 2).toUpperCase()}</AvatarFallback>
                                                             </Avatar>
-                                                            <div className="flex-0.5">
+                                                            <div className="md:flex-0.5 md:text-start text-center">
                                                                   <h3 className="font-semibold capitalize  leading-tight line-clamp-2">
                                                                         {org.name}
                                                                   </h3>
@@ -71,9 +71,12 @@ const Page = () => {
                                                 </Link>
                                           ))}
                         </div>
-                        <Link href="/govt-jobs" className="flex items-center justify-center text-blue-500">
+                        <br />
+                        {data?.data.length > 3 && <Link
+                              href="/govt-jobs"
+                              className="flex items-center justify-center bg-primary text-white py-2 px-4 rounded mt-4 w-[130px] m-auto">
                               View All
-                        </Link>
+                        </Link>}
                   </section>
             </div>
       )

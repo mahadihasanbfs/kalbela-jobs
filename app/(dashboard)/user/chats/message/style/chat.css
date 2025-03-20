@@ -397,3 +397,12 @@
             transform: scaleY(1);
       }
 }
+
+/* In your global styles or component-specific styles */
+.swiper-pagination-bullet {
+    background-color: #ff6347; /* Replace with your desired color */
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #ff4500; /* Replace with your active bullet color */
+}

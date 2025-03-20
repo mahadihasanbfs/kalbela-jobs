@@ -1,12 +1,14 @@
 'use client';
 import useApiRequest from '@/app/hooks/useApiRequest';
+import ApplyModal from '@/components/ApplyModal';
 import SecondaryBtn from '@/components/SecondaryBtn';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatDate } from '@/lib/utils';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
-const RelatedCompanyJob = ({ company, save_jobs }: { company: any, save_jobs: any }) => {
+const RelatedCompanyJob = ({ user, company, save_jobs }: { user: any, company: any, save_jobs: any }) => {
     const { data, loading, error } = useApiRequest<any>(`jobs/organization-jobs?slug=${company}`, "GET")
 
     const jobs = data?.data?.jobs;
@@ -20,11 +22,11 @@ const RelatedCompanyJob = ({ company, save_jobs }: { company: any, save_jobs: an
 
 
     return (
-        <div>
-            <h1 className="text-xl font-semibold">Related Company Job</h1>
-            <div className="mt-3 grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-4 ">
+        <div className='mt-12 border-t'>
+            <h1 className="text-xl mt-3 font-semibold">Similar Company Job</h1>
+            <div className="mt-3 grid lg:grid-cols-1 md:grid-cols- grid-cols-1 gap-4 ">
                 {
-                    jobs?.map((jobPost: any) => <Card
+                    jobs?.slice(0, 2)?.map((jobPost: any) => <Card
                         className="p-4 transition-shadow hover:shadow-md"
                     >
 
@@ -52,20 +54,36 @@ const RelatedCompanyJob = ({ company, save_jobs }: { company: any, save_jobs: an
                             </div>
                             <p className="mb-4 text-sm" dangerouslySetInnerHTML={{ __html: jobPost?.description }}></p>
 
-                            <SecondaryBtn
-                                onClick={() => save_jobs(jobPost?._id)}
-                                className="w-full !bg-primary hover:!bg-primary/80 !text-white rounded py-2"
-                            >
-                                Save Job
-                            </SecondaryBtn>
+                            <div className="flex items-center gap-4 pt-4">
+                                <div className="w-full">
+                                    <ApplyModal
+                                        slug={jobPost?.url}
+                                        company={jobPost?.company_info?.company_id}
+                                        user={user}
+                                    />
+                                </div>
+                                <SecondaryBtn
+                                    className="px-10 w-5/6  py-2"
+                                    onClick={() => save_jobs(jobPost?._id)}
+                                >
+                                    Save
+                                </SecondaryBtn>
+                            </div>
+
                         </CardContent>
                     </Card>)
                 }
             </div>
 
             {
-                jobs && jobs.length > 2 && <Link href={`/jobs/${company}`} className="text-primary text-sm mt-3 block">See All</Link>
+                jobs && jobs.length > 2 &&
+                <Link
+                    href={`/jobs`}
+                    className="text-blue-700 hover:text-primary duration-300 text-sm mt-6 flex items-center gap-1 ">
+                    See All <ArrowRight size={16} />
+                </Link>
             }
+            <br />
         </div>
     );
 };
