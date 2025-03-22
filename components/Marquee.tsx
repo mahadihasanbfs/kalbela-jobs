@@ -7,6 +7,7 @@ interface MarqueeProps {
   children?: React.ReactNode
   vertical?: boolean
   repeat?: number
+  speed?: number // Speed in seconds
   [key: string]: any
 }
 
@@ -17,13 +18,15 @@ export default function Marquee({
   children,
   vertical = false,
   repeat = 4,
+  speed = 40, // Default speed (higher means slower)
   ...props
 }: MarqueeProps) {
   return (
     <div
       {...props}
+      style={{ "--duration": `${speed}s` } as React.CSSProperties} // Dynamic speed
       className={cn(
-        "group flex overflow-hidden p-2 [--duration:40s] [--gap:0.30rem] [gap:var(--gap)]",
+        "group flex overflow-hidden p-2 [--gap:0.30rem] [gap:var(--gap)]",
         {
           "flex-row": !vertical,
           "flex-col": vertical,
@@ -45,6 +48,7 @@ export default function Marquee({
                 "[animation-direction:reverse]": reverse,
               }
             )}
+            style={{ animationDuration: `var(--duration)` }} // Apply speed dynamically
           >
             {children}
           </div>

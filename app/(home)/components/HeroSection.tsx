@@ -25,6 +25,8 @@ import SearchBox from "./SearchBox"
 import StatisticsList from "./StatisticsList"
 import { Button } from "@/components/ui/button"
 import { Typewriter } from "react-simple-typewriter"
+import StaticsBar from "./StaticsBar"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 const locationSuggestions = ["dhaka", "chattogram", "khulna", "rajshahi", "sylhet", "barishal", "mymensingh", "rangpur"]
 
@@ -145,7 +147,7 @@ const HeroSection = () => {
 
       return (
             <div className="z-50 ">
-                  <MaxWidthWrapper className="flex flex-col  items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4">
+                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4">
                         <div className="rounded-md pt-4 pb-2 ">
                               <h1
                                     className="mt-4 bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:mt-10 lg:text-5xl"
@@ -249,9 +251,9 @@ const HeroSection = () => {
                         <div className="!mt-[3px]">
                               <Job_type_tag />
                         </div>
-                        {/* <div className="  overflow-hidden ">
-                              <StatisticsList />
-                        </div> */}
+                        <div className="  overflow-hidden ">
+                              <StaticsBar />
+                        </div>
                   </MaxWidthWrapper>
             </div>
       )

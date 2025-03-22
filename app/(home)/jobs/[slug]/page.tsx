@@ -7,7 +7,7 @@ import { useParams } from "next/navigation"
 import { dummyJobs } from "@/public/assets/dummyData"
 import { useUserData } from "@/utils/encript_decript"
 import { Avatar } from "@radix-ui/react-avatar"
-import { Banknote, Briefcase, Building2, Calendar, CalendarIcon, Facebook, FileWarning, Linkedin, MapPin, Share2, Twitter } from 'lucide-react'
+import { Banknote, Briefcase, Building2, Calendar, CalendarCheck, CalendarIcon, Facebook, FileWarning, Linkedin, MapPin, Share2, Twitter } from 'lucide-react'
 import { toast } from "react-toastify"
 
 import { formatDate } from "@/lib/utils"
@@ -256,18 +256,20 @@ const JobsDetails = () => {
                                           <div className="space-y-4">
                                                 <div className="grid grid-cols-2 gap-2 text-sm">
 
-                                                      <div className="space-y-3">
-                                                            <div className="flex items-center gap-2 text-sm">
-                                                                  <Calendar className="h-4 w-4 text-muted-foreground" />
-                                                                  <span className="text-muted-foreground">Deadline:</span>
-                                                                  <span>{formatDate(jobData?.expiry_date || new Date())}</span>
+                                                      <div className="space-y-3 w-full">
+                                                            <div className="flex whitespace-break-spaces items-start gap-2 text-sm">
+                                                                  <CalendarCheck className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                                  <div className="text-muted-foreground flex gap-2 mr-2">
+                                                                        <div>Deadline:</div>
+                                                                        <div className="whitespace-nowrap">{formatDate(jobData?.expiry_date || new Date())}</div>
+                                                                  </div>
                                                             </div>
 
                                                             <div className="flex whitespace-break-spaces items-start gap-2 text-sm">
                                                                   <MapPin className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                                                                  <div>
-                                                                        <span className="text-muted-foreground mr-2">Location:</span>
-                                                                        <span>{formatLocation()}</span>
+                                                                  <div className="text-muted-foreground flex gap-2 mr-2">
+                                                                        <div>Location:</div>
+                                                                        <div className="whitespace-nowrap">{formatLocation()}</div>
                                                                   </div>
                                                             </div>
                                                       </div>
@@ -332,12 +334,14 @@ const JobsDetails = () => {
                                           </div>
                                     </Card>
 
-                                    <SimilarJobslG jobs={jobs} save_jobs={save_jobs} />
+                                    {/* @ts-ignore */}
+                                    <RelatedCompanyJob user={user} company={jobData?.company_info?.website} save_jobs={save_jobs} />
+                                    {/* <SimilarJobslG jobs={jobs} save_jobs={save_jobs} /> */}
                               </div>
 
                               {/* Right Column - Job Details */}
                               <div className="lg:col-span-2 col-span-1">
-                                    <div className="space-y-8">
+                                    <div className="md:space-y-8 space-y-4">
                                           <section>
                                                 <h3 className="mb-4 text-xl font-semibold">Company Description</h3>
                                                 <div
@@ -388,13 +392,10 @@ const JobsDetails = () => {
 
                                           )}
                                     </div>
-                                    <br />
-                                    {/* @ts-ignore */}
-                                    <RelatedCompanyJob company={jobData?.company_info?.website} save_jobs={save_jobs} />
+                                    <SimilarJobslG user={user} jobs={jobs} save_jobs={save_jobs} />
+                                    <SimilarJobsSM user={user} jobs={jobs} save_jobs={save_jobs} />
                               </div>
                         </div>
-                        <SimilarJobsSM jobs={jobs} save_jobs={save_jobs} />
-
                   </div>
             </MaxWidthWrapper>
       )
@@ -409,7 +410,7 @@ const JobSection = ({
       content?: string
       children?: React.ReactNode
 }) => (
-      <section>
+      <section >
             <h3 className="mb-2 text-xl font-semibold">{title}</h3>
             {content ? (
                   <div
@@ -419,6 +420,8 @@ const JobSection = ({
             ) : (
                   children
             )}
+
+            <br /> <br />
       </section>
 )
 

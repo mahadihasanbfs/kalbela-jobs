@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 const Page = () => {
       const { data, loading, error } = useApiRequest<any>("jobs/get-all-org-jobs", "GET")
@@ -20,9 +21,22 @@ const Page = () => {
       const filteredData = data?.data?.filter((org: any) => org.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
       return (
-            <div className="w-full mt-8 lg:mt-0 ">
+            <div className="w-full mt-2 lg:mt-0 ">
+                  <div className="mb-4 flex h-12 bg-gray-100 px-4 py-1 items-center justify-between font-bold md:text-[1.4rem] text-lg">
+                        <div className="flex items-center gap-2">
+                              <img
+                                    src="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
+                                    alt="Government Jobs"
+                                    className="w-7 h-7 rounded-full"
+                              />
+                              Government Jobs
+                        </div>
+                        {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>}
+                  </div>
+
+
                   <section className=" relative w-full">
-                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-3 max-h-[500px] overflow-y-auto pt-2">
+                        <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3 max-h-[500px] overflow-y-auto pt-2">
                               {loading
                                     ? Array.from({ length: 8 }).map((_, index) => (
                                           <div key={index} className="flex flex-col rounded-lg border p-4 shadow-sm">
@@ -36,14 +50,14 @@ const Page = () => {
                                                 <Skeleton className="mt-4 h-10 w-full" />
                                           </div>
                                     ))
-                                    : data?.data
+                                    : data?.data?.slice(0, 9)
                                           ?.map((org: any) => (
                                                 <Link
                                                       href={`/govt-jobs/${org?.jobs[0]?._id}`}
                                                       key={org._id}
-                                                      className="flex flex-col justify-between rounded-lg border px-4 py-2 shadow-sm transition-all hover:shadow-md hover:border-gray-300"
+                                                      className="flex group flex-col justify-between rounded-lg hover:bg-gray-50 border md:p-4 p-2 shadow-sm transition-all hover:shadow-md hover:border-gray-300"
                                                 >
-                                                      <div className="flex items-center gap-4">
+                                                      <div className="flex md:flex-row flex-col justify-center md:justify-start items-start gap-4">
                                                             <Avatar className="size-12 rounded-lg">
                                                                   <AvatarImage
                                                                         src={org.logo}
@@ -52,11 +66,11 @@ const Page = () => {
                                                                   />
                                                                   <AvatarFallback>{org.name.substring(0, 2).toUpperCase()}</AvatarFallback>
                                                             </Avatar>
-                                                            <div className="flex-0.5">
-                                                                  <h3 className="font-semibold capitalize  leading-tight line-clamp-2">
-                                                                        {org.name}
+                                                            <div className="md:flex-0.5 md:text-start text-start">
+                                                                  <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">
+                                                                        {org.name.slice(0, 40)} {org.name.length > 40 && "..."}
                                                                   </h3>
-                                                                  <div className="flex flex-wrap items-center gap-2 mt-0.5">
+                                                                  <div className="flex flex-wrap items-center gap-2 mt-2">
                                                                         <p className="flex items-center text-xs text-gray-600">
                                                                               <Star className="mr-1 w-3 h-3 fill-yellow-400 text-yellow-400" />
                                                                               Openings: {org.job_count}
@@ -71,9 +85,12 @@ const Page = () => {
                                                 </Link>
                                           ))}
                         </div>
-                        <Link href="/govt-jobs" className="flex items-center justify-center text-blue-500">
+                        <br />
+                        {data?.data.length > 3 && <Link
+                              href="/govt-jobs"
+                              className="flex items-center justify-center bg-primary text-white py-2 px-4 rounded mt-4 w-[130px] m-auto">
                               View All
-                        </Link>
+                        </Link>}
                   </section>
             </div>
       )
