@@ -46,13 +46,13 @@ const SimilarJobslG = ({ user, jobs, save_jobs }: { user: any, jobs: any, save_j
                 className="mySwiper"
             >
                 {Array.isArray(jobs) && jobs?.map((jobPost: any) => (
-                    <SwiperSlide className="mb-10 rounded-lg border shadow hover:shadow-lg duration-300" key={jobPost?._id}>
-                        <Card className="p-4 !shadow-none !border-none transition-shadow hover:shadow-md">
-                            <CardContent className="p-0">
+                    <SwiperSlide className="mb-10 rounded-lg   border shadow hover:shadow-lg duration-300" key={jobPost?._id}>
+                        <Card className="p-4 !shadow-none !h-full  !border-none transition-shadow hover:shadow-md">
+                            <CardContent className="p-0 h-full">
                                 <h3 className="mb-2 text-lg font-semibold">
                                     {jobPost?.job_title}
                                 </h3>
-                                <div className="mb-2 flex flex-wrap gap-2 overflow-x-auto scrollbar-hide whitespace-nowrap">
+                                <div className="mb-2 flex gap-2 overflow-x-auto scrollbar-hide whitespace-nowrap">
                                     {jobPost?.skills?.slice(0, 4)?.map((skill: string, index: number) => (
                                         <Badge key={index} variant="outline" className="text-xs text-white bg-primary whitespace-nowrap">
                                             {skill}

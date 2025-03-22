@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import Govt_jobs from "./Govt_jobs"
+import { Button } from "@/components/ui/button"
 
 const FeaturedJobs: React.FC = () => {
       const { data, loading, error } = useApiRequest<any>(
@@ -19,19 +20,14 @@ const FeaturedJobs: React.FC = () => {
       console.log("data from featured jobs", data)
 
       return (
-            <section
-                  style={{
-                        // boxShadow: '#d4cccc42 0px -20px 65px 0px'
-                  }}
-                  className="">
-                  <div className="space-y-6">
-
-
+            <section>
+                  <div className="space-y-6 col-span-2">
                         <div>
-                              <h2 className="mb-4 flex items-center  font-bold text-[1.5rem]">
-                                    <span className="mr-2 text-red-500">🔥</span> Hot Jobs
-                              </h2>
-                              <div className="grid gap-4 grid-cols-2 lg:grid-cols-3 ">
+                              <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-bold md:text-[1.4rem] text-lg">
+                                    <div >🔥 Hot Jobs</div>
+                                    {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>}
+                              </div>
+                              <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3 ">
                                     {loading
                                           ? Array.from({ length: 16 }).map((_, index) => (
                                                 <div
@@ -45,17 +41,18 @@ const FeaturedJobs: React.FC = () => {
                                                       </div>
                                                 </div>
                                           ))
-                                          : data?.data?.map((job: any) => (
+                                          : data?.data?.slice(0, 9)?.map((job: any) => (
                                                 <Link
                                                       href={`/jobs/${job.url}`}
                                                       key={job._id}
-                                                      className="group flex justify-start flex-col md:flex-row w-full  items-center gap-2  overflow-hidden rounded-sm border p-2  hover:bg-[#001968] hover:bg-opacity-15"
+                                                      className="group flex justify-start flex-col md:flex-row w-full  items-start gap-2  overflow-hidden hover:bg-gray-50 rounded-lg border md:p-4 p-2 shadow-sm transition-all  hover:border-gray-300"
                                                 >
-                                                      <div className="">
-                                                            <div className="h-16 w-16">
+                                                      <div className="md:block md:w-auto flex w-full justify-center">
+                                                            <div className="h-16 w-16 m-auto ">
                                                                   {job?.company_info?.logo ? (
                                                                         <img
-                                                                              className="h-full w-20 rounded border-2 border-gray-300 bg-white object-contain p-2 shadow-md"
+                                                                              className="h-full w-20 rounded 
+                                                                               border-2 border-gray-300 bg-white object-contain p-2 shadow-md"
                                                                               src={job.company_info.logo}
                                                                               alt={job.company_info.name || "Company Logo"}
                                                                         />
@@ -69,7 +66,7 @@ const FeaturedJobs: React.FC = () => {
                                                             </div>
                                                       </div>
 
-                                                      <div className="flex-grow  gap-1 text-center md:text-start">
+                                                      <div className="flex-grow  gap-1 text-center md:text-start mx-auto">
                                                             <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">
 
                                                                   {job.job_title}
@@ -84,17 +81,9 @@ const FeaturedJobs: React.FC = () => {
                         </div>
 
                         <div>
-                              <h2 className="md:mb-4 md:mt-0 mt-3 flex items-center  font-bold text-[1.5rem]">
-                                    <img
-                                          src="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
-                                          alt="Government Jobs"
-                                          className="mr-2 w-6 h-6 rounded-full"
-                                    /> Government Jobs
-                              </h2>
                               <Govt_jobs />
                         </div>
                   </div>
-
             </section >
       )
 }
