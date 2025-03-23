@@ -1,30 +1,10 @@
+"use client"
+
 import React, { useState } from "react"
-import {
-  AlertCircle,
-  BaggageClaimIcon,
-  Briefcase,
-  ChevronLeft,
-  Eye,
-  FileBadge2,
-  GraduationCap,
-  Grid,
-  Home,
-  Key,
-  LifeBuoy,
-  LocateIcon,
-  LucideCookie,
-  Pencil,
-  Save,
-  Star,
-  Type,
-  X,
-} from "lucide-react"
+import { ChevronLeft, GraduationCap, Pencil, Plus, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -35,32 +15,137 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { EditModal } from "../CommonModal"
+
+interface TrainingSummaryType {
+  name: string
+  title: string
+  country: string
+  topics: string
+  year: string
+  institution: string
+  duration: string
+  location: string
+  index?: number
+}
+
 const TrainingSummarys = ({
   setActiveSection,
 }: {
   setActiveSection: (section: string | null) => void
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
-
-  const toggleEditMode = () => setIsEditing(!isEditing)
-
-  // Career Edite
-  const [selectedYear, setSelectedYear] = useState("")
-  const [trainingSummaryData, setTrainingSummaryData] = useState({
-    trainingTitle: "",
-    institute: "",
-    countryRegion: "",
-    location: "",
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
+  const [trainings, setTrainings] = useState<TrainingSummaryType[]>([])
+  const [currentTraining, setCurrentTraining] = useState<TrainingSummaryType>({
+    name: "",
+    title: "",
+    country: "",
+    topics: "",
+    year: "",
+    institution: "",
     duration: "",
-    topicCovered: "",
+    location: "",
+  })
+  const [errors, setErrors] = useState({
+    name: "",
+    title: "",
+    country: "",
+    topics: "",
+    year: "",
+    institution: "",
+    duration: "",
+    location: "",
   })
 
-  const handlarSave = async () => {
-    console.log("checked", trainingSummaryData)
+  const handleAddClick = () => {
+    setCurrentTraining({
+      name: "",
+      title: "",
+      country: "",
+      topics: "",
+      year: "",
+      institution: "",
+      duration: "",
+      location: "",
+    })
+    setIsEditMode(false)
+    setIsDialogOpen(true)
   }
 
+  const handleEditClick = (training: TrainingSummaryType, index: number) => {
+    setCurrentTraining({ ...training, index })
+    setIsEditMode(true)
+    setIsDialogOpen(true)
+  }
+
+  const handleDeleteClick = (trainingIndex: number) => {
+    const updatedTrainings = [...trainings]
+    updatedTrainings.splice(trainingIndex, 1)
+    setTrainings(updatedTrainings)
+  }
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false)
+  }
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target
+    setCurrentTraining((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelectChange = (name: any, value: any) => {
+    setCurrentTraining((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const validateInputs = () => {
+    const newErrors = {
+      name: currentTraining.name ? "" : "Training Name is required",
+      title: currentTraining.title ? "" : "Training Title is required",
+      country: currentTraining.country ? "" : "Country is required",
+      topics: currentTraining.topics ? "" : "Topics Covered is required",
+      year: currentTraining.year ? "" : "Year is required",
+      institution: currentTraining.institution
+        ? ""
+        : "Institution Name is required",
+      duration: currentTraining.duration ? "" : "Duration is required",
+      location: currentTraining.location ? "" : "Location is required",
+    }
+    setErrors(newErrors)
+    return !Object.values(newErrors).some((error) => error)
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+
+    if (validateInputs()) {
+      if (isEditMode && currentTraining.index !== undefined) {
+        const updatedTrainings = trainings.map((training, index) =>
+          index === currentTraining.index ? currentTraining : training
+        )
+        setTrainings(updatedTrainings)
+      } else {
+        setTrainings([...trainings, currentTraining])
+      }
+      setIsDialogOpen(false)
+    }
+
+    const obj = {
+      name: currentTraining.name,
+      title: currentTraining.title,
+      country: currentTraining.country,
+      topics: currentTraining.topics,
+      year: currentTraining.year,
+      institution: currentTraining.institution,
+      duration: currentTraining.duration,
+      location: currentTraining.location,
+    }
+
+    console.log("--->", obj)
+  }
+  const toggleEditMode = () => setIsDialogOpen(!isDialogOpen)
   return (
-    <div className="text-3xl text-black">
+    <div className="mb-4 w-full space-y-6 py-2">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
         <div className="flex items-center">
           <Button
@@ -73,7 +158,7 @@ const TrainingSummarys = ({
           </Button>
           <h1 className="ml-4 text-xl font-medium">Training Summary</h1>
         </div>
-        {isEditing ? (
+        {isDialogOpen ? (
           <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
@@ -95,132 +180,212 @@ const TrainingSummarys = ({
           </Button>
         )}
       </div>
-
-      {/* Career edit System */}
-
-      {isEditing ? (
-        <div className="mx-auto space-y-4 px-2 py-4">
-          {/* Training Title */}
-          <Input
-            id="functionalCate"
-            placeholder="Training Title *"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setTrainingSummaryData((prev) => ({
-                ...prev,
-                trainingTitle: e.target.value,
-              }))
-            }
+      {trainings.length === 0 ? (
+        <div className="py-8 text-center text-xl text-gray-500">
+          <GraduationCap
+            size={50}
+            strokeWidth={1}
+            className="mx-auto text-primary"
           />
+          <p>No summary found.</p>
 
-          {/* Topic Covered */}
-          <Input
-            id="functionalCate"
-            placeholder="Topic Covered *"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setTrainingSummaryData((prev) => ({
-                ...prev,
-                topicCovered: e.target.value,
-              }))
-            }
-          />
-
-          {/* Institute */}
-          <Input
-            id="functionalCate"
-            placeholder="Institute *"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setTrainingSummaryData((prev) => ({
-                ...prev,
-                institute: e.target.value,
-              }))
-            }
-          />
-
-          {/* country Region */}
-          <Input
-            id="functionalCate"
-            placeholder="Country Region *"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setTrainingSummaryData((prev) => ({
-                ...prev,
-                countryRegion: e.target.value,
-              }))
-            }
-          />
-
-          {/* Location */}
-          <Input
-            id="functionalCate"
-            placeholder="Location *"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setTrainingSummaryData((prev) => ({
-                ...prev,
-                location: e.target.value,
-              }))
-            }
-          />
-
-          {/* Training Year */}
-          <div className="">
-            <Select onValueChange={(value) => setSelectedYear(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Training Year *" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Training Year *</SelectLabel>
-                  <SelectItem value="2025"> 2025</SelectItem>
-                  <SelectItem value="2026">2026</SelectItem>
-                  <SelectItem value="2027">2027</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* duration */}
-          <Input
-            id="functionalCate"
-            placeholder="Duration"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setTrainingSummaryData((prev) => ({
-                ...prev,
-                duration: e.target.value,
-              }))
-            }
-          />
-
-          <div onClick={handlarSave} className="py-20">
-            <Button className="w-full">Save</Button>
-          </div>
+          <Button className="mt-4 px-6" onClick={handleAddClick}>
+            <Plus /> Add
+          </Button>
         </div>
       ) : (
-        <div className="mt-4 h-screen px-2">
-          <Card className="gap-4 p-4">
-            <div className="mx-auto flex h-12 w-12 justify-center rounded-full bg-gray-200 p-2">
-              <Grid className="h-8 w-8 text-gray-600" />
-            </div>
-            <div>
-              <p className="text-center text-sm text-gray-500">
-                There is currently no data! To add your training Details, kindly
-                click the following button.
-              </p>
-
-              <Button
-                onClick={toggleEditMode}
-                className="mt-3 w-full !bg-blue-500"
-              >
-                + Add Training
-              </Button>
-            </div>
-          </Card>
-        </div>
+        trainings.map((training, index) => (
+          <div
+            key={index}
+            className="rounded-md border bg-gray-50 p-4 dark:bg-gray-800"
+          >
+            <header className="flex items-center justify-between">
+              <h1 className="text-lg font-semibold">{training.name}</h1>
+              <div className="flex items-center gap-3">
+                <Button
+                  className="!bg-primary text-sm"
+                  onClick={() => handleEditClick(training, index)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="!bg-red-600 text-sm"
+                  onClick={() => handleDeleteClick(index)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </header>
+            <main className="mt-3 grid grid-cols-2 gap-8">
+              <div className="">
+                <h3 className="text-md font-semibold">Training Name</h3>
+                <p className="mt-2 text-gray-500">{training.name}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Training Title</h3>
+                <p className="mt-2 text-gray-500">{training.title}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Country</h3>
+                <p className="mt-2 text-gray-500">{training.country}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Topics Covered</h3>
+                <p className="mt-2 text-gray-500">{training.topics}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Year</h3>
+                <p className="mt-2 text-gray-500">{training.year}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Institution</h3>
+                <p className="mt-2 text-gray-500">{training.institution}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Duration</h3>
+                <p className="mt-2 text-gray-500">{training.duration}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Location</h3>
+                <p className="mt-2 text-gray-500">{training.location}</p>
+              </div>
+            </main>
+          </div>
+        ))
       )}
+
+      {trainings.length !== 0 && (
+        <Button className="px-6" onClick={handleAddClick}>
+          <Plus /> Add
+        </Button>
+      )}
+
+      <EditModal
+        open={isDialogOpen}
+        onOpenChange={handleDialogClose}
+        title={isEditMode ? "Edit Training" : "Add Training"}
+        className="absolute bottom-10 top-10 mx-auto w-[96%]"
+      >
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-2">
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="name">
+                Training Name
+              </label>
+              <Input
+                name="name"
+                value={currentTraining.name}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.name && <p className="text-red-500">{errors.name}</p>}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="title">
+                Training Title
+              </label>
+              <Input
+                name="title"
+                value={currentTraining.title}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.title && <p className="text-red-500">{errors.title}</p>}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="country">
+                Country
+              </label>
+              <Input
+                name="country"
+                value={currentTraining.country}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.country && (
+                <p className="text-red-500">{errors.country}</p>
+              )}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="topics">
+                Topics Covered
+              </label>
+              <Input
+                name="topics"
+                value={currentTraining.topics}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.topics && <p className="text-red-500">{errors.topics}</p>}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="year">
+                Year
+              </label>
+              <input
+                className="rounded-md border border-gray-200 px-2 py-[6px]"
+                name="year"
+                value={currentTraining.year}
+                onChange={handleInputChange}
+                type="date"
+              />
+              {errors.year && <p className="text-red-500">{errors.year}</p>}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="institution">
+                Institution Name
+              </label>
+              <Input
+                name="institution"
+                value={currentTraining.institution}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.institution && (
+                <p className="text-red-500">{errors.institution}</p>
+              )}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="duration">
+                Duration
+              </label>
+              <Input
+                name="duration"
+                value={currentTraining.duration}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.duration && (
+                <p className="text-red-500">{errors.duration}</p>
+              )}
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold" htmlFor="location">
+                Location
+              </label>
+              <Input
+                name="location"
+                value={currentTraining.location}
+                onChange={handleInputChange}
+                type="text"
+              />
+              {errors.location && (
+                <p className="text-red-500">{errors.location}</p>
+              )}
+            </div>
+          </div>
+          <div className="mt-4 flex justify-end gap-2">
+            <Button
+              type="button"
+              onClick={handleDialogClose}
+              className="!bg-red-500"
+            >
+              Cancel
+            </Button>
+            <Button type="submit">{isEditMode ? "Update" : "Add"}</Button>
+          </div>
+        </form>
+      </EditModal>
     </div>
   )
 }

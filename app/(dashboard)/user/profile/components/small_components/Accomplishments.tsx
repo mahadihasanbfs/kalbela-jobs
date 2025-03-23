@@ -1,86 +1,59 @@
-import React, { useState } from "react"
-import { format } from "date-fns"
+import { useState } from "react"
 import {
-  AlertCircle,
-  Award,
-  BaggageClaimIcon,
-  BarChart2,
-  Briefcase,
-  CalendarIcon,
   ChevronLeft,
-  Eye,
-  FileBadge2,
-  Globe,
-  GraduationCap,
-  Grid,
-  Home,
-  Key,
-  Laptop,
-  LifeBuoy,
-  Link,
-  LocateIcon,
-  LucideCookie,
+  Code,
+  FileKey,
+  Monitor,
   Pencil,
-  Save,
-  Star,
-  Type,
+  Trophy,
   X,
 } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
 
+import { AccomplishmentDialog } from "../small_components/accomplishment-dialog"
+
+interface AccomplishmentData {
+  title: string
+  issuedOn: string
+  url: string
+  description: string
+  type: "portfolio" | "publication" | "award" | "project" | "other"
+}
 const Accomplishments = ({
   setActiveSection,
 }: {
   setActiveSection: (section: string | null) => void
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [activeDialog, setActiveDialog] = useState<
+    "portfolio" | "publication" | "award" | "project" | "other" | null
+  >(null)
+  const [accomplishmentData, setAccomplishmentData] = useState<
+    AccomplishmentData[]
+  >([])
 
+  const handleSaveAccomplishment = (data: AccomplishmentData) => {
+    console.log("Saving accomplishment:", data)
+    // @ts-ignore
+    setAccomplishmentData([
+      ...accomplishmentData,
+      { ...data, type: activeDialog },
+    ])
+  }
+
+  const portfolio = accomplishmentData.filter(
+    (item) => item.type === "portfolio"
+  )
+  const publications = accomplishmentData.filter(
+    (item) => item.type === "publication"
+  )
+  const awards = accomplishmentData.filter((item) => item.type === "award")
+  const projects = accomplishmentData.filter((item) => item.type === "project")
+  const others = accomplishmentData.filter((item) => item.type === "other")
+  const [isEditing, setIsEditing] = useState<boolean>(true)
   const toggleEditMode = () => setIsEditing(!isEditing)
-  const handleSave = () => {
-    // Handle save logic here
-    setIsEditing(false)
-  }
-
-  // Career Edite
-  const [accountPlishment, setAccountPlishment] = useState({
-    title: "",
-    IssuedDate: "",
-    urlLink: "",
-    description: "",
-  })
-
-  const handleSaved = () => {
-    console.log("checked", accountPlishment)
-  }
-
   return (
-    <div className="text-3xl text-black">
+    <div className="mb-4 w-full space-y-6 py-2">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
         <div className="flex items-center">
           <Button
@@ -115,220 +88,294 @@ const Accomplishments = ({
           </Button>
         )}
       </div>
-
-      {/* Career edit System */}
-
-      {isEditing ? (
-        <div className="mx-auto px-2 py-4">
-          {/* Certification Title */}
-
-          <Label className="">Title *</Label>
-          <Input
-            id="primaryMobile"
-            className={`mt-1 w-full border border-gray-300`}
-            onChange={(e) =>
-              setAccountPlishment((prev) => ({
-                ...prev,
-                title: e.target.value,
-              }))
-            }
-          />
-
-          <Label className="-pb-5">Issued on *</Label>
-          <Input
-            id="functionalCate"
-            type="date"
-            className={`mt-1 border border-gray-300`}
-            onChange={(e) =>
-              setAccountPlishment((prev) => ({
-                ...prev,
-                IssuedDate: e.target.value,
-              }))
-            }
-          />
-
-          <Label htmlFor="primaryMobile" className="-pb-5">
-            URL *
-          </Label>
-          <Input
-            id="primaryMobile"
-            type="url"
-            className={`mt-1 w-full border border-gray-300`}
-            onChange={(e) =>
-              setAccountPlishment((prev) => ({
-                ...prev,
-                urlLink: e.target.value,
-              }))
-            }
-          />
-          <Label>Description *</Label>
-          <Textarea
-            onChange={(e) =>
-              setAccountPlishment((prev) => ({
-                ...prev,
-                description: e.target.value,
-              }))
-            }
-            className="mt-1"
-          />
-
-          <div className="flex gap-3 py-20">
-            <Button className="w-full">Cancel</Button>
-            <Button onClick={handleSaved} className="w-full !bg-blue-700">
-              Save
-            </Button>
-          </div>
+      <div className="flex flex-col items-center justify-center space-y-6 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#001968]/10">
+          <Monitor className="h-8 w-8 text-[#001968]" />
         </div>
-      ) : (
-        <div className="mt-4 h-screen px-2">
-          {/* Shandcn ui Tabs use */}
+        <p className="max-w-lg text-gray-600">
+          Currently no data exists! Select & add your portfolio url,
+          Papers/Journal, Publications, etc to enhance your profile
+        </p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Button
+            variant="outline"
+            className="border-[#001968] text-[#001968] hover:bg-[#001968]/10"
+            onClick={() => setActiveDialog("portfolio")}
+          >
+            Portfolio
+          </Button>
+          <Button
+            variant="outline"
+            className="border-[#001968] text-[#001968] hover:bg-[#001968]/10"
+            onClick={() => setActiveDialog("publication")}
+          >
+            Publications
+          </Button>
+          <Button
+            variant="outline"
+            className="border-[#001968] text-[#001968] hover:bg-[#001968]/10"
+            onClick={() => setActiveDialog("award")}
+          >
+            Awards/Honors
+          </Button>
+          <Button
+            variant="outline"
+            className="border-[#001968] text-[#001968] hover:bg-[#001968]/10"
+            onClick={() => setActiveDialog("project")}
+          >
+            Projects
+          </Button>
+          <Button
+            variant="outline"
+            className="border-[#001968] text-[#001968] hover:bg-[#001968]/10"
+            onClick={() => setActiveDialog("other")}
+          >
+            Others
+          </Button>
+        </div>
+      </div>
+      <AccomplishmentDialog
+        type={activeDialog || "portfolio"}
+        open={!!activeDialog}
+        onOpenChange={(open) => !open && setActiveDialog(null)}
+        /* @ts-ignore */
+        onSave={handleSaveAccomplishment}
+      />
 
-          <div>
-            <Tabs defaultValue="portfolio" className="w-full">
-              <ScrollArea className="mb-10 w-full">
-                <TabsList className="flex space-x-3">
-                  <TabsTrigger
-                    className="rounded-md px-8 transition data-[state=active]:bg-blue-500 data-[state=active]:text-white"
-                    value="portfolio"
-                  >
-                    Portfolio
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="rounded-md px-8 transition data-[state=active]:bg-blue-500 data-[state=active]:text-white"
-                    value="projects"
-                  >
-                    Projects
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="rounded-md px-8 transition data-[state=active]:bg-blue-500 data-[state=active]:text-white"
-                    value="publications"
-                  >
-                    Publications
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="rounded-md px-8 transition data-[state=active]:bg-blue-500 data-[state=active]:text-white"
-                    value="awards"
-                  >
-                    Awards
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="rounded-md px-8 transition data-[state=active]:bg-blue-500 data-[state=active]:text-white"
-                    value="others"
-                  >
-                    Others
-                  </TabsTrigger>
-                </TabsList>
-                <ScrollBar className="w-0" orientation="horizontal" />
-              </ScrollArea>
+      {portfolio.length > 0 && (
+        <div className="mt-6">
+          <h1 className="text-md border-b pb-2 font-semibold">
+            Portfolio ({portfolio.length})
+          </h1>
+          <ul className="mt-3 space-y-3">
+            {portfolio?.map((data, index) => (
+              <li
+                key={index}
+                className="grid-cols-6 gap-2 rounded border p-4 duration-300 hover:shadow-md md:grid"
+              >
+                <div className="flex !h-[100px] !w-[100px] items-center justify-center rounded bg-[#001968] text-white">
+                  <Code size={50} />
+                </div>
+                <div className="col-span-5">
+                  <div className="flex justify-between">
+                    <h3 className="text-md font-semibold capitalize">
+                      {data?.title}
+                    </h3>
 
-              <TabsContent value="portfolio">
-                <Card className="gap-4 p-4">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-                    <Laptop className="h-6 w-6 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-center text-sm text-gray-500">
-                      There is currently no data! To add your training Details,
-                      kindly click the following button.
+                    <p className="text-sm text-gray-500 duration-300">
+                      {data?.issuedOn}
                     </p>
-
-                    <Button
-                      onClick={toggleEditMode}
-                      className="mt-3 w-full !bg-blue-500"
-                    >
-                      + Add Portfolio
-                    </Button>
                   </div>
-                </Card>
-              </TabsContent>
 
-              <TabsContent value="projects">
-                <Card className="gap-4 p-4">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-                    <Laptop className="h-6 w-6 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-center text-sm text-gray-500">
-                      There is currently no data! To add your training Details,
-                      kindly click the following button.
+                  <a
+                    target={"_blank"}
+                    href={data?.url}
+                    className="text-sm text-primary duration-300 hover:text-blue-500"
+                  >
+                    {data?.url.slice(0, 50)} {data?.url.length > 50 && "..."}
+                  </a>
+
+                  <p className="text-sm text-gray-500">
+                    {data?.description.slice(0, 200)}{" "}
+                    {data?.description.length > 100 && "..."}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {publications.length > 0 && (
+        <div className="mt-6">
+          <h1 className="text-md border-b pb-2 font-semibold">
+            Publications ({publications.length})
+          </h1>
+          <ul className="mt-3 space-y-3">
+            {publications?.map((data, index) => (
+              <li
+                key={index}
+                className="grid-cols-6 gap-2 rounded border p-4 duration-300 hover:shadow-md md:grid"
+              >
+                <div className="flex !h-[100px] !w-[100px] items-center justify-center rounded bg-[#006868] text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={52}
+                    height={52}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-book-check"
+                  >
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+                    <path d="m9 9.5 2 2 4-4" />
+                  </svg>
+                </div>
+                <div className="col-span-5">
+                  <div className="flex justify-between">
+                    <h3 className="text-md font-semibold capitalize">
+                      {data?.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-500 duration-300">
+                      {data?.issuedOn}
                     </p>
-
-                    <Button
-                      onClick={toggleEditMode}
-                      className="mt-3 w-full !bg-blue-500"
-                    >
-                      + Add Projects
-                    </Button>
                   </div>
-                </Card>
-              </TabsContent>
 
-              <TabsContent value="publications">
-                <Card className="gap-4 p-4">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-                    <Laptop className="h-6 w-6 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-center text-sm text-gray-500">
-                      There is currently no data! To add your training Details,
-                      kindly click the following button.
+                  <a
+                    target={"_blank"}
+                    href={data?.url}
+                    className="text-sm text-primary duration-300 hover:text-blue-500"
+                  >
+                    {data?.url.slice(0, 50)} {data?.url.length > 50 && "..."}
+                  </a>
+
+                  <p className="text-sm text-gray-500">
+                    {data?.description.slice(0, 200)}{" "}
+                    {data?.description.length > 100 && "..."}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {awards.length > 0 && (
+        <div className="mt-6">
+          <h1 className="text-md border-b pb-2 font-semibold">
+            Awards/Honors ({awards.length})
+          </h1>
+          <ul className="mt-3 space-y-3">
+            {awards?.map((data, index) => (
+              <li
+                key={index}
+                className="grid-cols-6 gap-2 rounded border p-4 duration-300 hover:shadow-md md:grid"
+              >
+                <div className="flex !h-[100px] !w-[100px] items-center justify-center rounded bg-[#00682b] text-white">
+                  <Trophy strokeWidth={1.25} size={50} />
+                </div>
+                <div className="col-span-5">
+                  <div className="flex justify-between">
+                    <h3 className="text-md font-semibold capitalize">
+                      {data?.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-500 duration-300">
+                      {data?.issuedOn}
                     </p>
+                  </div>
 
-                    <Button
-                      onClick={toggleEditMode}
-                      className="mt-3 w-full !bg-blue-500"
-                    >
-                      + Add Publications
-                    </Button>
-                  </div>
-                </Card>
-              </TabsContent>
-              <TabsContent value="awards">
-                <Card className="gap-4 p-4">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-                    <Laptop className="h-6 w-6 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-center text-sm text-gray-500">
-                      There is currently no data! To add your training Details,
-                      kindly click the following button.
+                  <a
+                    target={"_blank"}
+                    href={data?.url}
+                    className="text-sm text-primary duration-300 hover:text-blue-500"
+                  >
+                    {data?.url.slice(0, 50)} {data?.url.length > 50 && "..."}
+                  </a>
+
+                  <p className="text-sm text-gray-500">
+                    {data?.description.slice(0, 200)}{" "}
+                    {data?.description.length > 100 && "..."}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {projects.length > 0 && (
+        <div className="mt-6">
+          <h1 className="text-md border-b pb-2 font-semibold">
+            Projects ({projects.length})
+          </h1>
+          <ul className="mt-3 space-y-3">
+            {projects?.map((data, index) => (
+              <li
+                key={index}
+                className="grid-cols-6 gap-2 rounded border p-4 duration-300 hover:shadow-md md:grid"
+              >
+                <div className="flex !h-[100px] !w-[100px] items-center justify-center rounded bg-[#005068] text-white">
+                  <Monitor strokeWidth={1.25} size={50} />
+                </div>
+                <div className="col-span-5">
+                  <div className="flex justify-between">
+                    <h3 className="text-md font-semibold capitalize">
+                      {data?.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-500 duration-300">
+                      {data?.issuedOn}
                     </p>
+                  </div>
 
-                    <Button
-                      onClick={toggleEditMode}
-                      className="mt-3 w-full !bg-blue-500"
-                    >
-                      + Add Awards
-                    </Button>
-                  </div>
-                </Card>
-              </TabsContent>
-              <TabsContent value="others">
-                <Card className="gap-4 p-4">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-                    <Laptop className="h-6 w-6 text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-center text-sm text-gray-500">
-                      There is currently no data! To add your training Details,
-                      kindly click the following button.
+                  <a
+                    target={"_blank"}
+                    href={data?.url}
+                    className="text-sm text-primary duration-300 hover:text-blue-500"
+                  >
+                    {data?.url.slice(0, 50)} {data?.url.length > 50 && "..."}
+                  </a>
+
+                  <p className="text-sm text-gray-500">
+                    {data?.description.slice(0, 200)}{" "}
+                    {data?.description.length > 100 && "..."}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {others.length > 0 && (
+        <div className="mt-6">
+          <h1 className="text-md border-b pb-2 font-semibold">
+            Others ({others.length})
+          </h1>
+          <ul className="mt-3 space-y-3">
+            {others?.map((data, index) => (
+              <li
+                key={index}
+                className="grid-cols-6 gap-2 rounded border p-4 duration-300 hover:shadow-md md:grid"
+              >
+                <div className="flex !h-[100px] !w-[100px] items-center justify-center rounded bg-[#ad196ff3] text-white">
+                  <FileKey size={50} strokeWidth={1.25} />
+                </div>
+                <div className="col-span-5">
+                  <div className="flex justify-between">
+                    <h3 className="text-md font-semibold capitalize">
+                      {data?.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-500 duration-300">
+                      {data?.issuedOn}
                     </p>
-
-                    <Button
-                      onClick={toggleEditMode}
-                      className="mt-3 w-full !bg-blue-500"
-                    >
-                      + Add others
-                    </Button>
                   </div>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
+
+                  <a
+                    target={"_blank"}
+                    href={data?.url}
+                    className="text-sm text-primary duration-300 hover:text-blue-500"
+                  >
+                    {data?.url.slice(0, 50)} {data?.url.length > 50 && "..."}
+                  </a>
+
+                  <p className="text-sm text-gray-500">
+                    {data?.description.slice(0, 200)}{" "}
+                    {data?.description.length > 100 && "..."}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
   )
 }
-
 export default Accomplishments
