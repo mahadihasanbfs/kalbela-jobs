@@ -118,7 +118,7 @@ const SearchDetails: React.FC = () => {
 
 
       return (
-            <section className=" pt-6">
+            <section className="bg-light-theme pt-6">
                   <MaxWidthWrapper>
                         <Breadcrumbs />
                   </MaxWidthWrapper>

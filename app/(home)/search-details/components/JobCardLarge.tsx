@@ -81,39 +81,40 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
       return (
             <div>
                   <div
-                        className="md:block hidden bg-white duration-300 hover:bg-gray-50 rounded-lg border p-4 hover:shadow-lg hover:border-indigo-600 shadow focus:outline-none focus:ring focus:ring-offset-2"
+                        style={{
+                              backgroundImage: `linear-gradient(181.07deg, rgb(239 245 255 / 86%) -53%, rgb(255 255 255) 24rem)`
+                        }}
+                        className="md:block hidden bg-light-theme duration-300 rounded-lg border p-4 hover:shadow-lg hover:border-indigo-600  focus:outline-none focus:ring focus:ring-offset-2"
                         key={job._id}
                   >
                         <article>
-                              <Link
-                                    href={`/jobs/${job.url}`}
-                                    className="relative border-b border-gray-400 pb-2"
+                              <div
+                                    className="relative border-gray-400 pb-2"
                               >
                                     <header>
 
-                                          <div className="flex items-center gap-4">
-                                                <div className="w-16 h-16 border md:w-20 md:h-20 rounded-xl overflow-hidden">
-                                                      <Image
-                                                            className="rounded-lg bg-gray-200 w-full h-full object-scale-down p-2 "
-                                                            src={job.company_info?.logo || fallback_image.src}
-                                                            width={400}
-                                                            height={400}
-                                                            alt={`${job.company_info?.name} logo`}
-                                                      />
-                                                </div>
-                                                <div>
+                                          <div className="flex w-full justify-between items-center gap-4">
+                                                <Link href={`/jobs/${job?.url}`} className="flex items-center gap-4 group">
                                                       <div className="max-w-64 md:max-w-xl">
-                                                            <h2 className="text-lg font-bold text-gray-800">{job.job_title}</h2>
-                                                            <h3 className="my-0.5">{job.company_info?.name} </h3>
+                                                            <h2 className="hover:text-blue-800 text-lg font-bold text-gray-800">{job.job_title}</h2>
+
+                                                            <Link href={`/companies${job?.company_info?.website}`} className="text-sm text-gray-500 hover:text-blue-800">
+                                                                  <h3 className="my-0.5">{job.company_info?.name} </h3>
+                                                            </Link>
 
                                                       </div>
+                                                </Link>
 
-                                                      <div className="md:flex hidden md:text-md text-xs md:items-center gap-2 mt-1">
-                                                            <h3 className="my-0.5">{job.company_info?.name}</h3>
-                                                            {/* <div className="border md:text-sm h-[28px] flex items-center justify-center border-[#4383D6] text-[#4383D6] md:w-auto w-auto md:text-md text-xs px-3 md:py-0.2 rounded-full">
-                                                            Actively Hiring
-                                                      </div> */}
-                                                      </div>
+                                                <div className="w-16 h-16 border md:w-20 md:h-20 rounded-xl overflow-hidden">
+                                                      <Link href={`/companies/${job?.company_info?.website}`}>
+                                                            <Image
+                                                                  className="rounded-lg bg-gray-200 w-full h-full object-scale-down p-2 "
+                                                                  src={job.company_info?.logo || fallback_image.src}
+                                                                  width={400}
+                                                                  height={400}
+                                                                  alt={`${job.company_info?.name} logo`}
+                                                            />
+                                                      </Link>
                                                 </div>
                                           </div>
                                           <div className="md:flex mt-4 hidden w-full gap-2 overflow-x-auto scrollbar-hide  lg:flex-wrap lg:overflow-x-visible">
@@ -128,51 +129,46 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                                                 ))}
                                           </div>
 
-                                          <ul className="md:mt-4 border-t pt-3 mt-3 md:flex hidden md:flex-row flex-col overflow-x-auto chat-bot md:items-center space-x-4 text-sm">
-                                                <li className="flex text-nowrap items-center gap-2 border-gray-500 pr-2 md:border-r">
-                                                      <MapPin strokeWidth={1} size={22} className="text-gray-500" />
-                                                      {formatLocation()}
-                                                </li>
-                                                <li className="flex text-nowrap items-center gap-2 border-gray-500 md:pr-2 md:border-r">
-                                                      <Calendar strokeWidth={1} size={22} className="text-gray-500" />
-                                                      {job?.job_type}
-                                                </li>
-                                                <li className="flex text-nowrap items-center gap-2 border-gray-500 md:pr-2 ">
-                                                      <Banknote strokeWidth={1} size={22} className="text-gray-500" />
-                                                      {job.salary_negotiable || job.negotiable_note
-                                                            ? "Negotiable"
-                                                            : `${job.salary_range?.min}${job.salary_range?.max ? ` - ${job.salary_range.max}` : ""} ${job.salary_range?.currency || ""} / month`}
-                                                </li>
-                                          </ul>
+                                          <div className="flex md:mt-4 border-t pt-3 mt-3 items-center justify-between">
+                                                <ul className=" md:flex hidden md:flex-row flex-col overflow-x-auto chat-bot md:items-center space-x-4 text-sm">
+                                                      <li className="flex text-nowrap items-center gap-2 border-gray-500 pr-2 md:border-r">
+                                                            <MapPin strokeWidth={1} size={22} className="text-gray-500" />
+                                                            {formatLocation()}
+                                                      </li>
+                                                      <li className="flex text-nowrap items-center gap-2 border-gray-500 md:pr-2 md:border-r">
+                                                            <Calendar strokeWidth={1} size={22} className="text-gray-500" />
+                                                            {job?.job_type}
+                                                      </li>
+                                                      <li className="flex text-nowrap items-center gap-2 border-gray-500 md:pr-2  md:border-r">
+                                                            <Banknote strokeWidth={1} size={22} className="text-gray-500" />
+                                                            {job.salary_negotiable || job.negotiable_note
+                                                                  ? "Negotiable"
+                                                                  : `${job.salary_range?.min}${job.salary_range?.max ? ` - ${job.salary_range.max}` : ""} ${job.salary_range?.currency || ""} / month`}
+                                                      </li>
 
-                                          <ul className="mt-6 md:hidden block space-y-2 text-sm">
-                                                <li className="flex gap-2 border-gray-500 pr-2 md:border-r">
-                                                      <MapPin strokeWidth={1} size={25} className="text-gray-500" />
-                                                      {formatLocation()}
-                                                </li>
-                                                <li className="flex  gap-2 border-gray-500 md:pr-2 md:border-r">
-                                                      <Calendar strokeWidth={1} size={22} className="text-gray-500" />
-                                                      {job?.job_type}
-                                                </li>
-                                                <li className="flex  gap-2 border-gray-500 md:pr-2 ">
-                                                      <Banknote strokeWidth={1} size={22} className="text-gray-500" />
-                                                      {job.salary_negotiable || job.negotiable_note
-                                                            ? "Negotiable"
-                                                            : `${job.salary_range?.min}${job.salary_range?.max ? ` - ${job.salary_range.max}` : ""} ${job.salary_range?.currency || ""} / month`}
-                                                </li>
-                                          </ul>
+                                                      <li className="flex text-nowrap items-center gap-2 border-gray-500 md:pr-2 ">
+                                                            <div className="flex gap-0 items-center px-2 cursor-default justify-between h-[30px]  rounded-full">
+                                                                  <div className="flex w-full gap-1 items-center justify-center">
+                                                                        {/* <RotateCw strokeWidth={1.4} size={18} /> */}
+                                                                        Duration : <span>
+                                                                              {formatTimeAgo(job?.expiry_date)}
+                                                                        </span></div>
+
+                                                            </div>
+                                                      </li>
+                                                </ul>
+
+                                                <Link href={`/jobs/${job.url}`}>
+                                                      <div className="flex gap-0 items-center !bg-primary !text-white px-6 justify-center text-center text-sm h-[35px]  rounded-full">Apply Now</div>
+                                                </Link>
+                                          </div>
 
                                     </header>
 
                                     <p className="mt-2 text-xs">{job.postedDate}</p>
-                              </Link>
+                              </div>
                               <div className="flex items-center gap-2 mt-3">
-                                    <button className="flex gap-0 items-center bg-[#00228015] text-[#066797] px-2 cursor-default justify-between h-[30px]  rounded-full">
-                                          <div className="flex w-full gap-1 items-center justify-center"><RotateCw strokeWidth={1.4} size={18} /> <span>
-                                                {formatTimeAgo(job?.expiry_date)}
-                                          </span></div>
 
-                                    </button>
 
 
 
@@ -213,7 +209,7 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
 
                         {/* Card footer */}
                         <div className="bg-white p-4 flex justify-between items-center">
-                              <div className="flex items-center gap-2">
+                              <Link href={`/companies/${job?.company_info?.website}`} className="flex items-center gap-2 group">
                                     <div className="w-8 h-8 rounded-full bg-[#FF5A5F] flex items-start justify-center">
                                           <div className="w-9 h-8 border  rounded-lg overflow-hidden">
                                                 <Image
@@ -225,10 +221,10 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                                                 />
                                           </div>
                                     </div>
-                                    <div className="font-medium text-sm text-gray-800  w-[140px]">
+                                    <div className="font-medium text-sm group-hover:!text-blue-500 text-gray-800  w-[140px]">
                                           {job.company_info?.name}
                                     </div>
-                              </div>
+                              </Link>
                               <Link href={`/jobs/${job?.url}`} className="bg-primary text-white px-4 py-1.5 rounded-full text-sm font-medium">View</Link>
                         </div>
                   </div>

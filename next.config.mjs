@@ -39,6 +39,7 @@ const nextConfig = {
       "img.freepik.com",
       "image.kalbelajobs.com",
       "server.kalbelajobs.com",
+      "localhost",
     ],
   },
   env: {
