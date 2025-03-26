@@ -248,12 +248,12 @@ const HeroSection = () => {
                               data={data}
                               theme={theme} /> */}
 
-                        <div className="!mt-[3px]">
+                        {/* <div className="!mt-[3px]">
                               <Job_type_tag />
-                        </div>
-                        <div className="  overflow-hidden ">
+                        </div> */}
+                        {/* <div className="  overflow-hidden ">
                               <StaticsBar />
-                        </div>
+                        </div> */}
                   </MaxWidthWrapper>
             </div>
       )

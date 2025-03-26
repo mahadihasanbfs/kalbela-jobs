@@ -11,6 +11,7 @@ import Footer from "@/components/footer/Footer"
 import Navbar from "@/components/navbar/Navbar"
 import DownloadApp from "@/components/DownloadApp"
 import ChatBot from "@/components/chatBot/ChatBot"
+import Navbar2 from "@/components/navbar/Navbar2"
 
 export const metadata: Metadata = {
       metadataBase: new URL(siteConfig.url),
@@ -100,7 +101,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                               <div className="relative flex min-h-screen flex-col justify-between ">
                                     <header className="sticky top-0  z-[1000]">
-                                          <Navbar />
+                                          <Navbar2 />
                                     </header>
                                     <main className="flex-1">
                                           {children}

@@ -40,6 +40,8 @@ const nextConfig = {
       "image.kalbelajobs.com",
       "server.kalbelajobs.com",
       "localhost",
+      "i.ibb.co.com",
+      "i.ibb.co",
     ],
   },
   env: {
