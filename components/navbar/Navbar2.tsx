@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MaxWidthWrapper from "../MaxWidthWrapper";
+import { ThemeToggle } from "../ThemeToggle";
 import { Skeleton } from "../ui/skeleton";
 import UserNav from "./UserNav";
 
@@ -130,7 +131,6 @@ const Navbar2 = () => {
                                 </li>
                             );
                         })}
-
                         <li>
                             {!user
                                 ? <div className="font-regular duration-300 text-gray-800 dark:text-gray-200 flex items-center gap-2">
@@ -150,12 +150,20 @@ const Navbar2 = () => {
 
                                 : <UserNav loading={loading} user={user} />}
                         </li>
+                        {<li>
+                            <ThemeToggle />
+                        </li>}
                     </ul>
                 </div>
 
-                <div className="items-center lg:hidden block">
+                <div className="items-center lg:hidden flex gap-3">
+                    <div>
+                        <ThemeToggle />
+                    </div>
                     {loading ? <Skeleton className="h-8 w-8 rounded-full" /> : <UserNav loading={loading} user={user} />}
+
                 </div>
+
             </MaxWidthWrapper>
         </nav>
     );

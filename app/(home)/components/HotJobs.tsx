@@ -96,6 +96,7 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data }) => {
                             alt={'add'}
                             width={500}
                             height={500}
+                            className="rounded"
                         />
                     </Link>)
                 }
