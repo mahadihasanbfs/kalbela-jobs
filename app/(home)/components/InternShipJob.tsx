@@ -71,7 +71,7 @@ const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading }) => {
                 </div>
 
                 {
-                    !data?.data && <div className='h-[400px] flex items-center justify-center '>
+                    !data?.data && <div className='md:h-[400px] h-[230px] flex items-center justify-center '>
                         <NotFoundVector />
                     </div>
                 }
