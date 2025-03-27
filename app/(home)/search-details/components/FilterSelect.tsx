@@ -239,14 +239,14 @@ const FilterSelect: FC<FilterSelectProps> = ({
                         </div>
                   </div>}
 
-                  <p onClick={() => setMore(!more)} className="text-[#008BDC] cursor-pointer">{
+                  <p onClick={() => setMore(!more)} className="text-primary_blue cursor-pointer">{
                         more ? "Hide filters" : "View more filters"
                   } </p>
 
 
                   <br />
                   <div className="flex justify-end">
-                        <button className="ml-auto text-[#008BDC] text-end">Clear All</button>
+                        <button className="ml-auto text-primary_blue text-end">Clear All</button>
                   </div>
 
             </div>

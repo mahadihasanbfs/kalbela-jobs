@@ -33,6 +33,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadio
 import { Button } from "@/components/ui/button"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import JobSearchForm from "./components/JobSearchForm"
 
 
 
@@ -142,12 +143,12 @@ const SearchDetails: React.FC = () => {
                         <MaxWidthWrapper>
                               <div
                                     style={{
-                                          backgroundImage: `linear-gradient(5deg, #0000007a, #000000b0), url("https://images.unsplash.com/photo-1533478784933-5fdbddc8ea7c?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")`
+                                          backgroundImage: `linear-gradient(5deg, #00000098, #0000008e), url("https://images.unsplash.com/photo-1533478784933-5fdbddc8ea7c?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")`
                                     }}
-                                    className="md:h-[280px] h-[200px] rounded w-full bg-cover object-cover bg-center">
-
+                                    className="md:h-[360px] h-auto rounded w-full bg-cover object-cover bg-center">
+                                    <JobSearchForm />
                               </div>
-                              <div className="flex bg-gray-100 p-2 items-center justify-between">
+                              {/* <div className="flex bg-gray-100 p-2 items-center justify-between">
                                     <h2 className="text-lg font-semibold">Total Jobs {totalJobs}</h2>
 
                                     <DropdownMenu>
@@ -175,7 +176,7 @@ const SearchDetails: React.FC = () => {
                                                 </DropdownMenuRadioGroup>
                                           </DropdownMenuContent>
                                     </DropdownMenu>
-                              </div>
+                              </div> */}
                         </MaxWidthWrapper>
                   </header>
 
@@ -196,7 +197,7 @@ const SearchDetails: React.FC = () => {
 
                                                 <div className="flex w-full mt-2 items-center border border-[#a6a6a7] rounded">
                                                       <input onChange={(e) => setQuery(e.target.value)} placeholder="Search" type="text" name='search' className="bg-transparent w-full h-full focus:outline-none focus-within:outline-none p-2" />
-                                                      <button className="bg-[#008BDC] cursor-default flex items-center justify-center w-16 h-11 text-white"><Search size={22} className=" text-white" /></button>
+                                                      <button className="bg-primary_blue cursor-default flex items-center justify-center w-16 h-11 text-white"><Search size={22} className=" text-white" /></button>
                                                 </div>
                                           </div>
                                           <div className="w-full rounded border p-4 shadow-sm">
@@ -247,7 +248,7 @@ const SearchDetails: React.FC = () => {
                   <MaxWidthWrapper className="flex flex-col gap-6 p-4 lg:flex-row sticky top-[56px]">
                         <aside className="hidden h-fit w-full  md:sticky md:top-20 lg:block lg:w-1/4 pt-5 ">
 
-                              <div className="bg-white text-[#008BDC] flex items-center justify-center gap-2 px-4 pb-4 pt-6 shadow  rounded-md mb-4">
+                              <div className="bg-white text-primary_blue flex items-center justify-center gap-2 px-4 pb-4 pt-6 shadow  rounded-md mb-4">
                                     <BellRing />
                                     <p className="">Save this search as alert</p>
                               </div>
@@ -258,7 +259,7 @@ const SearchDetails: React.FC = () => {
 
                                     <div className="flex w-full mt-2 items-center border border-[#a6a6a7] rounded">
                                           <input onChange={(e) => setQuery(e.target.value)} placeholder="Search" type="text" name='search' className="bg-transparent w-full h-full focus:outline-none focus-within:outline-none p-2" />
-                                          <button className="bg-[#008BDC] cursor-default flex items-center justify-center w-16 h-11 text-white"><Search size={22} className=" text-white" /></button>
+                                          <button className="bg-primary_blue cursor-default flex items-center justify-center w-16 h-11 text-white"><Search size={22} className=" text-white" /></button>
                                     </div>
                               </div>
                               <div className="bg-white px-4 pb-4 pt-6 shadow  rounded-md mb-2">

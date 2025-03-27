@@ -32,7 +32,7 @@ const SelaryRange: React.FC<SalaryRangeProps> = ({ setSalaryRange }) => {
                     step={5000} // Step to match given values
                     value={value}
                     onChange={handleChange}
-                    className="w-full h-1 bg-[#008BDC] rounded-lg appearance-none cursor-pointer dark:bg-gray-700 custom-range"
+                    className="w-full h-1 bg-primary_blue rounded-lg appearance-none cursor-pointer dark:bg-gray-700 custom-range"
                 />
                 <div className="flex justify-between mt-2 text-sm text-gray-500 dark:text-gray-400">
                     <span>0</span>

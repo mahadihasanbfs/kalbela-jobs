@@ -77,14 +77,14 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                   .join(", ");
       };
 
-      console.log(formatLocation());
+      console.log("Job....", job);
       return (
             <div>
                   <div
-                        style={{
-                              backgroundImage: `linear-gradient(181.07deg, rgb(239 245 255 / 86%) -53%, rgb(255 255 255) 24rem)`
-                        }}
-                        className="md:block hidden bg-light-theme duration-300 rounded-lg border p-4 hover:shadow-lg hover:border-indigo-600  focus:outline-none focus:ring focus:ring-offset-2"
+                        // style={{
+                        //       backgroundImage: `linear-gradient(181.07deg, rgb(239 245 255 / 86%) -53%, rgb(255 255 255) 24rem)`
+                        // }}
+                        className="md:block hidden bg-light-theme duration-300 rounded-xl border p-4 hover:shadow-lg hover:border-indigo-600  focus:outline-none focus:ring focus:ring-offset-2"
                         key={job._id}
                   >
                         <article>
@@ -117,7 +117,9 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                                                       </Link>
                                                 </div>
                                           </div>
-                                          <div className="md:flex mt-4 hidden w-full gap-2 overflow-x-auto scrollbar-hide  lg:flex-wrap lg:overflow-x-visible">
+
+
+                                          <div className=" mt-4 hidden w-full gap-2 overflow-x-auto scrollbar-hide  lg:flex-wrap lg:overflow-x-visible">
                                                 {job.skills?.map((skill: string, idx: number) => (
                                                       <span
                                                             key={idx}
@@ -129,7 +131,53 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                                                 ))}
                                           </div>
 
-                                          <div className="flex md:mt-4 border-t pt-3 mt-3 items-center justify-between">
+
+                                          <div className="grid grid-cols-3 gap-y-6">
+                                                <div className="">
+                                                      <label className="text-gray-500" htmlFor="salary">Salary</label>
+                                                      <h1 className="font-semibold">
+                                                            {job.salary_negotiable || job.negotiable_note
+                                                                  ? "Negotiable"
+                                                                  : `${job.salary_range?.min}${job.salary_range?.max ? ` - ${job.salary_range.max}` : ""} ${job.salary_range?.currency || ""} / month`}
+                                                      </h1>
+                                                </div>
+
+                                                <div className="">
+                                                      <label className="text-gray-500" htmlFor="salary">Location</label>
+                                                      <h1 className="font-semibold">  {formatLocation()}</h1>
+                                                </div>
+
+                                                <div className="">
+                                                      <label className="text-gray-500" htmlFor="salary">Job Type</label>
+                                                      <h1 className="font-semibold">  {job?.job_type}</h1>
+                                                </div>
+
+                                                <div className="">
+                                                      <label className="text-gray-500" htmlFor="salary">Duration</label>
+                                                      <h1 className="font-semibold">  {formatTimeAgo(job?.expiry_date)}</h1>
+                                                </div>
+
+                                                <div className="">
+                                                      <label className="text-gray-500" htmlFor="salary">Gender</label>
+                                                      <h1 className="font-semibold">{job?.gender ?? 'N/A'}</h1>
+                                                </div>
+
+                                                {/* <div className="">
+                                                      <label className="text-gray-500" htmlFor="salary">Salary</label>
+                                                      <h1 className="font-semibold">34000 - 5000 BDT</h1>
+                                                </div> */}
+
+                                          </div>
+
+
+                                          <div className="flex justify-end">
+                                                <Link href={`/jobs/${job.url}`}>
+                                                      <div className="flex gap-0 items-center !bg-primary !text-white px-6 justify-center text-center text-sm h-[35px]  rounded-full">Apply Now</div>
+                                                </Link>
+                                          </div>
+
+
+                                          <div className="hidden md:mt-4 border-t pt-3 mt-3 items-center justify-between">
                                                 <ul className=" md:flex hidden md:flex-row flex-col overflow-x-auto chat-bot md:items-center space-x-4 text-sm">
                                                       <li className="flex text-nowrap items-center gap-2 border-gray-500 pr-2 md:border-r">
                                                             <MapPin strokeWidth={1} size={22} className="text-gray-500" />
