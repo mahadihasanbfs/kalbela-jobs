@@ -49,7 +49,7 @@ const secondRow = reviews.slice(reviews.length / 2)
 
 const Testimonial = () => {
   return (
-    <div className="mx-auto h-full w-full max-w-screen-xl px-0 md:px-20 lg:px-12 2xl:max-w-screen-2xl">
+    <MaxWidthWrapper>
       <div className="bg-background py-6 md:py-10">
         <CustomTitle title="What people are saying" />
         <br />
@@ -68,7 +68,7 @@ const Testimonial = () => {
           <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
         </div>
       </div>
-    </div>
+    </MaxWidthWrapper>
   )
 }
 
