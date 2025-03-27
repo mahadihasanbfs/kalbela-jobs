@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { BellRing, Filter } from "lucide-react"
+import { BellRing, Filter, Menu } from "lucide-react"
 import { useTheme } from "next-themes"
 import { selectCustomStyles } from "@/lib/utils"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -29,11 +29,15 @@ import {
 import Breadcrumbs from "@/components/Breadcrumbs"
 import { Navigation, Autoplay } from "swiper/modules"; // Import Autoplay module
 import { Search } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import useApiRequest from "@/app/hooks/useApiRequest"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 
 
 
-const ITEMS_PER_PAGE = 10
+let ITEMS_PER_PAGE = 10;
 
 const SearchDetails: React.FC = () => {
       const { theme } = useTheme()
@@ -56,11 +60,17 @@ const SearchDetails: React.FC = () => {
 
       const [currentPage, setCurrentPage] = useState(1)
       const [sortOrder, setSortOrder] = useState("Relevance")
+      const [page, setPage] = useState(10)
 
 
       const pathname = usePathname()
       const pathSegments = pathname.split("/").filter(Boolean)
+      const pathRouter = useRouter();
+      // const { query: queryRouter } = pathRouter;
 
+      // Decode the query parameter
+      // const searchTerm = query?.q ? decodeURIComponent(query.q as string) : '';
+      // console.log('path:::::', queryRouter);
 
       const { jobs, totalJobs, loading } = useJobsSearch({
             endpoint: "jobs",
@@ -71,7 +81,12 @@ const SearchDetails: React.FC = () => {
             category,
             salary_range: salaryRange,
             limit: ITEMS_PER_PAGE,
-      })
+      });
+      const { data: categories } = useApiRequest<any>("category", "GET")
+      const handleCategoryChange = (key: string) => {
+            setCategory(key)
+            console.log("category:::::", key);
+      }
 
       const totalPages = Math.ceil(totalJobs / ITEMS_PER_PAGE)
       // const totalPages = 100
@@ -119,9 +134,50 @@ const SearchDetails: React.FC = () => {
 
       return (
             <section className="bg-light-theme pt-6">
-                  <MaxWidthWrapper>
+                  {/* <MaxWidthWrapper>
                         <Breadcrumbs />
-                  </MaxWidthWrapper>
+                  </MaxWidthWrapper> */}
+
+                  <header>
+                        <MaxWidthWrapper>
+                              <div
+                                    style={{
+                                          backgroundImage: `linear-gradient(5deg, #0000007a, #000000b0), url("https://images.unsplash.com/photo-1533478784933-5fdbddc8ea7c?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")`
+                                    }}
+                                    className="md:h-[280px] h-[200px] rounded w-full bg-cover object-cover bg-center">
+
+                              </div>
+                              <div className="flex bg-gray-100 p-2 items-center justify-between">
+                                    <h2 className="text-lg font-semibold">Total Jobs {totalJobs}</h2>
+
+                                    <DropdownMenu>
+                                          <DropdownMenuTrigger asChild>
+                                                <button className="flex items-center gap-2">Job By Category <Menu size={23} strokeWidth={1.2} /></button>
+                                          </DropdownMenuTrigger>
+                                          <DropdownMenuContent className="w-56 mr-14">
+                                                <DropdownMenuLabel>Categories</DropdownMenuLabel>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuRadioGroup className="h-[200px] overflow-y-auto overflow-x-hidden scrollbar-hide ">
+                                                      <DropdownMenuRadioItem
+                                                            onClick={() => handleCategoryChange('')}
+                                                            className="duration-200 hover:bg-gray-100 "
+                                                            value={''}>
+                                                            All</DropdownMenuRadioItem>
+                                                      {
+                                                            categories?.data?.map((itm: any, index: number) => <DropdownMenuRadioItem
+                                                                  key={itm?.id || index}
+                                                                  onClick={() => handleCategoryChange(itm?.name)}
+                                                                  className="duration-200 hover:bg-gray-100 "
+                                                                  value={itm?.name}>
+                                                                  {itm?.name}</DropdownMenuRadioItem>)
+                                                      }
+
+                                                </DropdownMenuRadioGroup>
+                                          </DropdownMenuContent>
+                                    </DropdownMenu>
+                              </div>
+                        </MaxWidthWrapper>
+                  </header>
 
                   <MaxWidthWrapper className="pt-2 lg:hidden ">
                         <div className="flex items-center gap-2 flex-nowrap overflow-x-auto w-full">
@@ -226,6 +282,25 @@ const SearchDetails: React.FC = () => {
 
                         <div className="flex-grow lg:w-3/4">
                               <br />
+
+                              <div className="flex justify-end mb-2">
+                                    <div className="flex items-center gap-2">
+                                          Jobs Per Page   <Select>
+                                                <SelectTrigger className="w-[100px]">
+                                                      <SelectValue placeholder="10" />
+                                                </SelectTrigger>
+                                                <SelectContent className=" !mr-[3.5rem]">
+                                                      <SelectGroup className="text-center">
+                                                            <SelectItem className="text-center" value="4">4 Items</SelectItem>
+                                                            <SelectItem className="text-center" value="6">6 Items</SelectItem>
+                                                            <SelectItem className="text-center" value="10">10 Items</SelectItem>
+                                                            <SelectItem className="text-center" value="15">15 Items</SelectItem>
+                                                            <SelectItem className="text-center" value="20">20 Items</SelectItem>
+                                                      </SelectGroup>
+                                                </SelectContent>
+                                          </Select>
+                                    </div>
+                              </div>
                               {loading ? (
                                     <div className="space-y-4">
                                           {[...Array(3)].map((_, index) => (

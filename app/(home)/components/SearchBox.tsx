@@ -106,7 +106,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                   {isOpen && (
                         <motion.div
                               onClick={handleClose}
-                              className="fixed top-0 left-0 right-0 bottom-0 inset-0 flex items-start pt-[7%] justify-center backdrop-blur-sm z-50"
+                              className="fixed top-0 left-0 right-0 bottom-0 inset-0 flex items-start pt-[7%] justify-center backdrop-blur-sm z-[4000]"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}

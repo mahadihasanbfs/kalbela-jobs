@@ -1,3 +1,4 @@
+import NotFoundVector from '@/components/NotFoundVector';
 import { Skeleton } from '@/components/ui/skeleton';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,6 +24,7 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data }) => {
                     <div >🔥 Hot Jobs</div>
                     {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
                 </div>
+
                 <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3 ">
                     {loading
                         ? Array.from({ length: 16 }).map((_, index) => (
@@ -74,6 +76,13 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data }) => {
                             </Link>
                         ))}
                 </div>
+
+                {
+                    !data?.data && <div className='h-[400px] flex items-center justify-center '>
+                        <NotFoundVector />
+                    </div>
+                }
+
             </div>
 
             <div className='flex flex-col gap-2'>

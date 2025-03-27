@@ -1,3 +1,4 @@
+import NotFoundVector from '@/components/NotFoundVector';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
@@ -17,6 +18,7 @@ const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading }) => {
                     <div >🔥 Internship</div>
                     {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
                 </div>
+
                 <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4 ">
                     {loading
                         ? Array.from({ length: 16 }).map((_, index) => (
@@ -67,6 +69,12 @@ const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading }) => {
                             </Link>
                         ))}
                 </div>
+
+                {
+                    !data?.data && <div className='h-[400px] flex items-center justify-center '>
+                        <NotFoundVector />
+                    </div>
+                }
             </div>
         </div>
     );

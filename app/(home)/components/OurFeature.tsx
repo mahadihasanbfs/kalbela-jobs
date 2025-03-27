@@ -6,14 +6,18 @@ export default function OurFeature() {
             <section className="py-12 bg-white sm:py-16 lg:py-20">
                 <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="text-center">
-                        <h2 className="text-3xl capitalize font-bold leading-tight text-gray-900 sm:text-4xl xl:text-5xl font-pj">
+                        <div className=" font-bold md:text-[1.8rem]  text-2xl">
                             Offering the best deal
-                        </h2>
-                        <p className="mt-4 text-base leading-7 text-gray-600 sm:mt-8 font-pj">
+                            <div className="flex items-center justify-center gap-1 mt-3 ">
+                                <span className="bg-primary_blue w-[30px] h-1 rounded-full"></span>
+                                <span className="bg-gray-200 w-[50px] h-1 rounded-full"></span>
+                            </div>
+                        </div>
+                        {/* <p className="mt-4 text-base leading-7 text-gray-600 sm:mt-8 font-pj">
                             Lorem ipsum dolor sit amet, consectetur adipis elit
-                        </p>
+                        </p> */}
                     </div>
-                    <div className="grid grid-cols-2 mt-10 text-center sm:mt-16 sm:grid-cols-2 sm:gap-x-12 gap-y-12 md:grid-cols-3 md:gap-0 xl:mt-24">
+                    <div className="grid grid-cols-2 mt-10 text-center sm:mt-16 sm:grid-cols-2 sm:gap-x-12 gap-y-12 md:grid-cols-3 md:gap-0 xl:mt-16">
                         <div className="md:p-8 group lg:p-14">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

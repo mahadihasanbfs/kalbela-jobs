@@ -334,14 +334,6 @@ const JobCategory2 = () => {
         'Job Alerts',
         'Company Profiles',
         'Salary Insights',
-        'Interview Preparation',
-        'Resume Templates',
-        'Cover Letter Builder',
-        'Job Recommendations',
-        'Career Resources',
-        'Online Courses',
-        'Freelancer Profiles',
-        'Networking Opportunities'
     ];
 
 
@@ -443,7 +435,7 @@ const JobCategory2 = () => {
                                 Government Jobs
                             </div>
                             {(openMenu == 'gov_job' &&
-                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto">
+                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('gov_job')}
@@ -506,7 +498,7 @@ const JobCategory2 = () => {
                                 Job By Section
                             </div>
                             {(openMenu == 'job_by_section' &&
-                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto">
+                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('job_by_section')}
@@ -554,7 +546,7 @@ const JobCategory2 = () => {
                                 Job By Location
                             </div>
                             {(openMenu == 'job_by_location' &&
-                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto">
+                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('job_by_location')}
@@ -602,14 +594,14 @@ const JobCategory2 = () => {
                                 More Links
                             </div>
                             {(openMenu == 'more_links' &&
-                                <div className="!py-0  w-[420px] absolute left-[-284px] top-14 max-h-[400px] overflow-y-auto">
+                                <div className="!py-0  w-[420px] absolute left-[-284px] top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('more_links')}
                                         onMouseLeave={handleMouseLeave}
                                     >
 
-                                        <ul className="list-inside space-y-1">
+                                        <ul className="list-inside space-y-4">
                                             {
                                                 moreLinks?.map((items: any, i: any) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
                                                     <Link href="#" key={i} className="ml-6 flex gap-2">
@@ -653,7 +645,7 @@ const JobCategory2 = () => {
                         <ul className="grid md:grid-cols-3 gap-2">
                             {jobByCategory.map((itm, i) => (
                                 <li key={i}>
-                                    <Link className="font-medium  hover:text-primary_blue py-1 rounded duration-200 flex items-center gap-1" href="#">
+                                    <Link className="font-  hover:text-primary_blue py-1 rounded duration-200 text-md flex items-center gap-1" href="#">
                                         <span>
                                             <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200" />
                                         </span>
@@ -679,7 +671,7 @@ const JobCategory2 = () => {
                         <ul className="grid md:grid-cols-3 gap-2">
                             {jobByIndustry?.map((itm, i) => (
                                 <li key={i}>
-                                    <Link className="font-medium hover:text-primary_blue py-1 rounded duration-200 flex items-center gap-1" href="#">
+                                    <Link className=" hover:text-primary_blue py-1 rounded duration-200 flex text-md items-center gap-1" href="#">
                                         <span>
                                             <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200" />
                                         </span>

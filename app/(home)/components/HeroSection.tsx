@@ -146,7 +146,7 @@ const HeroSection = () => {
 
 
       return (
-            <div className="z-50 ">
+            <div className=" ">
                   <MaxWidthWrapper className="flex flex-col items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4">
                         <div className="rounded-md pt-4 pb-2 ">
                               <h1
@@ -169,7 +169,7 @@ const HeroSection = () => {
                         </div>
 
                         {/* display search */}
-                        <div className="dark:bg-[#040913] bg-white relative md:w-[740px] w-full z-10 !opacity-100 px-2 lg:py-2 py-0 rounded-full border md:h-[60px] h-[50px] flex items-center shadow-xl dark:shadow-[#2d384f18] shadow-[#80808018] overflow-hidden">
+                        <div className="dark:bg-[#040913] !bg-white relative md:w-[740px] w-full !opacity-100 px-2 lg:py-2 py-0 rounded-full border md:h-[60px] h-[50px] flex items-center shadow-xl backdrop-blur-sm dark:shadow-[#2d384f18] shadow-[#80808018] overflow-hidden cursor-pointer z-50">
                               <div
                                     onClick={() => setIsOpen(!isOpen)}
                                     className="flex  justify-between w-full  lg:text-xl text-xs items-center md:gap-2 font-sans">

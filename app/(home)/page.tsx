@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
       return (
             <Fragment>
-                  <div className="relative ">
+                  <div className="relative z-50">
                         <div className="">
                               <HeroSection />
                               {/* <Job_type_tag /> */}

@@ -52,7 +52,13 @@ const Pricing = () => {
                 <div className="max-w-xl px-8 mx-auto text-center md:px-0">
                     <h2 className="font-bold md:text-[1.4rem] text-2xl uppercase font-pj">
                         Service Package
+
+                        <div className="flex items-center justify-center gap-1 mt-3 ">
+                            <span className="bg-primary_blue w-[30px] h-1 rounded-full"></span>
+                            <span className="bg-gray-200 w-[50px] h-1 rounded-full"></span>
+                        </div>
                     </h2>
+
                     <p className="mt-2 text-lg font-normal text-gray-600 font-pj">
                         Various packages are available for job posting, membership, resume banks, and customized plans.
                     </p>

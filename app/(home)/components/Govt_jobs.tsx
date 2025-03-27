@@ -9,6 +9,7 @@ import useApiRequest from "@/app/hooks/useApiRequest"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import NotFoundVector from "@/components/NotFoundVector"
 
 const Page = () => {
       const { data, loading, error } = useApiRequest<any>("jobs/get-all-org-jobs", "GET")
@@ -38,9 +39,8 @@ const Page = () => {
                                     />
                                     Government Jobs
                               </div>
-                              {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>}
+                              {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
                         </div>
-
 
                         <section className=" relative w-full">
                               <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3 max-h-[500px] overflow-y-auto pt-2">
@@ -99,6 +99,12 @@ const Page = () => {
                                     View All
                               </Link>}
                         </section>
+
+                        {
+                              !data?.data && <div className='h-[400px] flex items-center justify-center '>
+                                    <NotFoundVector />
+                              </div>
+                        }
                   </div>
 
                   <div className='flex flex-col gap-2'>

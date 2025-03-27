@@ -113,7 +113,7 @@ const Navbar2 = () => {
                                     </Link>
 
                                     {link.isDropdown && openDropdown === index && (
-                                        <ul className="absolute left-0 -mt-2  overflow-hidden w-48 ">
+                                        <ul className="absolute left-0 -mt-2 shadow-lg overflow-hidden w-48 ">
                                             <div className="bg-white dark:bg-primary shadow-lg rounded-md mt-4 overflow-hidden">
                                                 {link.dropdownItems?.map((item, subIndex) => (
                                                     <li key={subIndex}>
@@ -132,20 +132,23 @@ const Navbar2 = () => {
                         })}
 
                         <li>
-                            <div className="font-regular duration-300 text-gray-800 dark:text-gray-200 flex items-center gap-2">
-                                <Link
-                                    className="border-r-2 text-red-600 hover:text-red-700 duration-300 pr-3 border-primary"
-                                    href="/login"
-                                >
-                                    Login
-                                </Link>
-                                <Link
-                                    className="text-red-600 hover:text-red-700 duration-300"
-                                    href="/registration"
-                                >
-                                    Register
-                                </Link>
-                            </div>
+                            {!user
+                                ? <div className="font-regular duration-300 text-gray-800 dark:text-gray-200 flex items-center gap-2">
+                                    <Link
+                                        className=" bg-primary_blue hover:bg-primary text-white rounded text-sm px-4 py-3  hover:text-gray-100 duration-300 pr-3 border-primary"
+                                        href="/login"
+                                    >
+                                        Login | Register
+                                    </Link>
+                                    {/* <Link
+                                        className="text-primary_blue hover:text-gray-700 duration-300"
+                                        href="/registration"
+                                    >
+                                        Register
+                                    </Link> */}
+                                </div>
+
+                                : <UserNav loading={loading} user={user} />}
                         </li>
                     </ul>
                 </div>
