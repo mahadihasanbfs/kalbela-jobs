@@ -42,6 +42,7 @@ const nextConfig = {
       "localhost",
       "i.ibb.co.com",
       "i.ibb.co",
+      "randomuser.me",
     ],
   },
   env: {

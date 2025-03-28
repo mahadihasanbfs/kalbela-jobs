@@ -264,7 +264,9 @@ const SearchDetails: React.FC = () => {
                               </div>
                               <div className="bg-white px-4 pb-4 pt-6 shadow  rounded-md mb-2">
 
-                                    <div className="mb-4 text-md text-center font-semibold flex items-center justify-center gap-1"><Filter color="#008BDC" strokeWidth={1.3} />Filters</div>
+                                    <div className="mb-4 text-md text-center font-semibold flex items-center justify-center border-b pb-2 gap-1">
+                                          {/* <Filter color="#26495e" strokeWidth={1.8} /> */}
+                                          Filters</div>
                                     <FilterSelect
                                           customStyles={customStyles}
                                           location={location}

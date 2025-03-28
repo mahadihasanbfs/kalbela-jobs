@@ -1,7 +1,15 @@
-import { Check, X } from "lucide-react";
-import Link from "next/link";
+'use client';
+import { cn } from '@/lib/utils';
+import { ChevronDown } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import React, { useState } from 'react';
+import Consulting from './components/Consulting';
+import Question from './components/Question';
+import Services from './components/Services';
 
-const Pricing = () => {
+const PricingPage = () => {
+    const { id } = useParams();
+
     const plans = [
         {
             id: 1,
@@ -86,61 +94,20 @@ const Pricing = () => {
         },
     ];
 
+
+    const data = plans?.find(itm => itm?.id.toString() === id.toString());
+
     return (
-        <section className="py-12 bg-white sm:py-16 lg:py-20">
-            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div className="max-w-xl px-8 mx-auto text-center md:px-0">
-                    <h2 className="font-bold md:text-[1.4rem] text-2xl uppercase font-pj">
-                        Service Package
-
-                        <div className="flex items-center justify-center gap-1 mt-3 ">
-                            <span className="bg-primary_blue w-[30px] h-1 rounded-full"></span>
-                            <span className="bg-gray-200 w-[50px] h-1 rounded-full"></span>
-                        </div>
-                    </h2>
-
-                    <p className="mt-2 text-lg font-normal text-gray-600 font-pj">
-                        Various packages are available for job posting, membership, resume banks, and customized plans.
-                    </p>
-                </div>
-                <div className="grid max-w-sm grid-cols-1 gap-6 mx-auto mt-8 text-center md:text-left md:mt-16 md:max-w-6xl md:grid-cols-3">
-                    {plans.map((plan, index) => (
-                        <div key={index} className="relative group">
-                            <div className="relative group overflow-hidden hover:bg-primary duration-200 border border-gray-200 rounded-2xl">
-                                <div className="p-6 lg:px-10 lg:py-8">
-                                    {/* <h3 className="text-lg font-bold group-hover:text-white font-pj">{plan.name}</h3> */}
-                                    <h2 className="mt-3 group-hover:text-white duration-150 text-3xl font-bold font-pj">{plan?.name}</h2>
-                                    <p className="mt-5 text-base font-normal leading-7 text-gray-600 group-hover:text-gray-400 font-pj">
-                                        {plan.description}
-                                    </p>
-                                    <Link
-                                        href={`/pricing/${plan?.id}`}
-                                        className="inline-flex items-center justify-center px-8 py-3.5 w-full mt-8 text-base font-bold text-gray-900 group-hover:bg-white hover:bg-white transition-all border-gray-400 duration-200 border-2 group-hover:border-transparent focus:ring-offset-gray-900 rounded-xl font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white hover:bg-opacity-90"
-                                        role="button"
-                                    >
-                                        Get Started
-                                    </Link>
-                                    <div className="">
-                                        <p className="mt-8 text-base text-start font-bold group-hover:text-white font-pj">
-                                            What's included:
-                                        </p>
-                                        <ul className="mt-4 space-y-3 text-base text-start font-pj">
-                                            {plan.features.map((feature, idx) => (
-                                                <li key={idx} className={`flex gap-1 duration-150 ${feature.available ? 'text-green-600 group-hover:text-green-400' : 'text-red-600 group-hover:text-red-400'}`}>
-                                                    {feature.available ? <Check strokeWidth={1} /> : <X strokeWidth={1} />}
-                                                    <span>{feature.text}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+        <div>
+            <div className="min-h-screen text-black py-12 px-4 md:px-6">
+                <div className="max-w-6xl mx-auto">
+                    <Services service={data?.services} />
+                    <Question question={data?.questions} />
+                    <Consulting />
                 </div>
             </div>
-        </section>
+        </div>
     );
 };
 
-export default Pricing;
+export default PricingPage;
