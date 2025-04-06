@@ -43,6 +43,7 @@ const nextConfig = {
       "i.ibb.co.com",
       "i.ibb.co",
       "randomuser.me",
+      "avatar.iran.liara.run",
     ],
   },
   env: {

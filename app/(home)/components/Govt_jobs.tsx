@@ -119,6 +119,7 @@ const Page = () => {
               alt={'add'}
               width={500}
               height={500}
+              className="rounded"
               onError={(e) => e.currentTarget.src = '/fallback_img.png'}
             />
           </Link>)

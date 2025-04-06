@@ -54,6 +54,7 @@ const HomePage = () => {
                   </div>
                   <br /><br />
                   <JobCategory2 />
+                  <Sponsors />
                   <StaticsBar />
                   <br />
                   <MaxWidthWrapper className="py-0 md:py-2 ">
@@ -68,7 +69,6 @@ const HomePage = () => {
                   <TopCompanies />
                   {/* <InterviewQuestions /> */}
                   <Testimonial />
-                  <Sponsors />
                   <NesLetter />
                   <DownloadOurMobileApp />
             </Fragment>
