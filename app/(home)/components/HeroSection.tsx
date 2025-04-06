@@ -7,26 +7,13 @@ import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
 import { Activity, Award, Briefcase, Building, Clock, Search, TrendingUp, Users, X } from "lucide-react"
 import { useTheme } from "next-themes"
-
-import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
-import PrimaryBtn from "@/components/PrimaryBtn"
-import { TypingRandomizedTextEffect } from "@/components/RandomizedTextEffect"
 import useApiRequest from "@/app/hooks/useApiRequest"
-import Job_type_tag from "./Job_type_tag"
 
 import Link from "next/link"
-import SearchModal from "./Search"
 import Image from "next/image"
 import SearchBox from "./SearchBox"
-import StatisticsList from "./StatisticsList"
-import { Button } from "@/components/ui/button"
 import { Typewriter } from "react-simple-typewriter"
-import StaticsBar from "./StaticsBar"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 const locationSuggestions = ["dhaka", "chattogram", "khulna", "rajshahi", "sylhet", "barishal", "mymensingh", "rangpur"]
 
@@ -51,6 +38,32 @@ const HeroSection = () => {
       const [filteredSkills, setFilteredSkills] = useState<string[]>([])
       const [showSkillDropdown, setShowSkillDropdown] = useState(false)
       const [isOpen, setIsOpen] = useState<boolean>(false);
+      const [hideLogo, setHideLogo] = useState(false);
+      const [isScrolled, setIsScrolled] = useState(false);
+
+
+      React.useEffect(() => {
+            const handleScroll = () => {
+                  setIsScrolled(window.scrollY > 50);
+            };
+            window.addEventListener("scroll", handleScroll);
+            return () => {
+                  window.removeEventListener("scroll", handleScroll);
+            };
+      }, []);
+
+
+      React.useEffect(() => {
+            if (isScrolled) {
+                  const timeout = setTimeout(() => {
+                        setHideLogo(true);
+                  }, 100);
+
+                  return () => clearTimeout(timeout);
+            } else {
+                  setHideLogo(false);
+            }
+      }, [isScrolled]);
 
       // Fetch skills from the API
       const fetchSkills = async (query: string) => {
@@ -147,8 +160,19 @@ const HeroSection = () => {
 
       return (
             <div className=" ">
-                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4">
+                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4 lg:h-[70vh]  border-[red]">
                         <div className="rounded-md pt-4 pb-2 ">
+                              <Link href="/">
+                                    <img
+                                          className={`
+            mx-auto h-auto w-36 md:w-48 transition-all duration-300 ease-in-out
+            ${isScrolled ? "translate-y-6 opacity-0" : "translate-y-0 opacity-100"}
+            ${hideLogo ? "hidden" : "block"}
+        `}
+                                          src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
+                                          alt="logo"
+                                    />
+                              </Link>
                               <h1
                                     className="mt-4 bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:mt-10 lg:text-5xl"
                                     style={{

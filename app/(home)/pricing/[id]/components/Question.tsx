@@ -1,4 +1,3 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { QnAccordion, QnAccordionContent, QnAccordionItem, QnAccordionTrigger } from '@/components/ui/QnAccordion';
 import React from 'react';
 

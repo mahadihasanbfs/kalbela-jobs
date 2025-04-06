@@ -19,8 +19,8 @@ const Navbar2 = () => {
 
     const router = useRouter();
 
+    const [hideLogo, setHideLogo] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
     const [loading, setLoading] = useState(true);
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
@@ -49,6 +49,19 @@ const Navbar2 = () => {
         };
     }, []);
 
+
+    useEffect(() => {
+        if (isScrolled) {
+            const timeout = setTimeout(() => {
+                setHideLogo(true);
+            }, 100);
+
+            return () => clearTimeout(timeout);
+        } else {
+            setHideLogo(false);
+        }
+    }, [isScrolled]);
+
     const links = [
         { name: "Home", href: "/", isDropdown: false },
         { name: "E-Learning", href: "/e-learning", isDropdown: false },
@@ -71,26 +84,33 @@ const Navbar2 = () => {
     return (
         <nav
             className={`${isScrolled
-                ? " bg-white/75 backdrop-blur-lg dark:bg-black"
+                ? " bg-white/75 backdrop-blur-lg border-b dark:bg-black"
                 : isHomePage
                     ? "bg-transparent"
                     : "dark:bg-[#121a2d]"
-                } shadow-none lg:py-2 md:py-1 py-1 border-b !border-[#cbcacae4]`}
+                } shadow-none lg:py-2 md:py-1 py-1  !border-[#cbcacae4]`}
         >
             <MaxWidthWrapper className="flex h-[64px] items-center justify-between">
-                <div>
-                    <Link href="/">
-                        <img
-                            className="mx-auto h-auto w-36 md:w-48"
-                            src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
-                            alt="logo"
-                        />
-                    </Link>
-                </div>
+                <Link href="/">
+                    <img
+                        className={`
+            mx-auto h-auto w-36 md:w-48 transition-all duration-300 ease-in-out
+            ${!isScrolled ? "translate-y-6 opacity-0" : "translate-y-0 opacity-100"}
+            ${!hideLogo ? "hidden" : "block"}
+        `}
+                        src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
+                        alt="logo"
+                    />
+                </Link>
+
+
+                <div
+                    className={`flex  border-primary_blue items-center justify-between gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${!isScrolled ? "w-full" : "w-[900px]"
+                        }`}
+                >
 
 
 
-                <div>
                     <ul className="lg:flex hidden items-center gap-6 text-[1.130rem]">
                         {links.map((link, index) => {
                             const isActive = pathname === link.href;
@@ -131,6 +151,8 @@ const Navbar2 = () => {
                                 </li>
                             );
                         })}
+                    </ul>
+                    <ul className="lg:flex hidden items-center gap-6 text-[1.130rem]">
                         <li>
                             {!user
                                 ? <div className="font-regular duration-300 text-gray-800 dark:text-gray-200 flex items-center gap-2">

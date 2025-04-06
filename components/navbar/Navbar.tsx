@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
                         : isHomePage
                               ? "bg-transparent"
                               : "dark:bg-[#121a2d]"
-                        } shadow-none lg:py-2 md:py-1 py-1`}
+                        } shadow-none lg:py-2 md:py-1 py-1 `}
             >
                   <MaxWidthWrapper className="flex h-[64px] items-center justify-between">
                         <div className="items-center lg:hidden block">
