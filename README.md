@@ -1,5 +1,15 @@
 # Kalbela Jobs - Frontend
 
+✔ navbar with logo animate and hero section with logo  ( done )
+✔ login and registration  ( done )
+
+
+
+
+
+
+
+
 This is the **frontend** repository for the **Kalbela Jobs User Panel** built with **Next.js**.
 
 ## 🏗 Project Structure

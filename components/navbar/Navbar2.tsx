@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { ThemeToggle } from "../ThemeToggle";
 import { Skeleton } from "../ui/skeleton";
+import UserMegaMenuDropdown from "./UserMegaMenuDropdown";
 import UserNav from "./UserNav";
 
 const Navbar2 = () => {
@@ -94,9 +95,9 @@ const Navbar2 = () => {
                 <Link href="/">
                     <img
                         className={`
-            mx-auto h-auto w-36 md:w-48 transition-all duration-300 ease-in-out
-            ${!isScrolled ? "translate-y-6 opacity-0" : "translate-y-0 opacity-100"}
-            ${!hideLogo ? "hidden" : "block"}
+            mx-auto h-auto w-32 md:w-48 transition-all duration-300 ease-in-out
+            ${!isScrolled ? "md:translate-y-6 md:opacity-0" : "md:translate-y-0 md:opacity-100"}
+            ${!hideLogo ? "md:hidden" : "md:block"}
         `}
                         src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
                         alt="logo"
@@ -105,7 +106,7 @@ const Navbar2 = () => {
 
 
                 <div
-                    className={`flex  border-primary_blue items-center justify-between gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${!isScrolled ? "w-full" : "w-[900px]"
+                    className={`md:flex hidden border-primary_blue items-center justify-between gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${!isScrolled ? "w-full" : "w-[900px]"
                         }`}
                 >
 
@@ -154,7 +155,7 @@ const Navbar2 = () => {
                     </ul>
                     <ul className="lg:flex hidden items-center gap-6 text-[1.130rem]">
                         <li>
-                            {!user
+                            {/* {!user
                                 ? <div className="font-regular duration-300 text-gray-800 dark:text-gray-200 flex items-center gap-2">
                                     <Link
                                         className=" bg-primary_blue hover:bg-primary text-white rounded text-sm px-4 py-3  hover:text-gray-100 duration-300 pr-3 border-primary"
@@ -162,15 +163,14 @@ const Navbar2 = () => {
                                     >
                                         Login | Register
                                     </Link>
-                                    {/* <Link
-                                        className="text-primary_blue hover:text-gray-700 duration-300"
-                                        href="/registration"
-                                    >
-                                        Register
-                                    </Link> */}
+                                   
                                 </div>
 
-                                : <UserNav loading={loading} user={user} />}
+                                : <UserNav loading={loading} user={user} />} */}
+
+                            {!user && !loading && (
+                                <UserMegaMenuDropdown />
+                            )}
                         </li>
                         {<li>
                             <ThemeToggle />

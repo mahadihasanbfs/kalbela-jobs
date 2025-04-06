@@ -38,32 +38,21 @@ const HeroSection = () => {
       const [filteredSkills, setFilteredSkills] = useState<string[]>([])
       const [showSkillDropdown, setShowSkillDropdown] = useState(false)
       const [isOpen, setIsOpen] = useState<boolean>(false);
-      const [hideLogo, setHideLogo] = useState(false);
       const [isScrolled, setIsScrolled] = useState(false);
-
 
       React.useEffect(() => {
             const handleScroll = () => {
-                  setIsScrolled(window.scrollY > 50);
+                  if (window.scrollY > 20) {
+                        setIsScrolled(true);
+                  } else {
+                        setIsScrolled(false);
+                  }
             };
+
             window.addEventListener("scroll", handleScroll);
-            return () => {
-                  window.removeEventListener("scroll", handleScroll);
-            };
+            return () => window.removeEventListener("scroll", handleScroll);
       }, []);
 
-
-      React.useEffect(() => {
-            if (isScrolled) {
-                  const timeout = setTimeout(() => {
-                        setHideLogo(true);
-                  }, 100);
-
-                  return () => clearTimeout(timeout);
-            } else {
-                  setHideLogo(false);
-            }
-      }, [isScrolled]);
 
       // Fetch skills from the API
       const fetchSkills = async (query: string) => {
@@ -160,21 +149,21 @@ const HeroSection = () => {
 
       return (
             <div className=" ">
-                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4 lg:h-[70vh]  border-[red]">
-                        <div className="rounded-md pt-4 pb-2 ">
+                  <MaxWidthWrapper className="flex flex-col items-center justify-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4 lg:h-[550px] ">
+                        <div className="rounded-md pt-14 pb-2 ">
                               <Link href="/">
                                     <img
                                           className={`
-            mx-auto h-auto w-36 md:w-48 transition-all duration-300 ease-in-out
-            ${isScrolled ? "translate-y-6 opacity-0" : "translate-y-0 opacity-100"}
-            ${hideLogo ? "hidden" : "block"}
-        `}
+    mx-auto h-auto w-[18rem] transition-all duration-300 md:block hidden ease-in-out 
+    ${isScrolled ? "scale-50 opacity-0 invisible" : "scale-100 opacity-100 visible"}
+  `}
                                           src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
                                           alt="logo"
                                     />
+
                               </Link>
                               <h1
-                                    className="mt-4 bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:mt-10 lg:text-5xl"
+                                    className="mt-4 bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:mt-4 lg:text-5xl"
                                     style={{
                                           backgroundImage: "linear-gradient(to right, #001968, #0a4d92)",
                                           WebkitBackgroundClip: "text",
@@ -193,7 +182,7 @@ const HeroSection = () => {
                         </div>
 
                         {/* display search */}
-                        <div className="dark:bg-[#040913] !bg-white relative md:w-[740px] w-full !opacity-100 px-2 lg:py-2 py-0 rounded-full border md:h-[60px] h-[50px] flex items-center shadow-xl backdrop-blur-sm dark:shadow-[#2d384f18] shadow-[#80808018] overflow-hidden cursor-pointer z-50">
+                        <div className="dark:bg-[#040913]  !bg-white relative md:w-[740px] w-full !opacity-100 px-2 lg:py-2 py-0 rounded-full border md:h-[60px] h-[50px] flex items-center shadow-xl backdrop-blur-sm dark:shadow-[#2d384f18] shadow-[#80808018] overflow-hidden cursor-pointer z-50">
                               <div
                                     onClick={() => setIsOpen(!isOpen)}
                                     className="flex  justify-between w-full  lg:text-xl text-xs items-center md:gap-2 font-sans">
@@ -237,7 +226,7 @@ const HeroSection = () => {
                               </div>
                         </div>
 
-                        <div className="">
+                        <div>
                               <SearchBox
                                     searchQuery={searchQuery}
                                     handleSkillChange={handleSkillChange}
@@ -254,30 +243,8 @@ const HeroSection = () => {
                                     removeFromHistory={removeFromHistory}
                                     highlightMatch={highlightMatch}
                                     isOpen={isOpen}
-                                    setIsOpen={setIsOpen}
-
-                              />
-
+                                    setIsOpen={setIsOpen} />
                         </div>
-
-                        {/* <SearchModal searchQuery={searchQuery}
-                              setSearchQuery={setSearchQuery}
-                              filteredSkills={filteredSkills}
-                              filteredSearchHistory={filteredSearchHistory}
-                              handleSkillChange={handleSkillChange}
-                              removeFromHistory={removeFromHistory}
-                              handleSearch={handleSearch}
-                              location={location}
-                              setLocation={setLocation}
-                              data={data}
-                              theme={theme} /> */}
-
-                        {/* <div className="!mt-[3px]">
-                              <Job_type_tag />
-                        </div> */}
-                        {/* <div className="  overflow-hidden ">
-                              <StaticsBar />
-                        </div> */}
                   </MaxWidthWrapper>
             </div>
       )
