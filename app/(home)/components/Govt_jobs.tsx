@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Star, User } from "lucide-react"
+import { ArrowRight, Star, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import useApiRequest from "@/app/hooks/useApiRequest"
@@ -30,7 +30,7 @@ const Page = () => {
   return (
     <div className="grid md:grid-cols-4 gap-4">
       <div className="md:col-span-3 w-full mt-2 lg:mt-0 ">
-        <div className="mb-4 flex h-12 bg-gray-100 px-4 py-1 items-center justify-between font-bold md:text-[1.4rem] text-lg">
+        <div className="mb-4 flex h-12 bg-gray-100 px-4 py-1 items-center justify-between font-semibold md:text-[1.2rem] text-lg">
           <div className="flex items-center gap-2">
             <img
               src="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
@@ -41,6 +41,7 @@ const Page = () => {
             Government Jobs
           </div>
           {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
+          <Button className="!py-0 !text-primary hover:text-primary_blue !pr-0 !bg-transparent">View All <ArrowRight /></Button>
         </div>
 
         <section className=" relative w-full">

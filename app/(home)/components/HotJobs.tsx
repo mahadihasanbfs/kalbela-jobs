@@ -1,5 +1,7 @@
 import NotFoundVector from '@/components/NotFoundVector';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ArrowLeftRight, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -20,9 +22,9 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data }) => {
   return (
     <div className='grid md:grid-cols-4 gap-4'>
       <div className='md:col-span-3'>
-        <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-bold md:text-[1.4rem] text-lg">
+        <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-semibold md:text-[1.2rem] text-lg">
           <div >🔥 Hot Jobs</div>
-          {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
+          <Button className="!py-0 !text-primary hover:text-primary_blue !pr-0 !bg-transparent">View All <ArrowRight /></Button>
         </div>
 
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3 ">

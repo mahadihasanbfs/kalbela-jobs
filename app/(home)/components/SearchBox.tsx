@@ -151,7 +151,13 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                                           />
                                     </Link>
 
-                                    <div className={`${showSkillDropdown ? 'rounded-xl h-auto ' : 'rounded-full  md:h-[60px] h-[50px]'} border md:p-2.5 p-1 shadow-lg shadow-gray-100 items-center border-gray-300 bg-[#ffffff] `}>
+                                    <div
+                                          className={`${showSkillDropdown && (filteredSkills.length > 0 || filteredSearchHistory.length > 0)
+                                                ? 'rounded-lg h-auto'
+                                                : 'rounded-full md:h-[60px] h-[50px]'
+                                                } border md:p-2.5 p-1 shadow-lg shadow-gray-100 items-center border-gray-300 md:w-[730px] m-auto bg-[#ffffff] `}
+                                    >
+
                                           <div className="flex mt-[2px] items-center gap-2">
                                                 <form className='flex items-center w-full' onSubmit={(e) => {
                                                       e.preventDefault();
