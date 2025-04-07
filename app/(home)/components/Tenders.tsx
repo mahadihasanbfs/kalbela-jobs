@@ -14,7 +14,7 @@ const Tenders: React.FC<TendersProps> = ({ data, loading }) => {
   return (
     <div>
       <div>
-        <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-bold md:text-[1.4rem] text-lg">
+        <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-semibold md:text-[1.2rem] text-lg">
           <div >🔥 Tenders</div>
           {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
         </div>

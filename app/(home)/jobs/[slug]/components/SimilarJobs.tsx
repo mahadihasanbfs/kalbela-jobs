@@ -49,9 +49,11 @@ const SimilarJobslG = ({ user, jobs, save_jobs }: { user: any, jobs: any, save_j
                     <SwiperSlide className="mb-10 rounded-lg   border shadow hover:shadow-lg duration-300" key={jobPost?._id}>
                         <Card className="p-4 !shadow-none !h-full  !border-none transition-shadow hover:shadow-md">
                             <CardContent className="p-0 h-full">
-                                <h3 className="mb-2 text-lg font-semibold">
-                                    {jobPost?.job_title}
-                                </h3>
+                                <Link href={`/jobs/${jobPost?.url}`} className="flex items-center hover:text-primary_blue gap-2 mb-2">
+                                    <h3 className="mb-2 text-lg font-semibold">
+                                        {jobPost?.job_title}
+                                    </h3>
+                                </Link>
                                 <div className="mb-2 flex gap-2 overflow-x-auto scrollbar-hide whitespace-nowrap">
                                     {jobPost?.skills?.slice(0, 4)?.map((skill: string, index: number) => (
                                         <Badge key={index} variant="outline" className="text-xs text-white bg-primary whitespace-nowrap">

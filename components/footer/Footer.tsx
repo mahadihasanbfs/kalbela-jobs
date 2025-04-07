@@ -184,14 +184,24 @@ const Footer: React.FC = () => {
                                                             </a>
                                                       </li>
                                                       <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/privacy"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
-                                                                  Terms of User Privacy{" "}
-                                                            </a>
+                                                                  Privacy{" "}
+                                                            </Link>
+                                                      </li>
+                                                      <li>
+                                                            <Link
+                                                                  href="/terms_of_service"
+                                                                  title=""
+                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                                                            >
+                                                                  {" "}
+                                                                  Terms of Service{" "}
+                                                            </Link>
                                                       </li>
                                                 </ul>
                                           </div>

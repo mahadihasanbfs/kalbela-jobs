@@ -65,9 +65,7 @@ const Navbar2 = () => {
 
     const links = [
         { name: "Home", href: "/", isDropdown: false },
-        { name: "E-Learning", href: "/e-learning", isDropdown: false },
         { name: "Jobseeker", href: "/jobseeker", isDropdown: false },
-        { name: "Employer", href: "/employer", isDropdown: false },
         {
             name: "Services",
             href: "#",
@@ -79,6 +77,8 @@ const Navbar2 = () => {
             ],
         },
         { name: "Training", href: "/training", isDropdown: false },
+        { name: "Easy Learning", href: "/learning", isDropdown: false },
+        { name: "Career Resource", href: "/career_resource", isDropdown: false },
         { name: "Contact Us", href: "/contact", isDropdown: false },
     ];
 
@@ -106,7 +106,7 @@ const Navbar2 = () => {
 
 
                 <div
-                    className={`md:flex hidden border-primary_blue items-center justify-between gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${!isScrolled ? "w-full" : "w-[900px]"
+                    className={`md:flex hidden border-primary_blue items-center justify-between gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${!isScrolled ? "w-full" : "w-[980px]"
                         }`}
                 >
 
