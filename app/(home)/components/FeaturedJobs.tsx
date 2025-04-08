@@ -49,7 +49,7 @@ const FeaturedJobs: React.FC = () => {
                                           onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
                                     /> */}
                                     <Image
-                                          src="/assets/add2.jpg"
+                                          src="/assets/banner3.jpg"
                                           alt="ad"
                                           width={500}
                                           height={500}
