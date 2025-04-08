@@ -40,8 +40,16 @@ const FeaturedJobs: React.FC = () => {
                               </div>
 
                               <div className="flex flex-col gap-2">
-                                    <Image
+                                    {/* <Image
                                           src="https://i.ibb.co.com/mrZ8DzSW/banner3.jpg"
+                                          alt="ad"
+                                          width={500}
+                                          height={500}
+                                          className="rounded border"
+                                          onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
+                                    /> */}
+                                    <Image
+                                          src="/assets/add2.jpg"
                                           alt="ad"
                                           width={500}
                                           height={500}
