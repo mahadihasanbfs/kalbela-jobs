@@ -44,6 +44,9 @@ const nextConfig = {
       "i.ibb.co",
       "randomuser.me",
       "avatar.iran.liara.run",
+      "https://icons8.com",
+      "www.youtube.com",
+      "www.facebook.com",
     ],
   },
   env: {

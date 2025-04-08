@@ -85,8 +85,9 @@ const StatisticsList: React.FC = () => {
                                         </div> */}
                                         <div>
                                             <div className="md:space-y-1 text-center w-full">
-                                                <h1 className="font-semibold md:text-xl text-white">{counts[index]}+</h1>
-                                                <p className="text-gray-100 md:text-sm text-xs">{itm.title}</p>
+                                                {/* <h1 className="font-semibold md:text-xl text-black">{counts[index]}+</h1> */}
+                                                <h1 className="font-semibold md:text-xl text-black">{counts[index]}+</h1>
+                                                <p className="text-gray-800 md:text-sm text-xs">{itm.title}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -108,8 +109,8 @@ const StatisticsList: React.FC = () => {
                                     </div> */}
                                     <div>
                                         <div className="md:space-y-1 text-center w-full">
-                                            <h1 className="font-semibold md:text-xl text-white">{counts[index]}+</h1>
-                                            <p className="text-gray-100 md:text-sm text-xs">{itm.title}</p>
+                                            <h1 className="font-semibold md:text-xl text-black">{counts[index]}+</h1>
+                                            <p className="text-gray-800 md:text-sm text-xs">{itm.title}</p>
                                         </div>
                                     </div>
                                 </div>

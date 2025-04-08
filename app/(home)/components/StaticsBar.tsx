@@ -13,12 +13,12 @@ const StaticsBar = () => {
     // }
     return (
         <div style={{
-            backgroundImage: `linear-gradient(180deg, rgb(14, 39, 42), rgba(0, 9, 9, 0.963))`,
+            backgroundImage: `linear-gradient(180deg, #f8f8f8, #f2f4f6dd)`,
             backgroundSize: "cover",
             backgroundPosition: "end",
         }}
 
-            className=' w-full md:h-[5rem] md:p-0 p-2 opacity-100 overflow-hidden mb-6 flex items-center justify-center gap-4'>
+            className=' w-full md:h-[5rem] md:p-0 p-2 opacity-100 overflow-hidden mb-6 flex items-center justify-center gap-4 text-black'>
             <MaxWidthWrapper>
                 <StatisticsList />
             </MaxWidthWrapper>

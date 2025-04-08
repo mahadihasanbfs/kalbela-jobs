@@ -3,21 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 import React from 'react';
+import JobTitleBar from './JobTitleBar';
 
 
 interface InternShipJobProps {
   data: { data: any[] };
   loading: boolean;
+  error: any;
 }
 
-const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading }) => {
+const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading, error }) => {
   return (
     <div>
       <div>
-        <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-semibold md:text-[1.2rem] text-lg">
-          <div >🔥 Internship</div>
-          {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
-        </div>
+        <JobTitleBar title="🔥 Internship" viewBtn={false} />
 
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4 ">
           {loading
@@ -70,7 +69,7 @@ const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading }) => {
         </div>
 
         {
-          !data?.data && <div className='md:h-[400px] h-[230px] flex items-center justify-center '>
+          error && <div className='md:h-[400px] h-[230px] flex items-center justify-center '>
             <NotFoundVector />
           </div>
         }

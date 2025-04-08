@@ -18,7 +18,7 @@ export default function OurFeature() {
                             Lorem ipsum dolor sit amet, consectetur adipis elit
                         </p> */}
           </div>
-          <div className="grid grid-cols-2 mt-10 text-center sm:mt-16 sm:grid-cols-2 sm:gap-x-12 gap-y-12 md:grid-cols-3 md:gap-0 xl:mt-16">
+          <div className="grid grid-cols-2 mt-10 text-center sm:mt-16 sm:grid-cols-2 sm:gap-x-12 gap-y-12 md:grid-cols-3 md:gap-0 xl:mt-16 lg:px-16 pb-4 !pt-0">
             <Link href={'/search-details'} className="md:p-8 group lg:p-14">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

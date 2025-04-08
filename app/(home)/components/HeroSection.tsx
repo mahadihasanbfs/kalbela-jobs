@@ -149,12 +149,12 @@ const HeroSection = () => {
 
       return (
             <div className=" ">
-                  <MaxWidthWrapper className="flex flex-col items-center justify-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4 lg:h-[450px] ">
-                        <div className="rounded-md pt-2 pb-2 ">
+                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 md:!h-[330px] !h-[230px] justify-end ">
+                        <div className="rounded-md pt-2 md:pb-2 ">
                               <Link href="/">
                                     <img
                                           className={`
-                                          mx-auto h-auto w-[18rem] transition-all duration-300 md:block hidden ease-in-out 
+                                          mx-auto h-auto w-[19rem] transition-all duration-300 md:block hidden ease-in-out 
                                           ${isScrolled ? "scale-50 opacity-0 invisible" : "scale-100 opacity-100 visible"}
                                           `}
                                           src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
@@ -163,7 +163,7 @@ const HeroSection = () => {
 
                               </Link>
                               <h1
-                                    className="mt-4 bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:mt-4 lg:text-5xl"
+                                    className="mt-[1.5rem] bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:text-[2rem]"
                                     style={{
                                           backgroundImage: "linear-gradient(to right, #001968, #0a4d92)",
                                           WebkitBackgroundClip: "text",
@@ -192,7 +192,7 @@ const HeroSection = () => {
                                           <div className="flex items-center justify-between  w-full">
                                                 <div className=" border-gray-300 p-2 w-full text-gray-500 text-nowrap overflow-hidden text-sm flex items-center md:gap-2  gap-1">
                                                       <Typewriter
-                                                            words={['Search by keyword', 'Search by keyword ', 'Search by keyword']}
+                                                            words={['Search by keyword', 'Search by location ', 'Search by category']}
                                                             loop={5}
                                                             cursor
                                                             cursorStyle=''
