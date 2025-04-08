@@ -34,12 +34,12 @@ const ShortAdd: React.FC = () => {
                         <Link
                             className='w-full '
                             key={banner.id} href={banner?.link}>
-                            <Image
+                            <img
                                 src={banner.img}
                                 alt={banner.title}
-                                width={500}
-                                height={500}
-                                onError={(e) => (e.currentTarget.src = "/fallback.png")}
+                                // width={500}
+                                // height={500}
+                                // onError={(e) => (e.currentTarget.src = "/fallback.png")}
                                 className="w-full object-cover border border-gray-300 h-[40px] lg:h-[80px]"
                             />
                         </Link>
