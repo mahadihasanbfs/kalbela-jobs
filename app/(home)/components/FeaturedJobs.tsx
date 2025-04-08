@@ -41,7 +41,7 @@ const FeaturedJobs: React.FC = () => {
 
                               <div className="flex flex-col gap-2">
                                     <Image
-                                          src="/banner4.jpg"
+                                          src="/assets/banner3.jpg"
                                           alt="ad"
                                           width={500}
                                           height={500}
