@@ -353,7 +353,7 @@ const JobCategory2 = () => {
 
     return (
         <div className="relative z-10">
-            <div className="md:block hidden bg-gray-100">
+            <div className="lg:block hidden bg-gray-100">
                 <MaxWidthWrapper className="!py-0 relative">
                     <div className="flex flex-wrap justify-between items-center gap-2">
                         {/* Job By Category */}
@@ -626,6 +626,8 @@ const JobCategory2 = () => {
                     </div>
                 </MaxWidthWrapper>
             </div>
+
+
             <MobileCategory
                 jobByCategory={jobByCategory}
                 jobByIndustry={jobByIndustry}

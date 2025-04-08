@@ -6,11 +6,11 @@ import Link from "next/link";
 
 const MobileCategory = ({ jobByCategory, jobByLocation, jobByIndustry, governmentJobs, jobBySection, moreLinks }: { jobByCategory: any, jobByLocation: any, jobByIndustry: any, governmentJobs: any, jobBySection: any, moreLinks: any }) => {
     return (
-        <div className="md:hidden block mb-4">
-            <MaxWidthWrapper className="grid grid-cols-3 gap-3">
+        <div className="lg:hidden block mb-4 ">
+            <MaxWidthWrapper className="grid grid-cols-3 gap-3 !p-0">
                 {/* job by category */}
                 <Dialog>
-                    <DialogTrigger asChild>
+                    <DialogTrigger className="!p-0" asChild>
                         <button
                             className={`relative bg-gray-100 hover:bg-white rounded-md border`}
                         >

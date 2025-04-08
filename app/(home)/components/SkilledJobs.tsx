@@ -3,22 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 import React from 'react';
+import JobTitleBar from './JobTitleBar';
 
 
 interface SkilledJobsProps {
   data: { data: any[] };
   loading: boolean;
+  error: any
 }
 
-const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading }) => {
+const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading, error }) => {
   return (
     <div>
       <div>
-        <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-semibold md:text-[1.2rem] text-lg">
-          <div >🔥 Skilled Jobs</div>
-          {/* {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>} */}
-
-        </div>
+        <JobTitleBar title="🔥 Skilled Jobs" viewBtn={false} />
 
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4 ">
           {loading
@@ -73,7 +71,7 @@ const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading }) => {
         </div>
 
         {
-          !data?.data && <div className='md:h-[400px] h-[230px] flex items-center justify-center '>
+          error && <div className='md:h-[400px] h-[230px] flex items-center justify-center '>
             <NotFoundVector />
           </div>
         }

@@ -15,7 +15,7 @@ const VerticalMarquee = () => {
             const totalItems = data?.data?.length || 0;
             const baseSize = Math.floor(totalItems / 10);
             const remainder = totalItems % 10;
-            const extraItem = i < remainder ? 1 : 0; // Distribute extra items evenly
+            const extraItem: number = i < remainder ? 1 : 0; // Distribute extra items evenly
 
             const startIndex = i * baseSize + Math.min(i, remainder);
             const endIndex = startIndex + baseSize + extraItem;
@@ -27,7 +27,7 @@ const VerticalMarquee = () => {
       };
 
       return (
-            <div className="relative z-0 flex h-[30rem] flex-row items-center justify-center space-x-12 space-y-[0.5rem] overflow-hidden opacity-20 [perspective:300px]">
+            <div className="relative z-0 flex h-[30rem] flex-row items-center justify-center space-x-12 space-y-[0.5rem] overflow-hidden opacity-30 [perspective:300px]">
                   {rows.map((row, i) => (
                         <Marquee
                               key={i}

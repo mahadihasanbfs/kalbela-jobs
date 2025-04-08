@@ -20,6 +20,7 @@ import OurFeature from "./components/OurFeature"
 import VideoGallery from "./components/VideoGellary"
 import Pricing from "./components/Pricing"
 import DownloadOurMobileApp from "./components/DownloadOurMobileApp"
+import ShortAdd from "./components/ShortAdd"
 
 export const metadata: Metadata = {
       title: "Kalbela Jobs || Find Your Dream Job Today",
@@ -48,28 +49,31 @@ const HomePage = () => {
                               {/* <Job_type_tag /> */}
                               {/* <JobType /> */}
                         </div>
-                        <div className="pointer-events-none absolute right-0 top-0  w-full">
+                        <div className="pointer-events-none absolute right-0 top-0 md:hidden w-full">
                               <VerticalMarquee />
                         </div>
                   </div>
                   <br /><br />
-                  <JobCategory2 />
-                  <Sponsors />
-                  <StaticsBar />
+                  <MaxWidthWrapper>
+                        <JobCategory2 />
+                        <ShortAdd />
+                        <StaticsBar />
+                  </MaxWidthWrapper>
                   <br />
                   <MaxWidthWrapper className="py-0 md:py-2 ">
-                        <div className="md:px-8 px-2 opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
+                        <div className=" opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
                               <FeaturedJobs />
                         </div>
                   </MaxWidthWrapper>
                   <OurFeature />
                   <VideoGallery />
                   <Pricing />
-                  <div className="bg-gradient-to-t from-[transparent] to-[#cfe1ffa4] absolute top-0 left-0 right-0 h-[430px] w-full" />
+                  <div className="bg-gradient-to-t from-[transparent] to-[#cfe1ffa4] absolute top-0 left-0 right-0 md:h-[450px] h-[290px] w-full" />
                   <TopCompanies />
                   {/* <InterviewQuestions /> */}
                   <Testimonial />
                   <NesLetter />
+                  <Sponsors />
                   <DownloadOurMobileApp />
             </Fragment>
       )

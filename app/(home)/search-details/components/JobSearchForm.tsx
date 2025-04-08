@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-export default function JobSearchForm() {
+export default function JobSearchForm({ title = "JOBS IN BANGLADESH" }) {
     const [dateRange, setDateRange] = useState("")
 
     return (
@@ -15,7 +15,7 @@ export default function JobSearchForm() {
 
             {/* Content */}
             <div className="relative z-10 px-4 py-8 md:py-12 max-w-7xl mx-auto">
-                <h1 className="text-center text-white text-xl md:text-2xl font-bold mb-8">JOBS IN BANGLADESH</h1>
+                <h1 className="text-center text-white text-xl md:text-2xl font-bold mb-8">{title}</h1>
 
                 <div className="bg-[#000000a1]  p-4 md:p-6 shadow-lg">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
