@@ -48,13 +48,13 @@ const FeaturedJobs: React.FC = () => {
                                           className="rounded border"
                                           onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
                                     /> */}
-                                    <Image
-                                          src="/assets/banner3.jpg"
+                                    <img
+                                          src="/assets/banner3.png"
                                           alt="ad"
-                                          width={500}
-                                          height={500}
+                                          // width={500}
+                                          // height={500}
                                           className="rounded border"
-                                          onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
+                                    // onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
                                     />
 
                                     <iframe
