@@ -9,23 +9,22 @@ const ShortAdd: React.FC = () => {
     const banners = [
         {
             id: 0,
-            img: "/1.png",
+            img: "/banner/1.png",
             title: "Find Your Dream Job",
             link: "#"
         },
         {
             id: 1,
-            img: "/2.png",
+            img: "/banner/2.png",
             title: "Find Your Dream Job",
             link: "#"
         },
         {
             id: 2,
-            img: "/3.png",
+            img: "/banner/3.png",
             title: "Find Your Dream Job",
             link: "#"
         },
-
     ]
     return (
         <div>
