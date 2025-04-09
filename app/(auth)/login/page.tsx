@@ -117,7 +117,7 @@ const RegistrationPage = () => {
 
         />
       </MaxWidthWrapper>
-      <div className="hidden lg:flex flex-col items-center justify-center bg-white dark:bg-black dark:text-gray-100 text-gray-800 h-full w-full pt-10">
+      <div className="flex flex-col items-center justify-center bg-white dark:bg-black dark:text-gray-100 text-gray-800 h-full w-full pt-10">
         <div className="w-full max-w-7xl px-4">
           <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 ">Easiest Way To Apply</h2>
 
@@ -135,7 +135,7 @@ const RegistrationPage = () => {
           </div>
 
           {/* Four steps */}
-          <div className="grid grid-cols-4 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {/* First Step */}
             <div className="flex flex-col items-center">
               <div className="text-center mb-2">First Step</div>

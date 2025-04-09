@@ -4,7 +4,7 @@ const SupportSection = () => {
   return (
     <div className="mt-16 w-full">
       <div
-        className="w-full bg-cover bg-center"
+        className="w-full bg-cover bg-right md:bg-center"
         style={{
           backgroundImage: "url('/support_bg.jpg')",
         }}
