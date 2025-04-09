@@ -18,7 +18,7 @@ import Image from "next/image"
 
 const FeaturedJobs: React.FC = () => {
       const { data, loading, error } = useApiRequest<any>(
-            "jobs/get-featured-jobs?limit=3",
+            "jobs/get-featured-jobs",
             "GET"
       )
 
@@ -29,6 +29,8 @@ const FeaturedJobs: React.FC = () => {
             '/sample-video.mp4',
             '/assets/add2.jpg',
       ]
+
+      console.log("hot job", data);
 
       return (
             <section>

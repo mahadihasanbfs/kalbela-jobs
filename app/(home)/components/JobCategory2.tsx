@@ -352,7 +352,7 @@ const JobCategory2 = () => {
     };
 
     return (
-        <div className="relative z-10">
+        <div className="relative z-20 opacity-100">
             <div className="lg:block hidden bg-gray-100">
                 <MaxWidthWrapper className="!py-0 relative">
                     <div className="flex flex-wrap justify-between items-center gap-2">
@@ -363,7 +363,7 @@ const JobCategory2 = () => {
                             onMouseLeave={handleMouseLeave}
                             onClick={() => handleClick('category')}
                         >
-                            <div className="py-4 px-3  hover:text-primary_blue flex items-center text-lg text-primary duration-300 cursor-pointer gap-2">
+                            <div className="py-4 px-3 font-semibold hover:text-primary_blue flex items-center text-md text-primary duration-300 cursor-pointer gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" stroke="currentColor" strokeWidth={1} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layout-list">
                                     <rect width={7} height={7} x={3} y={3} rx={1} />
                                     <rect width={7} height={7} x={3} y={14} rx={1} />
@@ -383,7 +383,7 @@ const JobCategory2 = () => {
                             onMouseLeave={handleMouseLeave}
                             onClick={() => handleClick('job_industry')}
                         >
-                            <div className="py-4 px-3 flex hover:text-primary_blue items-center text-lg text-primary  duration-300 cursor-pointer gap-2">
+                            <div className="py-4 px-3 font-semibold flex hover:text-primary_blue items-center text-md text-primary  duration-300 cursor-pointer gap-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width={26}
@@ -412,7 +412,7 @@ const JobCategory2 = () => {
                             onMouseLeave={handleMouseLeave}
                             onClick={() => handleClick('gov_job')}
                         >
-                            <div className="py-4 px-3 hover:text-primary_blue flex items-center text-lg text-primary duration-300 cursor-pointer gap-2">
+                            <div className="py-4 px-3 font-semibold hover:text-primary_blue flex items-center text-md text-primary duration-300 cursor-pointer gap-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width={26}
@@ -477,7 +477,7 @@ const JobCategory2 = () => {
                             onMouseLeave={handleMouseLeave}
                             onClick={() => handleClick('job_by_section')}
                         >
-                            <div className="py-4 px-3 hover:text-primary_blue flex items-center text-md text-primary duration-300 cursor-pointer gap-2">
+                            <div className="py-4 px-3 font-semibold hover:text-primary_blue flex items-center text-md text-primary duration-300 cursor-pointer gap-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width={26}
@@ -541,7 +541,7 @@ const JobCategory2 = () => {
                             onMouseLeave={handleMouseLeave}
                             onClick={() => handleClick('job_by_location')}
                         >
-                            <div className="py-4 px-3 hover:text-primary_blue flex items-center text-md text-primary duration-300 cursor-pointer gap-2">
+                            <div className="py-4 px-3 hover:text-primary_blue flex items-center text-md text-primary font-semibold duration-300 cursor-pointer gap-2">
                                 <MapPin size={26} strokeWidth={1} />
                                 Job By Location
                             </div>
@@ -589,7 +589,7 @@ const JobCategory2 = () => {
                             onMouseLeave={handleMouseLeave}
                             onClick={() => handleClick('more_links')}
                         >
-                            <div className="py-4 px-3 hover:text-primary_blue flex items-center text-md text-primary duration-300 cursor-pointer gap-2">
+                            <div className="py-4 px-3 hover:text-primary_blue flex items-center text-md text-primary font-semibold duration-300 cursor-pointer gap-2">
                                 <Link2 size={26} strokeWidth={1.4} absoluteStrokeWidth />
                                 More Links
                             </div>
