@@ -72,9 +72,9 @@ const HomePage = () => {
                   <TopCompanies />
                   {/* <InterviewQuestions /> */}
                   <Testimonial />
-                  <NesLetter />
                   <Sponsors />
                   <DownloadOurMobileApp />
+                  <NesLetter />
             </Fragment>
       )
 }
