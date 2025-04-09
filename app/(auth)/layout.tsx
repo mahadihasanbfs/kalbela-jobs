@@ -13,77 +13,77 @@ import BottomNav from "@/components/BottomNav"
 import Navbar2 from "@/components/navbar/Navbar2"
 
 export const metadata: Metadata = {
-      title: {
-            default: siteConfig.name,
-            template: `%s - ${siteConfig.name}`,
-      },
-      description: siteConfig.description,
-      themeColor: [
-            { media: "(prefers-color-scheme: light)", color: "white" },
-            { media: "(prefers-color-scheme: dark)", color: "black" },
-      ],
-      icons: {
-            icon: "/favicon.ico",
-            shortcut: "/favicon-16x16.png",
-            apple: "/apple-touch-icon.png",
-      },
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 interface RootLayoutProps {
-      children: React.ReactNode
+  children: React.ReactNode
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-      return (
-            <>
-                  <html lang="en" suppressHydrationWarning>
-                        <head>
-                              <meta
-                                    name="theme-color"
-                                    content="#DEEBFF"
-                                    media="(prefers-color-scheme: light)"
-                              />
-                              <meta
-                                    name="viewport"
-                                    content="width=device-width, initial-scale=1.0"
-                              />
-                              <meta charSet="UTF-8" />
-                              <meta title="Sign In - Kalbela Jobs" />
-                              <meta name="description" content="Sign In - Kalbela Jobs" />
-                              <meta
-                                    name="keywords"
-                                    content="Jobs, Job Seeker, Employer, Job Portal, Job Posting"
-                              />
-                              <meta name="author" content="Kalbela Jobs" />
-                              <link rel="icon" href="/favicon.ico" />
-                              <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-                              <link rel="shortcut icon" href="/favicon-16x16.png" />
-                              <link rel="manifest" href="/manifest.json" />
-                        </head>
-                        <body
-                              className={cn(
-                                    "min-h-screen bg-background font-sans antialiased",
-                                    fontPoppins.variable
-                              )}
-                        >
-                              <ThemeProvider attribute="class" enableSystem>
-                                    <div className="relative md:mb-0 mb-[60px] flex min-h-screen flex-col bg-light-theme dark:bg-dark-theme">
-                                          <header className="sticky top-0 z-50">
-                                                {/* <Navbar /> */}
-                                                <Navbar2 />
-                                          </header>
-                                          <main>
-                                                <MaxWidthWrapper>
-                                                      <div className="flex-1 items-center justify-center">{children}</div>
-                                                </MaxWidthWrapper>
-                                                <ToastContainer />
-                                          </main>
-                                    </div>
-                                    <BottomNav />
-                                    <TailwindIndicator />
-                              </ThemeProvider>
-                        </body>
-                  </html>
-            </>
-      )
+  return (
+    <>
+      <html lang="en" suppressHydrationWarning>
+        <head>
+          <meta
+            name="theme-color"
+            content="#DEEBFF"
+            media="(prefers-color-scheme: light)"
+          />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta charSet="UTF-8" />
+          <meta title="Sign In - Kalbela Jobs" />
+          <meta name="description" content="Sign In - Kalbela Jobs" />
+          <meta
+            name="keywords"
+            content="Jobs, Job Seeker, Employer, Job Portal, Job Posting"
+          />
+          <meta name="author" content="Kalbela Jobs" />
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="shortcut icon" href="/favicon-16x16.png" />
+          <link rel="manifest" href="/manifest.json" />
+        </head>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontPoppins.variable
+          )}
+        >
+          <ThemeProvider attribute="class" enableSystem>
+            <div className="relative md:mb-0 mb-[60px] flex min-h-screen flex-col bg-light-theme dark:bg-dark-theme">
+              <header className="sticky top-0 z-50">
+                {/* <Navbar /> */}
+                <Navbar2 />
+              </header>
+              <main>
+
+                <div className="flex-1 items-center justify-center">{children}</div>
+
+                <ToastContainer />
+              </main>
+            </div>
+            <BottomNav />
+            <TailwindIndicator />
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
+  )
 }

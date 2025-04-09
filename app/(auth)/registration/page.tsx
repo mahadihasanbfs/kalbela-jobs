@@ -12,227 +12,229 @@ import useApiForPost from "@/app/hooks/useApiForPost"
 
 import AuthAnimation from "../components/AuthAnimation"
 import { googleLogin } from "@/app/hooks/firebse"
+import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import SupportSection from "../components/SupportSection"
 
 
 interface FormData {
-      fullName: string
-      email: string
-      password: string
+  fullName: string
+  email: string
+  password: string
 }
 const RegistrationPage = () => {
-      const [isPasswordVisible, setPasswordVisible] = useState(false)
-      const [loading, setLoading] = useState(false)
-      const [error_message, set_error_message] = useState("")
-      const router = useRouter() // Next.js Router
-      const [user] = useUserData()
+  const [isPasswordVisible, setPasswordVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error_message, set_error_message] = useState("")
+  const router = useRouter() // Next.js Router
+  const [user] = useUserData()
 
-      const [formData, setFormData] = useState<FormData>({
-            fullName: "",
-            email: "",
-            password: "",
-      })
+  const [formData, setFormData] = useState<FormData>({
+    fullName: "",
+    email: "",
+    password: "",
+  })
 
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const { name, value } = e.target
-            setFormData((prevData) => ({
-                  ...prevData,
-                  [name]: value,
-            }))
-      }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
 
-      const { apiRequest } = useApiForPost()
+  const { apiRequest } = useApiForPost()
 
-      const handleSubmit = async (e: React.FormEvent) => {
-            e.preventDefault()
-            setLoading(true)
-            const { data, error } = await apiRequest<any>(
-                  "api/v1/auth/sign-up-user",
-                  "POST",
-                  formData
-            )
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    const { data, error } = await apiRequest<any>(
+      "api/v1/auth/sign-up-user",
+      "POST",
+      formData
+    )
 
-            if (error) {
-                  set_error_message(error.message)
-                  setLoading(false)
-                  return
-            }
-            if (data) {
-                  set_user_data(data.data)
-                  set_error_message("")
-                  setLoading(false)
-                  router.push("/user")
-            }
-      }
-
-
-      const handleLogin = async () => {
-            await googleLogin();
-
-      };
+    if (error) {
+      set_error_message(error.message)
+      setLoading(false)
+      return
+    }
+    if (data) {
+      set_user_data(data.data)
+      set_error_message("")
+      setLoading(false)
+      router.push("/user")
+    }
+  }
 
 
-      return (
-            <section className="">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 py-8">
-                        <AuthAnimation />
+  const handleLogin = async () => {
+    await googleLogin();
 
-                        <div className="flex items-center justify-center lg:border-2 lg:border-l-0 rounded-r-2xl  py-10  sm:py-16  lg:py-24">
-                              <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-                                    <h2 className="text-3xl font-bold leading-tight sm:text-4xl">
-                                          Sign up to Celebration
-                                    </h2>
-                                    <p className="mt-2 text-base text-gray-600 dark:text-slate-200">
-                                          Already have an account?
-                                          <Link
-                                                href="/login"
-                                                title=""
-                                                className="pl-1 font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700"
-                                          >
-                                                Login
-                                          </Link>
-                                    </p>
-                                    <form
-                                          onSubmit={handleSubmit}
-                                          onChange={() => set_error_message("")}
-                                          action="#"
-                                          method="POST"
-                                          className="mt-8"
-                                    >
-                                          <div className="space-y-5">
-                                                <div>
-                                                      <label htmlFor="" className="text-base font-medium">
-                                                            Full Name <span className="text-red-500">*</span>
-                                                      </label>
-                                                      <div className="relative mt-2.5 text-gray-400 focus-within:text-gray-600">
-                                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                                  <svg
-                                                                        className="h-5 w-5"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                        stroke="currentColor"
-                                                                  >
-                                                                        <path
-                                                                              strokeLinecap="round"
-                                                                              strokeLinejoin="round"
-                                                                              strokeWidth={2}
-                                                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                                                        />
-                                                                  </svg>
-                                                            </div>
-                                                            <input
-                                                                  type="text"
-                                                                  name="fullName"
-                                                                  value={formData.fullName}
-                                                                  onChange={handleChange}
-                                                                  placeholder="Enter your full name"
-                                                                  className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
-                                                            />
-                                                      </div>
-                                                </div>
-                                                <div>
-                                                      <label htmlFor="" className="text-base font-medium">
-                                                            {" "}
-                                                            Email <span className="text-red-500">*</span>
-                                                      </label>
-                                                      <div className="relative mt-2.5 text-gray-400 focus-within:text-gray-600">
-                                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                                  <svg
-                                                                        className="h-5 w-5"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                        stroke="currentColor"
-                                                                  >
-                                                                        <path
-                                                                              strokeLinecap="round"
-                                                                              strokeLinejoin="round"
-                                                                              strokeWidth={2}
-                                                                              d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                                                                        />
-                                                                  </svg>
-                                                            </div>
-                                                            <input
-                                                                  type="email"
-                                                                  name="email"
-                                                                  value={formData.email}
-                                                                  onChange={handleChange}
-                                                                  placeholder="Enter email to get started"
-                                                                  className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
-                                                            />
-                                                      </div>
-                                                </div>
-                                                <div>
-                                                      <label htmlFor="" className="text-base font-medium">
-                                                            {" "}
-                                                            Password <span className="text-red-500">*</span>
-                                                      </label>
-                                                      <div className="relative mt-2.5 text-gray-400 focus-within:text-gray-600">
-                                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                                  <svg
-                                                                        className="h-5 w-5"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                        stroke="currentColor"
-                                                                  >
-                                                                        <path
-                                                                              strokeLinecap="round"
-                                                                              strokeLinejoin="round"
-                                                                              strokeWidth={2}
-                                                                              d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"
-                                                                        />
-                                                                  </svg>
-                                                            </div>
-                                                            <input
-                                                                  type={isPasswordVisible ? "text" : "password"}
-                                                                  name="password"
-                                                                  value={formData.password}
-                                                                  onChange={handleChange}
-                                                                  placeholder="Enter your password"
-                                                                  className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
-                                                            />
-                                                            <button
-                                                                  type="button"
-                                                                  onClick={() => setPasswordVisible(!isPasswordVisible)}
-                                                                  className="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none"
-                                                            >
-                                                                  {isPasswordVisible ? (
-                                                                        <EyeOff className="h-5 w-5" />
-                                                                  ) : (
-                                                                        <Eye className="h-5 w-5" />
-                                                                  )}
-                                                            </button>
-                                                      </div>
-                                                </div>
-                                                {error_message?.length ? (
-                                                      <p className="py-4 text-red-500">{error_message}</p>
-                                                ) : (
-                                                      ""
-                                                )}
-                                                <div>
-                                                      <PrimaryBtn disabled={loading} className="w-full py-3">
-                                                            {loading ? "Loading..." : "Sign up"}
-                                                      </PrimaryBtn>
-                                                </div>
-                                          </div>
-                                    </form>
-                                    <div className="mt-3 space-y-3">
-                                          <SecondaryBtn
-                                                // onClick={handlerGoogleLogin}
-                                                onClick={() => handleLogin()}
-                                                className="relative w-full py-3"
-                                          >
-                                                <div className="absolute inset-y-0 left-0 px-4 py-2">
-                                                      <img
-                                                            className="size-7 text-[#2563EB]"
-                                                            src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-                                                            alt=""
-                                                      />
-                                                </div>
-                                                Sign in with Google
-                                          </SecondaryBtn>
-                                          {/* <SecondaryBtn
+  };
+
+
+  return (
+    <section className="">
+      <MaxWidthWrapper className="grid grid-cols-1 lg:grid-cols-2 py-8">
+        <AuthAnimation />
+
+        <div className="flex items-center justify-center lg:border-2 lg:border-l-0 rounded-r-2xl  py-10  sm:py-16  lg:py-24">
+          <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
+            <h2 className="text-3xl font-bold leading-tight sm:text-4xl">
+              Sign up to Celebration
+            </h2>
+            <p className="mt-2 text-base text-gray-600 dark:text-slate-200">
+              Already have an account?
+              <Link
+                href="/login"
+                title=""
+                className="pl-1 font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700"
+              >
+                Login
+              </Link>
+            </p>
+            <form
+              onSubmit={handleSubmit}
+              onChange={() => set_error_message("")}
+              action="#"
+              method="POST"
+              className="mt-8"
+            >
+              <div className="space-y-5">
+                <div>
+                  <label htmlFor="" className="text-base font-medium">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative mt-2.5 text-gray-400 focus-within:text-gray-600">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <svg
+                        className="h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      placeholder="Enter your full name"
+                      className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="" className="text-base font-medium">
+                    {" "}
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative mt-2.5 text-gray-400 focus-within:text-gray-600">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <svg
+                        className="h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Enter email to get started"
+                      className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="" className="text-base font-medium">
+                    {" "}
+                    Password <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative mt-2.5 text-gray-400 focus-within:text-gray-600">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <svg
+                        className="h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type={isPasswordVisible ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Enter your password"
+                      className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setPasswordVisible(!isPasswordVisible)}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none"
+                    >
+                      {isPasswordVisible ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+                {error_message?.length ? (
+                  <p className="py-4 text-red-500">{error_message}</p>
+                ) : (
+                  ""
+                )}
+                <div>
+                  <PrimaryBtn disabled={loading} className="w-full py-3">
+                    {loading ? "Loading..." : "Sign up"}
+                  </PrimaryBtn>
+                </div>
+              </div>
+            </form>
+            <div className="mt-3 space-y-3">
+              <SecondaryBtn
+                // onClick={handlerGoogleLogin}
+                onClick={() => handleLogin()}
+                className="relative w-full py-3"
+              >
+                <div className="absolute inset-y-0 left-0 px-4 py-2">
+                  <img
+                    className="size-7 text-[#2563EB]"
+                    src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                    alt=""
+                  />
+                </div>
+                Sign in with Google
+              </SecondaryBtn>
+              {/* <SecondaryBtn
                                                 // onClick={handlerGoogleLogin}
 
                                                 className="relative w-full py-3"
@@ -246,45 +248,105 @@ const RegistrationPage = () => {
                                                 </div>
                                                 Sign in with Linkedin
                                           </SecondaryBtn> */}
-                                          <Link
-                                                href="https://app.kalbelajobs.com/sign-up"
-                                                className="flex items-center"
-                                          >
-                                                <SecondaryBtn className="relative w-full py-3">
-                                                      <div className="absolute inset-y-0 left-0 px-4 py-2">
-                                                            <img
-                                                                  className="size-7 text-[#2563EB]"
-                                                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn2JeSiT3SLCTDzuGWCjPSkiQOdByB1LByDA&s"
-                                                                  alt=""
-                                                            />
-                                                      </div>
-                                                      Sign up as a Employer
-                                                </SecondaryBtn>
-                                          </Link>
-                                    </div>
-                                    <p className="mt-5 text-sm text-gray-600 dark:text-slate-200">
-                                          This site is protected by reCAPTCHA and the Google{" "}
-                                          <a
-                                                href="#"
-                                                title=""
-                                                className="text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline"
-                                          >
-                                                Privacy Policy
-                                          </a>{" "}
-                                          &amp;
-                                          <a
-                                                href="#"
-                                                title=""
-                                                className="text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline"
-                                          >
-                                                Terms of Service
-                                          </a>
-                                    </p>
-                              </div>
-                        </div>
+              <Link
+                href="https://app.kalbelajobs.com/sign-up"
+                className="flex items-center"
+              >
+                <SecondaryBtn className="relative w-full py-3">
+                  <div className="absolute inset-y-0 left-0 px-4 py-2">
+                    <img
+                      className="size-7 text-[#2563EB]"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn2JeSiT3SLCTDzuGWCjPSkiQOdByB1LByDA&s"
+                      alt=""
+                    />
                   </div>
-            </section>
-      )
+                  Sign up as a Employer
+                </SecondaryBtn>
+              </Link>
+            </div>
+            <p className="mt-5 text-sm text-gray-600 dark:text-slate-200">
+              This site is protected by reCAPTCHA and the Google{" "}
+              <a
+                href="#"
+                title=""
+                className="text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline"
+              >
+                Privacy Policy
+              </a>{" "}
+              &amp;
+              <a
+                href="#"
+                title=""
+                className="text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline"
+              >
+                Terms of Service
+              </a>
+            </p>
+          </div>
+        </div>
+      </MaxWidthWrapper>
+
+      <div className="hidden lg:flex flex-col items-center justify-center bg-white dark:bg-black dark:text-gray-100 text-gray-800 h-full w-full pt-10">
+        <div className="w-full max-w-7xl px-4">
+          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 ">Easiest Way To Apply</h2>
+
+          {/* Red line with dots */}
+          <div className="relative flex justify-center mb-12">
+            <div className="w-full max-w-3xl h-px bg-red-500 relative">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="flex items-center justify-center bg-white px-4">
+                  <div className="w-2 h-2 rounded-full bg-red-500 mx-0.5"></div>
+                  <div className="w-2 h-2 rounded-full bg-red-500 mx-0.5"></div>
+                  <div className="w-2 h-2 rounded-full bg-red-500 mx-0.5"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Four steps */}
+          <div className="grid grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {/* First Step */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-2">First Step</div>
+              <div className="border border-gray-300 rounded-md p-8 mb-4 w-full flex justify-center">
+                <img src="/icons/step-1.png" alt="" />
+              </div>
+              <div className="text-center font-medium">Signup with Kalbelajobs.com</div>
+            </div>
+
+            {/* Second Step */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-2">Second Step</div>
+              <div className="border border-gray-300 rounded-md p-8 mb-4 w-full flex justify-center">
+                <img src="/icons/step-2.png" alt="" />
+              </div>
+              <div className="text-center font-medium">Create your profile</div>
+            </div>
+
+            {/* Third Step */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-2">Third Step</div>
+              <div className="border border-gray-300 rounded-md p-8 mb-4 w-full flex justify-center">
+                <img src="/icons/step-3.png" alt="" />
+              </div>
+              <div className="text-center font-medium">Upload your resume</div>
+            </div>
+
+            {/* Now it's our turn */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-2">Now it's our turn</div>
+              <div className="border border-gray-300 rounded-md p-8 mb-4 w-full flex justify-center">
+                <img src="/icons/step-4.png" alt="" />
+              </div>
+              <div className="text-center font-medium">Now relax :)</div>
+            </div>
+          </div>
+        </div>
+
+        <SupportSection />
+      </div>
+    </section>
+  )
 }
 
 export default RegistrationPage
