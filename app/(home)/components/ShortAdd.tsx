@@ -1,6 +1,5 @@
 'use client';
 
-import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -28,7 +27,7 @@ const ShortAdd: React.FC = () => {
     ]
     return (
         <div>
-            <div className='flex gap-6 items-center justify-center  py-3'>
+            <div className='flex md:flex-row flex-col md:gap-6 gap-1 items-center justify-center  py-3'>
                 {
                     banners?.map(banner =>
                         <Link
@@ -40,7 +39,7 @@ const ShortAdd: React.FC = () => {
                                 // width={500}
                                 // height={500}
                                 // onError={(e) => (e.currentTarget.src = "/fallback.png")}
-                                className="w-full object-cover border border-gray-300 h-[40px] lg:h-[80px]"
+                                className="w-full border object-cover border-gray-300 h-[40px] lg:h-[80px]"
                             />
                         </Link>
                     )
