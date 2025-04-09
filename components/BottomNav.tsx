@@ -83,7 +83,11 @@ const BottomNav: React.FC = () => {
       return (
             <div>
                   <Fragment>
-                        <div className="fixed bottom-0 left-1/2 z-50 h-16 w-full max-w-lg -translate-x-1/2 rounded-t-xl border-2 border-b-0 bg-white/30 backdrop-blur-md lg:hidden">
+                        <div
+                              style={{
+                                    boxShadow: "#00000038 0px -4px 29px 0px"
+                              }}
+                              className="fixed bottom-0 left-1/2 z-50 h-16 w-full max-w-lg -translate-x-1/2 rounded-t-xl border-b-0 bg-white backdrop-blur-md lg:hidden">
                               <div className="mx-auto grid h-full max-w-lg grid-cols-5">
                                     {/* All menu */}
                                     <div className="flex items-center justify-center">

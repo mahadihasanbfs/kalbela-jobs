@@ -1,8 +1,9 @@
+'use client';
+
 import NotFoundVector from '@/components/NotFoundVector';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import JobTitleBar from './JobTitleBar';
@@ -10,25 +11,32 @@ import JobTitleBar from './JobTitleBar';
 interface HotJobsProps {
   loading: boolean;
   data: {
-    data: any;
+    data: any[];
   };
   error: any;
 }
 
 const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
-  // State to keep track of how many items to display
-  const [visibleItems, setVisibleItems] = useState(15);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  const replaceMoreData = () => {
-    // Show the next 3 items when "Show More" is clicked
-    if (visibleItems + 15 <= data?.data.length) {
-      setVisibleItems(visibleItems + 15);
+  const jobs = data?.data || [];
+  const totalPages = Math.ceil(jobs.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const visibleItems = jobs.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
-  const backPrevData = () => {
-    // Hide all items when "Show Less" is clicked (set to show only 3 items again)
-    setVisibleItems(3);
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   return (
@@ -42,7 +50,7 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
         />
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
           {loading
-            ? new Array(15).fill('').map((_, index) => (
+            ? new Array(itemsPerPage).fill(null).map((_, index) => (
               <div key={index} className="flex flex-col items-start rounded-sm border p-4 md:flex-row">
                 <Skeleton className="mr-3 h-14 w-14 rounded-full" />
                 <div className="flex-grow">
@@ -51,37 +59,43 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
                 </div>
               </div>
             ))
-            : data?.data.slice(visibleItems - 15, visibleItems).map((job: any) => (
-              <Link
-                href={`/jobs/${job.url}`}
-                key={job._id}
-                className="group flex justify-start flex-col md:flex-row w-full items-start gap-2 overflow-hidden hover:bg-gray-50 rounded-lg border md:p-4 p-2 shadow-sm transition-all hover:border-gray-300"
-              >
-                <div className="md:block md:w-auto flex w-full justify-center">
-                  <div className="h-16 w-16 m-auto">
-                    {job?.company_info?.logo ? (
-                      <img
-                        className="h-full w-20 rounded border-1 border-gray-300 bg-white object-contain p-2 border"
-                        src={job.company_info.logo}
-                        alt={job.company_info.name || 'Company Logo'}
-                        onError={(e) => (e.currentTarget.src = '/fallback_img.png')}
-                      />
-                    ) : (
-                      <div className="flex justify-center items-center h-full rounded border-2 border-gray-300 bg-white object-contain p-2 shadow-md">
-                        <span className="text-xl font-semibold text-gray-600">
-                          {job?.company_info?.name?.charAt(0).toUpperCase() || 'C'}
-                        </span>
-                      </div>
-                    )}
+            : visibleItems.length > 0 ? (
+              visibleItems.map((job: any) => (
+                <Link
+                  href={`/jobs/${job.url}`}
+                  key={job._id}
+                  className="group flex justify-start flex-col md:flex-row w-full items-start gap-2 overflow-hidden hover:bg-gray-50 rounded-lg border md:p-4 p-2 shadow-sm transition-all hover:border-gray-300"
+                >
+                  <div className="md:block md:w-auto flex w-full justify-center">
+                    <div className="h-16 w-16 m-auto">
+                      {job?.company_info?.logo ? (
+                        <img
+                          className="h-full w-20 rounded border border-gray-300 bg-white object-contain p-2"
+                          src={job.company_info.logo}
+                          alt={job.company_info.name || 'Company Logo'}
+                          onError={(e) => (e.currentTarget.src = '/fallback_img.png')}
+                        />
+                      ) : (
+                        <div className="flex justify-center items-center h-full rounded border-2 border-gray-300 bg-white p-2 shadow-md">
+                          <span className="text-xl font-semibold text-gray-600">
+                            {job?.company_info?.name?.charAt(0).toUpperCase() || 'C'}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex-grow gap-1 text-center md:text-start mx-auto">
-                  <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">{job.job_title}</h3>
-                  <p className="text-xs">{job.company_info?.name}</p>
-                </div>
-              </Link>
-            ))}
+                  <div className="flex-grow gap-1 text-center md:text-start mx-auto">
+                    <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">
+                      {job.job_title}
+                    </h3>
+                    <p className="text-xs">{job.company_info?.name}</p>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-gray-500 py-10">No hot jobs found.</div>
+            )}
         </div>
 
         {error && (
@@ -90,20 +104,27 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
           </div>
         )}
 
-        {visibleItems > 15 &&
-          <div className="flex items-center justify-center mt-8 gap-4 ">
-            <Button
-              className='bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded '
-              onClick={backPrevData}>
-              <ArrowLeft size={16} /> Show Less
-            </Button>
-            <Button
-              className='bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded '
-              onClick={replaceMoreData}>
-              Show More <ArrowRight size={16} />
-            </Button>
-          </div>
-        }
+        {/* Pagination Buttons */}
+        <div className="flex items-center justify-center mt-6 gap-4">
+          <Button
+            size={"sm"}
+            className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            <ArrowLeft size={16} className="mr-1" />
+            Previous
+          </Button>
+          <Button
+            size={"sm"}
+            className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Show More
+            <ArrowRight size={16} className="ml-1" />
+          </Button>
+        </div>
       </div>
     </div>
   );

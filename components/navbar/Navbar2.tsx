@@ -96,8 +96,8 @@ const Navbar2 = () => {
                     <img
                         className={`
             mx-auto h-auto w-32 md:w-48 transition-all duration-300 ease-in-out
-            ${!isScrolled ? "md:translate-y-6 md:opacity-0" : "md:translate-y-0 md:opacity-100"}
-            ${!hideLogo ? "md:hidden" : "md:block"}
+            ${isHomePage && !isScrolled ? "md:translate-y-6 md:opacity-0" : "md:translate-y-0 md:opacity-100"}
+            ${isHomePage && !hideLogo ? "md:hidden" : "md:block"}
         `}
                         src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
                         alt="logo"
@@ -106,13 +106,13 @@ const Navbar2 = () => {
 
 
                 <div
-                    className={`md:flex hidden border-primary_blue items-center justify-between gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${!isScrolled ? "w-full" : "w-[980px]"
+                    className={`md:flex hidden border-primary_blue items-center ${isHomePage ? 'justify-between' : 'justify-end'} gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${isHomePage && !isScrolled ? "w-full" : "w-[980px]"
                         }`}
                 >
 
 
 
-                    <ul className="lg:flex hidden items-center gap-6 text-[1.130rem]">
+                    <ul className="lg:flex hidden items-center gap-4 text-[1.130rem]">
                         {links.map((link, index) => {
                             const isActive = pathname === link.href;
 
@@ -125,7 +125,7 @@ const Navbar2 = () => {
                                 >
                                     <Link href={link.href}>
                                         <div
-                                            className={`flex items-center font-regular duration-300 ${isActive
+                                            className={`flex items-center  font-regular duration-300 ${isActive
                                                 ? "text-primary font-semibold relative after:bg-primary after:h-1 after:rounded-lg after:w-full after:absolute after:top-12 after:left-0"
                                                 : "text-gray-800 dark:text-gray-200"
                                                 }`}

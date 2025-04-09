@@ -49,7 +49,7 @@ const HomePage = () => {
                               {/* <Job_type_tag /> */}
                               {/* <JobType /> */}
                         </div>
-                        <div className="pointer-events-none absolute right-0 top-0 md:hidden w-full">
+                        <div className="pointer-events-none absolute right-0 top-0 lg:block md:hidden w-full">
                               <VerticalMarquee />
                         </div>
                   </div>
