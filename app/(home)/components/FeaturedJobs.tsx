@@ -3,88 +3,96 @@
 import React from "react"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import Govt_jobs from "./Govt_jobs"
 import { Button } from "@/components/ui/button"
+import InternShipJob from "./InternShipJob"
+import SkilledJobs from "./SkilledJobs"
+import Tenders from "./Tenders"
+import HotJobs from "./HotJobs"
+import useJobsSearch from "@/app/hooks/useJobSearch"
+import Image from "next/image"
 
 const FeaturedJobs: React.FC = () => {
       const { data, loading, error } = useApiRequest<any>(
-            "jobs/get-featured-jobs",
+            "jobs/get-featured-jobs?limit=3",
             "GET"
       )
 
-      console.log("data from featured jobs", data)
+      const addList = [
+            '/banner4.jpg',
+            'https://www.facebook.com/watch/?v=1142566183333827',
+            // 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            '/sample-video.mp4',
+            '/assets/add2.jpg',
+      ]
 
       return (
             <section>
                   <div className="space-y-6 col-span-2">
-                        <div>
-                              <div className="mb-4 h-12 flex bg-gray-100 px-4 py-1 items-center justify-between font-bold md:text-[1.4rem] text-lg">
-                                    <div >🔥 Hot Jobs</div>
-                                    {data?.data.length > 9 && <Button className="!py-0 !text-gray-800 !pr-0 !bg-transparent">More {">>"}</Button>}
+                        <div className="grid md:grid-cols-4 gap-4">
+                              <div className="md:col-span-3">
+                                    <HotJobs loading={loading} data={data} error={error} />
+                                    <Govt_jobs loading={loading} data={data} error={error} />
                               </div>
-                              <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3 ">
-                                    {loading
-                                          ? Array.from({ length: 16 }).map((_, index) => (
-                                                <div
-                                                      key={index}
-                                                      className="flex flex-col items-start rounded-sm border p-4 md:flex-row"
-                                                >
-                                                      <Skeleton className="mr-3 h-14 w-14 rounded-full" />
-                                                      <div className="flex-grow">
-                                                            <Skeleton className="mb-2 h-5 w-24" />
-                                                            <Skeleton className="h-4 w-32" />
-                                                      </div>
-                                                </div>
-                                          ))
-                                          : data?.data?.slice(0, 9)?.map((job: any) => (
-                                                <Link
-                                                      href={`/jobs/${job.url}`}
-                                                      key={job._id}
-                                                      className="group flex justify-start flex-col md:flex-row w-full  items-start gap-2  overflow-hidden hover:bg-gray-50 rounded-lg border md:p-4 p-2 shadow-sm transition-all  hover:border-gray-300"
-                                                >
-                                                      <div className="md:block md:w-auto flex w-full justify-center">
-                                                            <div className="h-16 w-16 m-auto ">
-                                                                  {job?.company_info?.logo ? (
-                                                                        <img
-                                                                              className="h-full w-20 rounded 
-                                                                               border-2 border-gray-300 bg-white object-contain p-2 shadow-md"
-                                                                              src={job.company_info.logo}
-                                                                              alt={job.company_info.name || "Company Logo"}
-                                                                        />
-                                                                  ) : (
-                                                                        <div className="flex justify-center items-center h-full rounded border-2 border-gray-300 bg-white object-contain p-2 shadow-md">
-                                                                              <span className="text-xl font-semibold text-gray-600">
-                                                                                    {job?.company_info?.name?.charAt(0).toUpperCase() || "C"}
-                                                                              </span>
-                                                                        </div>
-                                                                  )}
-                                                            </div>
-                                                      </div>
 
-                                                      <div className="flex-grow  gap-1 text-center md:text-start mx-auto">
-                                                            <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">
+                              <div className="flex flex-col gap-2">
+                                    {/* <Image
+                                          src="https://i.ibb.co.com/mrZ8DzSW/banner3.jpg"
+                                          alt="ad"
+                                          width={500}
+                                          height={500}
+                                          className="rounded border"
+                                          onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
+                                    /> */}
+                                    <img
+                                          src="/assets/banner3.png"
+                                          alt="ad"
+                                          // width={500}
+                                          // height={500}
+                                          className="rounded border"
+                                    // onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
+                                    />
 
-                                                                  {job.job_title}
-                                                            </h3>
-                                                            <p className="text-xs"> {job.company_info?.name}</p>
-                                                      </div>
+                                    <iframe
+                                          className="w-full aspect-video rounded border"
+                                          src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent('https://www.facebook.com/watch/?v=1142566183333827')}&autoplay=1&mute=1&show_text=false&width=500`}
+                                          width="500"
+                                          style={{ border: "none", overflow: "hidden" }}
+                                          scrolling="no"
+                                          frameBorder="0"
+                                          allow="autoplay; encrypted-media"
+                                          allowFullScreen
+                                    />
 
+                                    <Image
+                                          src="/assets/add2.jpg"
+                                          alt="ad"
+                                          width={500}
+                                          height={500}
+                                          className="rounded border"
+                                          onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
+                                    />
 
-                                                </Link>
-                                          ))}
+                                    <Image
+                                          src="/assets/add1.jpg"
+                                          alt="ad"
+                                          width={500}
+                                          height={500}
+                                          className="rounded border"
+                                          onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
+                                    />
+
                               </div>
                         </div>
-
-                        <div>
-                              <Govt_jobs />
-                        </div>
+                        <InternShipJob data={data} loading={loading} error={error} />
+                        <SkilledJobs data={data} loading={loading} error={error} />
+                        <Tenders data={data} loading={loading} error={error} />
                   </div>
-            </section >
+            </section>
       )
 }
 

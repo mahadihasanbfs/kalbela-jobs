@@ -101,12 +101,14 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             handleClose()
       };
 
+      // console.log("filteredSearchHistory", filteredSearchHistory);
+
       const modalContent = (
             <AnimatePresence>
                   {isOpen && (
                         <motion.div
                               onClick={handleClose}
-                              className="fixed top-0 left-0 right-0 bottom-0 inset-0 flex items-start pt-[7%] justify-center backdrop-blur-sm z-50"
+                              className="fixed top-0 left-0 right-0 bottom-0 inset-0 flex items-start pt-[7%] justify-center backdrop-blur-sm z-[4000]"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
@@ -151,7 +153,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                                           />
                                     </Link>
 
-                                    <div className={`${showSkillDropdown ? 'rounded-xl h-auto ' : 'rounded-full  md:h-[60px] h-[50px]'} border md:p-2.5 p-1 shadow-lg shadow-gray-100 items-center border-gray-300 bg-[#ffffff] `}>
+                                    <div
+                                          className={`${showSkillDropdown && (filteredSkills.length > 0 || filteredSearchHistory.length > 0)
+                                                ? 'rounded-lg h-auto'
+                                                : 'rounded-full md:h-[60px] h-[50px]'
+                                                } border md:p-2.5 p-1 shadow-lg shadow-gray-100 items-center border-gray-300 md:w-[730px] m-auto bg-[#ffffff] `}>
+
                                           <div className="flex mt-[2px] items-center gap-2">
                                                 <form className='flex items-center w-full' onSubmit={(e) => {
                                                       e.preventDefault();
@@ -246,7 +253,46 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                                                 </ul>
                                           )}
                                     </div>
-                                    <div className="mt-5">
+                                    <div className="mt-5 md:w-[730px] m-auto">
+                                          <div className=" mb-3">
+                                                {/* <h5 className="font-semibold mb-2">History</h5> */}
+                                                {filteredSearchHistory.length > 0 && (
+                                                      <div className='grid grid-cols-5 gap-2'>
+                                                            {filteredSearchHistory?.map((item: string) => (
+                                                                  <li
+                                                                        key={`history-${item}`}
+                                                                        onClick={() => {
+                                                                              setSearchQuery(item)
+                                                                              router.push(`/search-details?${item}`)
+                                                                              setShowSkillDropdown(false)
+                                                                        }}
+                                                                        className="relative hover:bg-gray-50 group m-1 flex flex-col items-center hover;bg-gray-50 justify-center cursor-pointer p-1.5 capitalize rounded 
+                                                                        "
+                                                                  >
+                                                                        <div className=" flex flex-col items-center gap-2 ">
+                                                                              <div className="bg-gray-100
+                                                                        hover:bg-gray-100 w-12 h-12 flex items-center  justify-center rounded-full">
+                                                                                    <Clock
+                                                                                          size={26}
+                                                                                          strokeWidth={1}
+                                                                                          className=" text-[#001968]" />
+                                                                              </div>
+                                                                              <div>
+                                                                                    <span className="text-sm text-center text-[#001968]">{highlightMatch(item, searchQuery)}</span>
+                                                                              </div>
+                                                                        </div>
+                                                                        <button
+                                                                              onClick={(e) => removeFromHistory(item, e)}
+                                                                              className="hidden absolute right-0 top-0 group-hover:block p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                                                                        >
+                                                                              <X className="h-4 w-4 text-gray-400" />
+                                                                        </button>
+                                                                  </li>
+                                                            ))}
+                                                            {filteredSkills.filter((skill: any) => !filteredSearchHistory.includes(skill)).length > 0 && <Separator className="my-2" />}
+                                                      </div>
+                                                )}
+                                          </div>
                                           <Job_type_tag />
                                     </div>
                               </motion.div>

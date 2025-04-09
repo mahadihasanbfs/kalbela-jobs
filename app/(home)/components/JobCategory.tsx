@@ -410,7 +410,7 @@ const JobCategory = () => {
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
     return (
-        <div className='bg-gray-100 mt-10 relative z-50'>
+        <div className='bg-[#DFDFF8] mt-10 relative !opacity-100 z-50'>
             <MaxWidthWrapper>
                 <ul className="md:flex hidden items-center gap-6 relative ">
                     {jobCategories.map((category) => (

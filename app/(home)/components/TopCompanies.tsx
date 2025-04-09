@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import SecondaryBtn from "@/components/SecondaryBtn"
 import useApiRequest from "@/app/hooks/useApiRequest"
+import CustomTitle from "./CustomTitle"
 
 const topCompaniessArr = [
   {
@@ -99,9 +100,8 @@ const TopCompanies: React.FC = () => {
   return (
     <section className="py-6 md:py-10">
       <MaxWidthWrapper>
-        <h2 className="md:mb-4 md:mt-0 mt-3 flex items-center  font-bold text-[1.5rem]">
-          Top companies hiring now
-        </h2>
+        <CustomTitle title="Top companies hiring now" />
+        <br />
         <Carousel
           opts={{ loop: true }}
           setApi={setApi}

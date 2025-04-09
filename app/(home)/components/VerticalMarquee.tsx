@@ -15,7 +15,7 @@ const VerticalMarquee = () => {
             const totalItems = data?.data?.length || 0;
             const baseSize = Math.floor(totalItems / 10);
             const remainder = totalItems % 10;
-            const extraItem = i < remainder ? 1 : 0; // Distribute extra items evenly
+            const extraItem: number = i < remainder ? 1 : 0; // Distribute extra items evenly
 
             const startIndex = i * baseSize + Math.min(i, remainder);
             const endIndex = startIndex + baseSize + extraItem;
@@ -27,7 +27,7 @@ const VerticalMarquee = () => {
       };
 
       return (
-            <div className="relative z-0 flex h-96 flex-row items-center justify-center space-x-12 space-y-[0.5rem] overflow-hidden opacity-20 [perspective:300px]">
+            <div className="relative z-0 flex h-[30rem] flex-row items-center justify-center space-x-12 space-y-[0.5rem] overflow-hidden opacity-30 [perspective:300px]">
                   {rows.map((row, i) => (
                         <Marquee
                               key={i}
@@ -44,10 +44,10 @@ const VerticalMarquee = () => {
                   ))}
 
                   {/* Gradient Overlays */}
-                  <div className="pointer-events-none absolute inset-x-0 -top-2 h-1/3 bg-gradient-to-b from-[#e1ecff] dark:from-background"></div>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white dark:from-background"></div>
-                  <div className="pointer-events-none absolute inset-y-0 -left-14 -top-2 w-1/4 bg-gradient-to-r from-gray-100 dark:from-background"></div>
-                  <div className="pointer-events-none absolute inset-y-0 -right-0 w-1/4 bg-gradient-to-l from-gray-100 dark:from-background"></div>
+                  <div className=" pointer-events-none absolute inset-x-0 -top-2 h-1/3 bg-gradient-to-b from-[#e1ecff] dark:from-background"></div>
+                  <div className=" pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white dark:from-background"></div>
+                  <div className=" pointer-events-none absolute inset-y-0 -left-14 -top-2 w-1/4 bg-gradient-to-r from-gray-100 dark:from-background"></div>
+                  <div className=" pointer-events-none absolute inset-y-0 -right-0 w-1/4 bg-gradient-to-l from-gray-100 dark:from-background"></div>
             </div>
       );
 };

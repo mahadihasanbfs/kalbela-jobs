@@ -7,26 +7,13 @@ import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
 import { Activity, Award, Briefcase, Building, Clock, Search, TrendingUp, Users, X } from "lucide-react"
 import { useTheme } from "next-themes"
-
-import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
-import PrimaryBtn from "@/components/PrimaryBtn"
-import { TypingRandomizedTextEffect } from "@/components/RandomizedTextEffect"
 import useApiRequest from "@/app/hooks/useApiRequest"
-import Job_type_tag from "./Job_type_tag"
 
 import Link from "next/link"
-import SearchModal from "./Search"
 import Image from "next/image"
 import SearchBox from "./SearchBox"
-import StatisticsList from "./StatisticsList"
-import { Button } from "@/components/ui/button"
 import { Typewriter } from "react-simple-typewriter"
-import StaticsBar from "./StaticsBar"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 const locationSuggestions = ["dhaka", "chattogram", "khulna", "rajshahi", "sylhet", "barishal", "mymensingh", "rangpur"]
 
@@ -51,6 +38,21 @@ const HeroSection = () => {
       const [filteredSkills, setFilteredSkills] = useState<string[]>([])
       const [showSkillDropdown, setShowSkillDropdown] = useState(false)
       const [isOpen, setIsOpen] = useState<boolean>(false);
+      const [isScrolled, setIsScrolled] = useState(false);
+
+      React.useEffect(() => {
+            const handleScroll = () => {
+                  if (window.scrollY > 20) {
+                        setIsScrolled(true);
+                  } else {
+                        setIsScrolled(false);
+                  }
+            };
+
+            window.addEventListener("scroll", handleScroll);
+            return () => window.removeEventListener("scroll", handleScroll);
+      }, []);
+
 
       // Fetch skills from the API
       const fetchSkills = async (query: string) => {
@@ -146,11 +148,22 @@ const HeroSection = () => {
 
 
       return (
-            <div className="z-50 ">
-                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 py-6 md:py-2 md:pb-4 lg:pb-4">
-                        <div className="rounded-md pt-4 pb-2 ">
+            <div className=" ">
+                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 md:!h-[330px] !h-[230px] justify-end ">
+                        <div className="rounded-md pt-2 md:pb-2 ">
+                              <Link href="/">
+                                    <img
+                                          className={`
+                                          mx-auto h-auto w-[19rem] transition-all duration-300 md:block hidden ease-in-out 
+                                          ${isScrolled ? "scale-50 opacity-0 invisible" : "scale-100 opacity-100 visible"}
+                                          `}
+                                          src={theme === "dark" ? "/logo_dark.png" : "/icons/logo.svg"}
+                                          alt="logo"
+                                    />
+
+                              </Link>
                               <h1
-                                    className="mt-4 bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:mt-10 lg:text-5xl"
+                                    className="mt-[1.5rem] bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:text-[2rem]"
                                     style={{
                                           backgroundImage: "linear-gradient(to right, #001968, #0a4d92)",
                                           WebkitBackgroundClip: "text",
@@ -169,7 +182,7 @@ const HeroSection = () => {
                         </div>
 
                         {/* display search */}
-                        <div className="dark:bg-[#040913] bg-white relative md:w-[740px] w-full z-10 !opacity-100 px-2 lg:py-2 py-0 rounded-full border md:h-[60px] h-[50px] flex items-center shadow-xl dark:shadow-[#2d384f18] shadow-[#80808018] overflow-hidden">
+                        <div className="dark:bg-[#040913]  !bg-white relative md:w-[740px] w-full !opacity-100 px-2 lg:py-2 py-0 rounded-full border md:h-[60px] h-[50px] flex items-center shadow-xl backdrop-blur-sm dark:shadow-[#2d384f18] shadow-[#80808018] overflow-hidden cursor-pointer z-50">
                               <div
                                     onClick={() => setIsOpen(!isOpen)}
                                     className="flex  justify-between w-full  lg:text-xl text-xs items-center md:gap-2 font-sans">
@@ -179,7 +192,7 @@ const HeroSection = () => {
                                           <div className="flex items-center justify-between  w-full">
                                                 <div className=" border-gray-300 p-2 w-full text-gray-500 text-nowrap overflow-hidden text-sm flex items-center md:gap-2  gap-1">
                                                       <Typewriter
-                                                            words={['Search by keyword', 'Search by keyword ', 'Search by keyword']}
+                                                            words={['Search by keyword', 'Search by location ', 'Search by category']}
                                                             loop={5}
                                                             cursor
                                                             cursorStyle=''
@@ -213,7 +226,7 @@ const HeroSection = () => {
                               </div>
                         </div>
 
-                        <div className="">
+                        <div>
                               <SearchBox
                                     searchQuery={searchQuery}
                                     handleSkillChange={handleSkillChange}
@@ -230,29 +243,7 @@ const HeroSection = () => {
                                     removeFromHistory={removeFromHistory}
                                     highlightMatch={highlightMatch}
                                     isOpen={isOpen}
-                                    setIsOpen={setIsOpen}
-
-                              />
-
-                        </div>
-
-                        {/* <SearchModal searchQuery={searchQuery}
-                              setSearchQuery={setSearchQuery}
-                              filteredSkills={filteredSkills}
-                              filteredSearchHistory={filteredSearchHistory}
-                              handleSkillChange={handleSkillChange}
-                              removeFromHistory={removeFromHistory}
-                              handleSearch={handleSearch}
-                              location={location}
-                              setLocation={setLocation}
-                              data={data}
-                              theme={theme} /> */}
-
-                        <div className="!mt-[3px]">
-                              <Job_type_tag />
-                        </div>
-                        <div className="  overflow-hidden ">
-                              <StaticsBar />
+                                    setIsOpen={setIsOpen} />
                         </div>
                   </MaxWidthWrapper>
             </div>

@@ -3,6 +3,7 @@ import Marquee from "@/components/Marquee"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 
 import { ReviewCard } from "./Testimonial_review_card"
+import CustomTitle from "./CustomTitle"
 
 const reviews = [
   {
@@ -48,11 +49,10 @@ const secondRow = reviews.slice(reviews.length / 2)
 
 const Testimonial = () => {
   return (
-    <div className="mx-auto h-full w-full max-w-screen-xl px-0 md:px-20 lg:px-12 2xl:max-w-screen-2xl">
+    <MaxWidthWrapper>
       <div className="bg-background py-6 md:py-10">
-        <h2 className="mb-2 w-full px-2 text-left font-bold title-size ">
-          What people are saying
-        </h2>
+        <CustomTitle title="What people are saying" />
+        <br />
         <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg">
           <Marquee pauseOnHover className="[--duration:30s]">
             {firstRow.map((review) => (
@@ -68,7 +68,7 @@ const Testimonial = () => {
           <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
         </div>
       </div>
-    </div>
+    </MaxWidthWrapper>
   )
 }
 

@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/ThemeProvider"
 import Navbar from "@/components/navbar/Navbar"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import BottomNav from "@/components/BottomNav"
+import Navbar2 from "@/components/navbar/Navbar2"
 
 export const metadata: Metadata = {
       title: {
@@ -68,7 +69,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
                               <ThemeProvider attribute="class" enableSystem>
                                     <div className="relative md:mb-0 mb-[60px] flex min-h-screen flex-col bg-light-theme dark:bg-dark-theme">
                                           <header className="sticky top-0 z-50">
-                                                <Navbar />
+                                                {/* <Navbar /> */}
+                                                <Navbar2 />
                                           </header>
                                           <main>
                                                 <MaxWidthWrapper>

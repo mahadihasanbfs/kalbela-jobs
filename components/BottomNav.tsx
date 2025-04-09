@@ -160,7 +160,7 @@ const BottomNav: React.FC = () => {
                                           <SheetHeaderSideBar>
                                                 <SheetTitleSideBar className="text-start">
                                                       <Link href="/">
-                                                            <img className="h-auto w-48" src="/logo.png" alt="logo" />
+                                                            <img className="h-auto w-[170px]" src="/logo.png" alt="logo" />
                                                       </Link>
                                                 </SheetTitleSideBar>
                                                 <SheetDescriptionSideBar className="sr-only">

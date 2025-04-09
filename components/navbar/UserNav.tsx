@@ -80,7 +80,7 @@ const UserNav = ({ loading, user }: { loading: boolean; user: any }) => {
                               )}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
-                              className="w-56 rounded-sm border border-gray-300"
+                              className="w-56 rounded-sm border mr-[20px] mt-2 border-gray-300 "
                               align={alignment as any}
                               forceMount
                         >

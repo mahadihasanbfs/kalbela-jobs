@@ -11,6 +11,7 @@ import Navbar from "@/components/navbar/Navbar"
 
 import BottomNav from "../../../components/BottomNav"
 import { Sidebar } from "./components/Sideber"
+import Navbar2 from "@/components/navbar/Navbar2"
 
 export const metadata: Metadata = {
       title: {
@@ -68,7 +69,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         <ThemeProvider attribute="class" enableSystem>
                               <div className="flex min-h-screen flex-col">
                                     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                                          <Navbar />
+                                          {/* <Navbar /> */}
+                                          <Navbar2 />
                                     </header>
                                     <MaxWidthWrapper>
                                           <div className="mx-auto flex flex-col lg:flex-row">

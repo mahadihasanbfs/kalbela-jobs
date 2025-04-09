@@ -113,7 +113,7 @@ const JobsDetails = () => {
                   .join(", ");
       };
 
-
+      console.log("job data", jobData);
 
       return (
             <MaxWidthWrapper>
@@ -221,30 +221,43 @@ const JobsDetails = () => {
 
                                     <Card className="h-fit p-6 lg:col-span-1">
                                           <div className="mb-6 flex items-center gap-4">
-                                                {jobData?.company_info?.company_website ? <Link href={`/companies/${jobData?.company_info?.company_website}`}>
-                                                      <div className="flex-shrink-0">
-                                                            <Avatar className="h-12 w-12">
-                                                                  <AvatarImage
-                                                                        className="h-12 w-12  rounded border-2 border-gray-300  object-scale-down p-2 shadow-md"
-                                                                        src={jobData?.company_info?.logo || "/placeholder.svg"}
-                                                                        alt={jobData?.company_info?.name || "Company Logo"}
-                                                                  />
-                                                                  <AvatarFallback className="text-lg">
-                                                                        {jobData?.company_info?.name?.charAt(0)}
-                                                                  </AvatarFallback>
-                                                            </Avatar>
-                                                      </div></Link> : <div className="flex-shrink-0">
-                                                      <Avatar className="h-12 w-12">
-                                                            <AvatarImage
-                                                                  className="h-12 w-12  rounded border-2 border-gray-300  object-scale-down p-2 shadow-md"
-                                                                  src={jobData?.company_info?.logo || "/placeholder.svg"}
-                                                                  alt={jobData?.company_info?.name || "Company Logo"}
-                                                            />
-                                                            <AvatarFallback className="text-lg">
-                                                                  {jobData?.company_info?.name?.charAt(0)}
-                                                            </AvatarFallback>
-                                                      </Avatar>
-                                                </div>}
+                                                {jobData?.company_info?.company_website
+                                                      ?
+                                                      <Link href={`/companies/${jobData?.company_info?.company_website}`}>
+                                                            <div className="flex-shrink-0">
+                                                                  <Avatar className="h-12 w-12">
+                                                                        <AvatarImage
+                                                                              className="h-12 w-12  rounded border-2 border-gray-300  object-scale-down p-2 "
+                                                                              src={jobData?.company_info?.logo || "/placeholder.svg"}
+                                                                              alt={jobData?.company_info?.name || "Company Logo"}
+                                                                        />
+                                                                        <AvatarFallback className="text-lg">
+                                                                              {jobData?.company_info?.name?.charAt(0)}
+                                                                        </AvatarFallback>
+                                                                  </Avatar>
+                                                            </div>
+                                                      </Link>
+                                                      :
+                                                      <Link href={`/companies/${jobData?.company_info?.website}`}>
+                                                            <div className="flex-shrink-0">
+                                                                  {
+                                                                        <div className="!h-12 !w-12">
+                                                                              <Avatar className="w-full h-full">
+                                                                                    <AvatarImage
+                                                                                          className="!h-12 !w-12  rounded border-2 border-gray-300  object-scale-down p-2 "
+                                                                                          src={jobData?.company_info?.logo || "/placeholder.svg"}
+                                                                                          alt={jobData?.company_info?.name || "Company Logo"}
+                                                                                    />
+                                                                                    <AvatarFallback className="text-lg rounded">
+                                                                                          {jobData?.company_info?.name?.charAt(0)}
+                                                                                    </AvatarFallback>
+                                                                              </Avatar>
+                                                                        </div>
+
+                                                                  }
+                                                            </div>
+                                                      </Link>
+                                                }
                                                 <div>
                                                       <h3 className="font-semibold capitalize">{jobData?.company_info?.name} {jobData?.company_info?.industry && `(${jobData?.company_info?.industry})`}</h3>
                                                       <p className="text-sm ">
