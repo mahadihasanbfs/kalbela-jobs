@@ -1,60 +1,78 @@
-import React, { useState } from "react"
-import {
-  AlertCircle,
-  BaggageClaimIcon,
-  Briefcase,
-  ChevronLeft,
-  Eye,
-  FileBadge2,
-  Home,
-  Key,
-  LifeBuoy,
-  LocateIcon,
-  LucideCookie,
-  Pencil,
-  Save,
-  Star,
-  Type,
-  X,
-} from "lucide-react"
+import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import { Info as InfoIcon, Plus, X } from "lucide-react"
+
+import "react-quill/dist/quill.snow.css"
+import { ChevronLeft, Pencil } from "lucide-react"
+import CreatableSelect from "react-select/creatable"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
+
+interface OptionType {
+  label: string
+  value: string
+}
 const OtherRelevantInfo = ({
   setActiveSection,
 }: {
   setActiveSection: (section: string | null) => void
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [keywordOptions, setKeywordOptions] = useState<OptionType[]>([])
+  const [selectedKeywords, setSelectedKeywords] = useState<OptionType[]>([])
+  const [isEditMode, setIsEditMode] = useState(false)
+  const [careerSummary, setCareerSummary] = useState("")
+  const [specialQualification, setSpecialQualification] = useState("")
+  const [errors, setErrors] = useState({
+    keywords: "",
+    careerSummary: "",
+    specialQualification: "",
+  })
 
-  const toggleEditMode = () => setIsEditing(!isEditing)
+  useEffect(() => {
+    if (isEditMode) {
+      setCareerSummary(careerSummary)
+      setSpecialQualification(specialQualification)
+    }
+  }, [isEditMode])
+
+  const validateInputs = () => {
+    const newErrors = {
+      keywords:
+        selectedKeywords.length > 0 ? "" : "At least one keyword is required",
+      careerSummary: careerSummary ? "" : "Career Summary is required",
+      specialQualification: specialQualification
+        ? ""
+        : "Special Qualification is required",
+    }
+    setErrors(newErrors)
+    return !Object.values(newErrors).some((error) => error)
+  }
+
   const handleSave = () => {
-    // Handle save logic here
-    setIsEditing(false)
+    if (!validateInputs()) {
+      return
+    }
+
+    console.log({
+      keywords: selectedKeywords,
+      careerSummary,
+      specialQualification,
+    })
+    setIsEditMode(false)
   }
 
-  // Career Edite
-
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
-
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const handleCreateOption = (inputValue: string) => {
+    const newOption = { label: inputValue, value: inputValue }
+    setKeywordOptions([...keywordOptions, newOption])
+    setSelectedKeywords([...selectedKeywords, newOption])
   }
+
+  // fksdaf
+  const toggleEditMode = () => setIsEditMode(!isEditMode)
   return (
-    <div className="text-3xl text-black">
+    <div className="mb-4 w-full py-2">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
         <div className="flex items-center">
           <Button
@@ -67,7 +85,7 @@ const OtherRelevantInfo = ({
           </Button>
           <h1 className="ml-4 text-xl font-medium">Other Relevant Info</h1>
         </div>
-        {isEditing ? (
+        {isEditMode ? (
           <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
@@ -90,154 +108,144 @@ const OtherRelevantInfo = ({
         )}
       </div>
 
-      {/* Career edit System */}
-
-      {isEditing ? (
-        <div className="mx-auto space-y-4 p-4">
+      <div className="mt-4">
+        <div className="flex items-center justify-between">
+          <h5 className="pb-3 font-semibold">Keywords</h5>
+        </div>
+        {isEditMode ? (
           <div>
-            <Input
-              id="functionalCate"
-              placeholder="Career Summary"
-              className={`mt-1 border border-gray-300`}
-              value={objective}
-              onChange={(e) => setObjective(e.target.value)}
-              onBlur={handleBlur}
+            <CreatableSelect
+              isMulti
+              value={selectedKeywords}
+              // @ts-ignore
+              onChange={setSelectedKeywords}
+              options={keywordOptions}
+              onCreateOption={handleCreateOption}
+              placeholder="Enter keywords"
+              className="mb-2"
+              styles={{
+                menu: (provided) => ({ ...provided, zIndex: 500 }),
+                control: (provided, state) => ({
+                  ...provided,
+                  boxShadow: "none",
+                  borderColor: state.isFocused
+                    ? "inherit"
+                    : provided.borderColor,
+                  "&:hover": { borderColor: "inherit" },
+                }),
+                multiValue: (provided) => ({
+                  ...provided,
+                  backgroundColor: "#1b2a69",
+                  color: "white",
+                }),
+                multiValueLabel: (provided) => ({
+                  ...provided,
+                  color: "white",
+                }),
+              }}
+              // styles={{
+              //     control: (provided, state) => ({
+              //         ...provided,
+              //         borderColor: state.isFocused ? 'red' : provided.borderColor,
+              //         '&:hover': {
+              //             borderColor: state.isFocused ? 'red' : provided.borderColor,
+              //         },
+              //     }),
+              // }}
             />
-            <Label
-              htmlFor="objective"
-              className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
-            >
-              What is Career Summary ?
-            </Label>
+            {errors.keywords && (
+              <p className="text-red-500">{errors.keywords}</p>
+            )}
           </div>
+        ) : (
+          <div>
+            {selectedKeywords.length > 0 ? (
+              selectedKeywords.map((keyword, index) => (
+                <span
+                  key={index}
+                  className="mb-2 mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
+                >
+                  {keyword.label}
+                </span>
+              ))
+            ) : (
+              <p>No keywords found</p>
+            )}
+          </div>
+        )}
+      </div>
 
-          <div className="">
+      <div className="mt-3 grid grid-cols-1">
+        <div>
+          <h5 className="text-md mb-2 mt-3 border-b pb-1 font-bold">
+            Career Summary
+          </h5>
+          {isEditMode ? (
             <div>
-              <Dialog>
-                <DialogTrigger className="flex items-center gap-2 text-sm text-gray-600">
-                  <Eye className="h-4 w-4 text-blue-500" /> EXAMPLE
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="text-start">
-                      Career Summary?
-                    </DialogTitle>
-                    <DialogDescription className="text-start">
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers. This
-                      action cannot be undone. This will permanently delete your
-                      account and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-
-                  <DialogHeader className="mt-4 text-start">
-                    <DialogTitle>Bad Example?</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers. This
-                      action cannot be undone. This will permanently delete your
-                      account and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
+              <ReactQuill
+                value={careerSummary}
+                onChange={setCareerSummary}
+                placeholder="Career Summary..."
+              />
+              {errors.careerSummary && (
+                <p className="text-red-500">{errors.careerSummary}</p>
+              )}
             </div>
-            <Input
-              id="objective"
-              placeholder="Special Qualification"
-              className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
-            />
-            <Label
-              htmlFor="objective"
-              className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
-            >
-              What is Special Qualification ?
-            </Label>
-          </div>
-
-          <div className="">
+          ) : (
             <div>
-              <Dialog>
-                <DialogTrigger className="flex items-center gap-2 text-sm text-gray-600">
-                  <Eye className="h-4 w-4 text-blue-500" /> EXAMPLE
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogTitle className="mb-2 text-start font-bold">
-                    Special Qualification
-                  </DialogTitle>
-                  <DialogHeader>
-                    <DialogTitle className="text-start">
-                      Good Example?
-                    </DialogTitle>
-                    <DialogDescription className="text-start">
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers. This
-                      action cannot be undone. This will permanently delete your
-                      account and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-
-                  <DialogHeader className="mt-4 text-start">
-                    <DialogTitle>Bad Example?</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers. This
-                      action cannot be undone. This will permanently delete your
-                      account and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
+              {careerSummary ? (
+                <div dangerouslySetInnerHTML={{ __html: careerSummary }} />
+              ) : (
+                <div>Career summary not found</div>
+              )}
             </div>
-            <Input
-              id="objective"
-              placeholder="Keywords *"
-              className={`mt-1 border border-gray-300`}
-              onBlur={handleBlur}
-            />
-            <Label
-              htmlFor="objective"
-              className="flex items-center gap-1 pl-2 text-[12px] text-gray-600"
-            >
-              What is Keywords ?
-            </Label>
-          </div>
-
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
-          </div>
+          )}
         </div>
-      ) : (
-        <div className="h-screen px-4">
-          <div className="my-8 flex items-center justify-start gap-3">
-            <div>
-              <Briefcase className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="text-sm text-blue-800">Career Summary</h3>
-            </div>
-          </div>
 
-          <div className="my-8 flex items-center justify-start gap-3">
+        <div>
+          <h5 className="text-md mb-2 mt-3 border-b pb-1 font-bold">
+            Special Qualification
+          </h5>
+          {isEditMode ? (
             <div>
-              <Star className="h-5 w-5 text-blue-600" />
+              <ReactQuill
+                value={specialQualification}
+                onChange={setSpecialQualification}
+                placeholder="Special Qualification..."
+              />
+              {errors.specialQualification && (
+                <p className="text-red-500">{errors.specialQualification}</p>
+              )}
             </div>
+          ) : (
             <div>
-              <h3 className="text-sm text-blue-800">Special Qualification</h3>
+              {specialQualification ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: specialQualification }}
+                />
+              ) : (
+                <div>Special qualification not found</div>
+              )}
             </div>
-          </div>
-
-          <div className="my-8 flex items-center justify-start gap-3">
-            <div>
-              <Key className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="text-sm text-blue-800">Keywords</h3>
-            </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
+
+      <div className="mb-10 mt-6 flex items-center gap-2">
+        {isEditMode && (
+          <>
+            <Button className="!bg-primary px-4" onClick={handleSave}>
+              Save
+            </Button>
+            <Button
+              className="!bg-red-500 px-4"
+              onClick={() => setIsEditMode(false)}
+            >
+              Cancel
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -1,41 +1,12 @@
-import React, { useState } from "react"
-import { format } from "date-fns"
-import {
-  AlertCircle,
-  Award,
-  BaggageClaimIcon,
-  BarChart2,
-  Briefcase,
-  CalendarIcon,
-  ChevronLeft,
-  Eye,
-  FileBadge2,
-  Globe,
-  GraduationCap,
-  Grid,
-  Home,
-  Key,
-  LifeBuoy,
-  Link,
-  LocateIcon,
-  LucideCookie,
-  Pencil,
-  Save,
-  Star,
-  Type,
-  User,
-  X,
-} from "lucide-react"
+"use client"
 
-import { cn } from "@/lib/utils"
+import { useState } from "react"
+import { ChevronLeft, Pencil, Shield, X } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Card } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
-  Select,
+  Select as SelectComponent,
   SelectContent,
   SelectGroup,
   SelectItem,
@@ -43,34 +14,86 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+
+interface ReferenceCard {
+  id: number
+  name: string
+  designation: string
+  organization: string
+  email: string
+  relation: string
+  phone: string
+  address: string
+}
 
 const References = ({
   setActiveSection,
 }: {
   setActiveSection: (section: string | null) => void
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [referenceCards, setReferenceCards] = useState<ReferenceCard[]>([])
+  const [nextId, setNextId] = useState<number>(1)
 
+  const handleAddReferenceCard = () => {
+    setReferenceCards([
+      ...referenceCards,
+      {
+        id: nextId,
+        name: "",
+        designation: "",
+        organization: "",
+        email: "",
+        relation: "",
+        phone: "",
+        address: "",
+      },
+    ])
+    setNextId(nextId + 1)
+  }
+
+  const handleSaveReferenceCard = (
+    id: number,
+    name: string,
+    designation: string,
+    organization: string,
+    email: string,
+    relation: string,
+    phone: string,
+    address: string
+  ) => {
+    setReferenceCards(
+      referenceCards.map((card) =>
+        card.id === id
+          ? {
+              ...card,
+              name,
+              designation,
+              organization,
+              email,
+              relation,
+              phone,
+              address,
+            }
+          : card
+      )
+    )
+  }
+
+  const handleCancelReferenceCard = (id: number) => {
+    setReferenceCards(referenceCards.filter((card) => card.id !== id))
+  }
+
+  const relationOptions = [
+    { value: "colleague", label: "Colleague" },
+    { value: "supervisor", label: "Supervisor" },
+    { value: "mentor", label: "Mentor" },
+    { value: "friend", label: "Friend" },
+  ]
+  const [isEditing, setIsEditing] = useState<boolean>(true)
   const toggleEditMode = () => setIsEditing(!isEditing)
-  const handleSave = () => {
-    // Handle save logic here
-    setIsEditing(false)
-  }
-
-  // Career Edite
-
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
-
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
-  }
-
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   return (
-    <div className="text-3xl text-black">
+    <div className="mb-4 w-full space-y-6 py-2">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
         <div className="flex items-center">
           <Button
@@ -81,7 +104,7 @@ const References = ({
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <h1 className="ml-4 text-xl font-medium">Link Account</h1>
+          <h1 className="ml-4 text-xl font-medium">References</h1>
         </div>
         {isEditing ? (
           <div className="flex items-center space-x-2">
@@ -105,111 +128,267 @@ const References = ({
           </Button>
         )}
       </div>
-
-      {/* Career edit System */}
-
-      {isEditing ? (
-        <div className="mx-auto space-y-4 px-2 py-4">
-          {/* Name Title */}
-          <Input
-            id="functionalCate"
-            placeholder="Name *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Organization */}
-          <Input
-            id="functionalCate"
-            placeholder="Organization *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Designation  */}
-          <Input
-            id="functionalCate"
-            placeholder="Designation  *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Address */}
-          <Input
-            id="functionalCate"
-            placeholder="Address *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Phone No */}
-          <Input
-            id="functionalCate"
-            placeholder="Phone No (Office)  *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Phone No Res */}
-          <Input
-            id="functionalCate"
-            placeholder="Phone No (Res) *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Phone No */}
-          <Input
-            id="functionalCate"
-            placeholder="Mobile No *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Email Addess*/}
-          <Input
-            id="functionalCate"
-            placeholder="Emaill Address *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          <div className="pb-5 pt-2">
-            <p className="text-sm font-medium">Relation *</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <Button variant="outline">Relative</Button>
-              <Button variant="outline">Family Friend</Button>
-              <Button variant="outline">Academic</Button>
-              <Button variant="outline">Others</Button>
-            </div>
-          </div>
-
-          <div className="flex gap-3 py-20">
-            <Button className="w-full !bg-blue-700">Save</Button>
-          </div>
+      {referenceCards.length === 0 ? (
+        <div className="py-8 text-center text-xl text-gray-500">
+          <Shield size={50} strokeWidth={1} className="mx-auto text-primary" />
+          <p>No data found.</p>
+          <Button className="mt-4 !bg-primary" onClick={handleAddReferenceCard}>
+            Add Reference
+          </Button>
         </div>
       ) : (
-        <div className="mt-4 h-screen px-2">
-          <Card className="gap-4 p-4">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-              <User className="h-6 w-6 text-gray-500" />
-            </div>
-            <div>
-              <p className="text-center text-sm text-gray-500">
-                There is currently no data! To add your training Details, kindly
-                click the following button.
-              </p>
-
-              <Button
-                onClick={toggleEditMode}
-                className="mt-3 w-full !bg-blue-500"
-              >
-                + Add Reference
-              </Button>
-            </div>
-          </Card>
-        </div>
+        referenceCards.map((card) => (
+          <ReferenceCardComponent
+            key={card.id}
+            card={card}
+            relationOptions={relationOptions}
+            onSave={handleSaveReferenceCard}
+            onCancel={handleCancelReferenceCard}
+          />
+        ))
       )}
+    </div>
+  )
+}
+
+interface ReferenceCardComponentProps {
+  card: ReferenceCard
+  relationOptions: { value: string; label: string }[]
+  onSave: (
+    id: number,
+    name: string,
+    designation: string,
+    organization: string,
+    email: string,
+    relation: string,
+    phone: string,
+    address: string
+  ) => void
+  onCancel: (id: number) => void
+}
+
+const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({
+  card,
+  relationOptions,
+  onSave,
+  onCancel,
+}) => {
+  const [name, setName] = useState<string>(card.name)
+  const [designation, setDesignation] = useState<string>(card.designation)
+  const [organization, setOrganization] = useState<string>(card.organization)
+  const [email, setEmail] = useState<string>(card.email)
+  const [relation, setRelation] = useState<string>(card.relation)
+  const [phone, setPhone] = useState<string>(card.phone)
+  const [address, setAddress] = useState<string>(card.address)
+  const [isEditing, setIsEditing] = useState<boolean>(true) // Track if the card is in edit mode
+
+  const handleSave = () => {
+    onSave(
+      card.id,
+      name,
+      designation,
+      organization,
+      email,
+      relation,
+      phone,
+      address
+    )
+    setIsEditing(false)
+
+    const obj = {
+      name,
+      designation,
+      organization,
+      email,
+      relation,
+      phone,
+      address,
+    }
+    console.log("reference data", obj)
+  }
+
+  return (
+    <div className="border">
+      <div className="flex items-center justify-between p-4">
+        <h1 className="text-xl font-semibold">Reference - {card.id}</h1>
+      </div>
+      <div className="bg-gray-50 p-4">
+        {isEditing ? (
+          <div>
+            <label
+              className="mb-2 block text-sm font-medium text-gray-700"
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mb-4 !bg-white"
+            />
+
+            <label
+              className="mb-2 block text-sm font-medium text-gray-700"
+              htmlFor="designation"
+            >
+              Designation
+            </label>
+            <Input
+              id="designation"
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+              className="mb-4 !bg-white"
+            />
+
+            <label
+              className="mb-2 block text-sm font-medium text-gray-700"
+              htmlFor="organization"
+            >
+              Organization
+            </label>
+            <Input
+              id="organization"
+              value={organization}
+              onChange={(e) => setOrganization(e.target.value)}
+              className="mb-4 !bg-white"
+            />
+
+            <label
+              className="mb-2 block text-sm font-medium text-gray-700"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mb-4 !bg-white"
+            />
+
+            <label
+              className="mb-2 block text-sm font-medium text-gray-700"
+              htmlFor="relation"
+            >
+              Relation
+            </label>
+            <SelectComponent value={relation} onValueChange={setRelation}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Relation</SelectLabel>
+                  {relationOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </SelectComponent>
+
+            <label
+              className="mb-2 mt-4 block text-sm font-medium text-gray-700"
+              htmlFor="phone"
+            >
+              Phone Number
+            </label>
+            <Input
+              id="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="mb-4 !bg-white"
+            />
+
+            <label
+              className="mb-2 mt-4 block text-sm font-medium text-gray-700"
+              htmlFor="address"
+            >
+              Address
+            </label>
+            <Textarea
+              id="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="mb-4 !bg-white"
+            />
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="">
+              <h4 className="font-semibold text-gray-700">Name</h4>
+              <p className="text-gray-500">{name}</p>
+            </div>
+
+            <div className="">
+              <h4 className="font-semibold text-gray-700">Designation</h4>
+              <p className="text-gray-500">{designation}</p>
+            </div>
+
+            <div className="">
+              <h4 className="font-semibold text-gray-700">Organization</h4>
+              <p className="text-gray-500">{organization}</p>
+            </div>
+
+            <div className="">
+              <h4 className="font-semibold text-gray-700">Email</h4>
+              <p className="text-gray-500">{email}</p>
+            </div>
+
+            <div className="">
+              <h4 className="font-semibold text-gray-700">phone</h4>
+              <p className="text-gray-500">{phone}</p>
+            </div>
+
+            <div className="">
+              <h4 className="font-semibold text-gray-700">Relation</h4>
+              <p className="text-gray-500">{relation}</p>
+            </div>
+
+            <div className="">
+              <h4 className="font-semibold text-gray-700">Address</h4>
+              <p className="text-gray-500">{address}</p>
+            </div>
+            {/* <h4 className="font-[500]">Name:</h4>
+                        <p>{name}</p>
+                        <h4 className="font-[500] mt-4">Designation:</h4>
+                        <p>{designation}</p>
+                        <h4 className="font-[500] mt-4">Organization:</h4>
+                        <p>{organization}</p>
+                        <h4 className="font-[500] mt-4">Email:</h4>
+                        <p>{email}</p>
+                        <h4 className="font-[500] mt-4">Relation:</h4>
+                        <p>{relation}</p>
+                        <h4 className="font-[500] mt-4">Phone Number:</h4>
+                        <p>{phone}</p>
+                        <h4 className="font-[500] mt-4">Address:</h4>
+                        <p>{address}</p> */}
+          </div>
+        )}
+        <div className="mb-5 flex items-center gap-2">
+          {isEditing ? (
+            <Button className="mt-4 !bg-primary !py-1" onClick={handleSave}>
+              Save
+            </Button>
+          ) : (
+            <Button
+              className="mt-4 !bg-primary !py-1"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </Button>
+          )}
+          <Button
+            className="mt-4 !bg-red-500 !py-1"
+            onClick={() => onCancel(card.id)}
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }
