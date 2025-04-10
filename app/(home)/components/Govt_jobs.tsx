@@ -8,7 +8,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import JobTitleBar from './JobTitleBar';
 
-interface HotJobsProps {
+interface GovJobProps {
   loading: boolean;
   data: {
     data: any[];
@@ -16,7 +16,7 @@ interface HotJobsProps {
   error: any;
 }
 
-const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
+const GovJob: React.FC<GovJobProps> = ({ loading, data, error }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
@@ -46,7 +46,7 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
           title="Government Jobs"
           iconSrc="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
           viewBtn={true}
-          path="/govtjob"
+          path="/govt-jobs"
         />
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
           {loading
@@ -94,18 +94,18 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
                 </Link>
               ))
             ) : (
-              <div className="col-span-full text-center text-gray-500 py-10">No hot jobs found.</div>
+              <></>
             )}
         </div>
 
-        {error && (
-          <div className="md:h-[400px] h-[230px] flex items-center justify-center">
-            <NotFoundVector />
+        {!loading && (error || visibleItems.length === 0) && (
+          <div className="md:h-[320px] h-[230px] flex items-center justify-center">
+            <NotFoundVector title='Government Job Not Available' />
           </div>
         )}
 
         {/* Pagination Buttons */}
-        <div className="flex items-center justify-center mt-6 gap-4">
+        {!error || visibleItems.length !== 0 && <div className="flex items-center justify-center mt-6 gap-4">
           <Button
             size={"sm"}
             className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
@@ -124,10 +124,10 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
             Show More
             <ArrowRight size={16} className="ml-1" />
           </Button>
-        </div>
+        </div>}
       </div>
     </div>
   );
 };
 
-export default HotJobs;
+export default GovJob;

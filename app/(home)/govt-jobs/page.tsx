@@ -1,20 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { Star, User, Search, ChevronDown } from "lucide-react"
+import { Star, User, Search } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import { useRouter } from "next/navigation"
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
+import NotFoundVector from "@/components/NotFoundVector"
 
 const Page = () => {
-      const [openPopover, setOpenPopover] = useState<string | null>(null)
-      const { data, loading } = useApiRequest<any>("jobs/get-all-org-jobs", "GET")
       const [searchTerm, setSearchTerm] = useState("")
+      const { data, loading, error } = useApiRequest<any>("jobs/get-all-govt-jobs", "GET")
       const router = useRouter()
 
       const get_org_all_jobs = (jobs: any) => jobs.reduce((acc: number, job: any) => acc + job.vacancy, 0)
@@ -26,7 +25,7 @@ const Page = () => {
       }
 
       return (
-            <div className="min-h-screen bg-light-theme  dark:bg-dark-theme py-8">
+            <div className="min-h-screen bg-light-theme dark:bg-dark-theme py-8">
                   <div className="container mx-auto px-4">
                         <h1 className="mb-8 text-center text-3xl font-bold">
                               <img
@@ -53,9 +52,10 @@ const Page = () => {
                               </p>
                         </div>
 
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                              {loading
-                                    ? Array.from({ length: 16 }).map((_, index) => (
+                        {/* Show loading skeleton when data is loading */}
+                        {loading && (
+                              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                                    {Array.from({ length: 16 }).map((_, index) => (
                                           <div key={index} className="flex flex-col rounded-lg border bg-white p-4 shadow-sm">
                                                 <div className="flex items-center gap-4">
                                                       <Skeleton className="h-16 w-16 rounded-full" />
@@ -66,8 +66,28 @@ const Page = () => {
                                                 </div>
                                                 <Skeleton className="mt-4 h-10 w-full" />
                                           </div>
-                                    ))
-                                    : filteredData?.map((org: any) => (
+                                    ))}
+                              </div>
+                        )}
+
+                        {/* Show error or empty state when there is an error */}
+                        {error && (
+                              <div className="md:h-[320px] mt-8 h-[230px] flex items-center justify-center">
+                                    <NotFoundVector title="Error: Failed to load government jobs" />
+                              </div>
+                        )}
+
+                        {/* Show no data message when no results are available */}
+                        {filteredData?.length === 0 && !loading && !error && (
+                              <div className="md:h-[320px] mt-8 h-[230px] flex items-center justify-center">
+                                    <NotFoundVector title="No Government Jobs Available" />
+                              </div>
+                        )}
+
+                        {/* Show organizations if data is available */}
+                        {filteredData?.length > 0 && !loading && !error && (
+                              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                                    {filteredData?.map((org: any) => (
                                           <div
                                                 key={org._id}
                                                 className="flex flex-col justify-between rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow-md"
@@ -119,9 +139,10 @@ const Page = () => {
                                                 </div>
                                           </div>
                                     ))}
-                        </div>
+                              </div>
+                        )}
                   </div>
-            </div >
+            </div>
       )
 }
 

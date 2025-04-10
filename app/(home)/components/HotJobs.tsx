@@ -90,7 +90,7 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
                 </Link>
               ))
             ) : (
-              <div className="col-span-full text-center text-gray-500 py-10">No hot jobs found.</div>
+              <></>
             )}
         </div>
 
@@ -101,26 +101,27 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
         )}
 
         {/* Pagination Buttons */}
-        <div className="flex items-center justify-center mt-6 gap-4">
-          <Button
-            size={"sm"}
-            className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            <ArrowLeft size={16} className="mr-1" />
-            Previous
-          </Button>
-          <Button
-            size={"sm"}
-            className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Show More
-            <ArrowRight size={16} className="ml-1" />
-          </Button>
-        </div>
+        {!loading && !error &&
+          <div className="flex items-center justify-center mt-6 gap-4">
+            <Button
+              size={"sm"}
+              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              <ArrowLeft size={16} className="mr-1" />
+              Previous
+            </Button>
+            <Button
+              size={"sm"}
+              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Show More
+              <ArrowRight size={16} className="ml-1" />
+            </Button>
+          </div>}
       </div>
     </div>
   );

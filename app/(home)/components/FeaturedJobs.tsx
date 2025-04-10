@@ -7,14 +7,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import useApiRequest from "@/app/hooks/useApiRequest"
-import Govt_jobs from "./Govt_jobs"
-import { Button } from "@/components/ui/button"
 import InternShipJob from "./InternShipJob"
 import SkilledJobs from "./SkilledJobs"
 import Tenders from "./Tenders"
 import HotJobs from "./HotJobs"
 import useJobsSearch from "@/app/hooks/useJobSearch"
 import Image from "next/image"
+import GovJob from "./Govt_jobs"
 
 const FeaturedJobs: React.FC = () => {
       const { data, loading, error } = useApiRequest<any>(
@@ -22,15 +21,13 @@ const FeaturedJobs: React.FC = () => {
             "GET"
       )
 
-      const addList = [
-            '/banner4.jpg',
-            'https://www.facebook.com/watch/?v=1142566183333827',
-            // 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-            '/sample-video.mp4',
-            '/assets/add2.jpg',
-      ]
+      const { data: gov_job, loading: gov_load, error: gov_err } = useApiRequest<any>(
+            "jobs/get-all-govt-jobs",
+            "GET"
+      )
 
-      console.log("hot job", data);
+
+      console.log("gov job", gov_job);
 
       return (
             <section>
@@ -38,7 +35,7 @@ const FeaturedJobs: React.FC = () => {
                         <div className="grid md:grid-cols-4 gap-4">
                               <div className="md:col-span-3">
                                     <HotJobs loading={loading} data={data} error={error} />
-                                    <Govt_jobs loading={loading} data={data} error={error} />
+                                    <GovJob loading={gov_load} data={gov_job} error={gov_err} />
                               </div>
 
                               <div className="flex flex-col gap-2">
