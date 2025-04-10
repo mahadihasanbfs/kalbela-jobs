@@ -7,16 +7,16 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { DatePicker } from "./DatePiker"
 
-export default function SearchAction() {
+export default function SearchAction({ title = 'Filter Jobs' }: { title: string }) {
     const [dateRange, setDateRange] = useState("")
 
     return (
         <div className="relative w-full">
             {/* Content */}
             <div className="relative py-4 flex flex-col items-center justify-center">
-                <h1 className="text-center text-white text-xl md:text-2xl font-bold ">World Wide Jobs</h1>
+                <h1 className="text-center text-white text-xl md:text-2xl font-bold ">{title}</h1>
 
-                <div className="bg-[#000000a1] w-full mt-3 p-2 md:p-2 shadow-lg ">
+                <div className="bg-[#000000a1] w-full mt-3 p-2 md:p-3 shadow-lg ">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
                         <Select>
                             <SelectTrigger className="w-full">

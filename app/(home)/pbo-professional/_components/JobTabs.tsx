@@ -8,15 +8,16 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import CategoryContent from './CategoryContent';
+import Industries from './Industries';
 
 const tabItems = [
     { key: 'category', label: 'Jobs by Category', content: <CategoryContent /> },
-    { key: 'industries', label: 'Industries', content: 'Jobs grouped by industries.' },
+    { key: 'industries', label: 'Industries', content: <Industries /> },
     { key: 'new', label: 'Newly Posted', content: 'Latest jobs posted recently.' },
     { key: 'deadline', label: 'Earliest Deadline', content: 'Jobs sorted by earliest deadlines.' },
 ];
 
-const JobCategories = () => {
+const JobTabs = () => {
     const [activeTab, setActiveTab] = useState('category');
     const [isClient, setIsClient] = useState(false);
 
@@ -98,4 +99,4 @@ const JobCategories = () => {
     );
 };
 
-export default JobCategories;
+export default JobTabs;

@@ -1,4 +1,4 @@
-const NotFoundVector = () => {
+const NotFoundVector = ({ title = "No vacancies found" }) => {
     return (
         <div className="md:w-[300px] w-[160px] m-auto ">
             <svg
@@ -652,7 +652,7 @@ const NotFoundVector = () => {
                         fontFamily="Gilroy"
                         fontStyle="normal"
                         fontWeight="normal"
-                        aria-label="No vacancies found"
+                        aria-label={title}
                         style={{ display: "block" }}
                     >
                         <g
