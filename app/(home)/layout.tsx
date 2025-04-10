@@ -109,9 +109,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                                           <DownloadApp />
                                           <ToastContainer />
                                     </main>
-                                    <div className="md:block hidden">
+{/*                                     <div className="md:block hidden">
                                           <ScrollToTop />
-                                    </div>
+                                    </div> */}
                                     <Footer />
                               </div>
                               <BottomNav />
