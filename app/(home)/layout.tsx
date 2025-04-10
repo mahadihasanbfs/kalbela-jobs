@@ -12,6 +12,7 @@ import Navbar from "@/components/navbar/Navbar"
 import DownloadApp from "@/components/DownloadApp"
 import ChatBot from "@/components/chatBot/ChatBot"
 import Navbar2 from "@/components/navbar/Navbar2"
+import ScrollToTop from "@/components/ScrollToTop"
 
 export const metadata: Metadata = {
       metadataBase: new URL(siteConfig.url),
@@ -108,6 +109,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                                           <DownloadApp />
                                           <ToastContainer />
                                     </main>
+                                    <div className="md:block hidden">
+                                          <ScrollToTop />
+                                    </div>
                                     <Footer />
                               </div>
                               <BottomNav />

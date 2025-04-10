@@ -66,6 +66,7 @@ const Navbar2 = () => {
     const links = [
         { name: "Home", href: "/", isDropdown: false },
         { name: "Jobseeker", href: "/jobseeker", isDropdown: false },
+        { name: "Employer", href: "https://app.kalbelajobs.com/sign-in", isDropdown: false },
         {
             name: "Services",
             href: "#",
@@ -106,13 +107,9 @@ const Navbar2 = () => {
 
 
                 <div
-                    className={`md:flex hidden border-primary_blue items-center ${isHomePage ? 'justify-between' : 'justify-end'} gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${isHomePage && !isScrolled ? "w-full" : "w-[980px]"
-                        }`}
-                >
+                    className={`md:flex hidden border-primary_blue items-center ${isHomePage && !isScrolled ? 'justify-between' : 'justify-end'} gap-4 lg:gap-6 transition-all duration-300 ease-in-out ${isHomePage && !isScrolled ? "w-full" : "w-[1040px] "}`}>
 
-
-
-                    <ul className="lg:flex hidden items-center gap-4 text-[1.130rem]">
+                    <ul className="lg:flex hidden items-center gap-4 text-[1rem]">
                         {links.map((link, index) => {
                             const isActive = pathname === link.href;
 
@@ -126,7 +123,7 @@ const Navbar2 = () => {
                                     <Link href={link.href}>
                                         <div
                                             className={`flex items-center  font-regular duration-300 ${isActive
-                                                ? "text-primary font-semibold relative after:bg-primary after:h-1 after:rounded-lg after:w-full after:absolute after:top-12 after:left-0"
+                                                ? "text-primary font-medium relative after:bg-primary after:h-1 after:rounded-lg after:w-full after:absolute after:top-12 after:left-0"
                                                 : "text-gray-800 dark:text-gray-200"
                                                 }`}
                                         >
@@ -140,7 +137,7 @@ const Navbar2 = () => {
                                                 {link.dropdownItems?.map((item, subIndex) => (
                                                     <li key={subIndex}>
                                                         <Link href={item.href}>
-                                                            <div className="px-4 py-1.5 !text-[1rem] text-primary dark:text-gray-200 duration-300 hover:text-white hover:bg-primary dark:hover:bg-gray-700">
+                                                            <div className="px-4 py-1.5 !text-[0.80rem] text-primary dark:text-gray-200 duration-300 hover:text-white hover:bg-primary dark:hover:bg-gray-700">
                                                                 {item.name}
                                                             </div>
                                                         </Link>
