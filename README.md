@@ -1,7 +1,7 @@
 # Kalbela Jobs - Frontend
 This is the **frontend** repository for the **Kalbela Jobs User Panel** built with **Next.js**.
+ 
 
-## 🏗 Project Structure
 
 ```
 /kalbela-jobs-frontend

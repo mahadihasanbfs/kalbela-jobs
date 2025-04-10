@@ -35,10 +35,12 @@ const Accomplishments = ({
   const handleSaveAccomplishment = (data: AccomplishmentData) => {
     console.log("Saving accomplishment:", data)
     // @ts-ignore
-    setAccomplishmentData([
-      ...accomplishmentData,
-      { ...data, type: activeDialog },
-    ])
+    if (activeDialog) {
+      setAccomplishmentData([
+        ...accomplishmentData,
+        { ...data, type: activeDialog },
+      ])
+    }
   }
 
   const portfolio = accomplishmentData.filter(
