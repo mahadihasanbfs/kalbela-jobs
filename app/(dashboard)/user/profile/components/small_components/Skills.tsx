@@ -1,75 +1,80 @@
-import React, { useState } from "react"
-import { format } from "date-fns"
-import {
-  AlertCircle,
-  Award,
-  BaggageClaimIcon,
-  BarChart2,
-  Briefcase,
-  CalendarIcon,
-  ChevronLeft,
-  Eye,
-  FileBadge2,
-  Globe,
-  GraduationCap,
-  Grid,
-  Home,
-  Key,
-  LifeBuoy,
-  Link,
-  LocateIcon,
-  LucideCookie,
-  Pencil,
-  Save,
-  Star,
-  Type,
-  User,
-  X,
-} from "lucide-react"
+"use client"
 
-import { cn } from "@/lib/utils"
+import { useState } from "react"
+import { ChevronLeft, Pencil, Shield, X } from "lucide-react"
+import Select from "react-select"
+
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+  Select as SelectComponent,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+interface SkillOption {
+  value: string
+  label: string
+}
+
+interface SkillCard {
+  id: number
+  skills: SkillOption[]
+  ntvq: boolean
+  company?: string
+  learningMethods: string[]
+}
 
 const Skills = ({
   setActiveSection,
 }: {
   setActiveSection: (section: string | null) => void
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [skillCards, setSkillCards] = useState<SkillCard[]>([])
+  const [nextId, setNextId] = useState<number>(1)
+
+  const handleAddSkillCard = () => {
+    setSkillCards([
+      ...skillCards,
+      { id: nextId, skills: [], ntvq: false, learningMethods: [] },
+    ])
+    setNextId(nextId + 1)
+  }
+  // @ts-ignore
+  const handleSaveSkillCard = (
+    id: number,
+    skills: SkillOption[],
+    ntvq: boolean,
+    company?: string
+  ) => {
+    setSkillCards(
+      skillCards.map((card) =>
+        card.id === id ? { ...card, skills, ntvq, company } : card
+      )
+    )
+  }
+
+  const handleCancelSkillCard = (id: number) => {
+    setSkillCards(skillCards.filter((card) => card.id !== id))
+  }
+  const [isEditing, setIsEditing] = useState<boolean>(true)
+
+  const skillsOption = [
+    { value: "Sales Strategy", label: "Sales Strategy" },
+    { value: "Sales Execution", label: "Sales Execution" },
+    { value: "Sales Support", label: "Sales Support" },
+    { value: "Sales Training", label: "Sales Training" },
+    { value: "Sales Coaching", label: "Sales Coaching" },
+    { value: "Sales Development", label: "Sales Development" },
+  ]
 
   const toggleEditMode = () => setIsEditing(!isEditing)
-  const handleSave = () => {
-    // Handle save logic here
-    setIsEditing(false)
-  }
-
-  // Career Edite
-
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
-
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
-  }
-
-  const [date, setDate] = React.useState<Date>()
-  const [endDate, setEndDate] = React.useState<Date>()
   return (
-    <div className="text-3xl text-black">
+    <div className="mb-4 w-full space-y-6 py-2">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
         <div className="flex items-center">
           <Button
@@ -80,7 +85,7 @@ const Skills = ({
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <h1 className="ml-4 text-xl font-medium">Add Skill</h1>
+          <h1 className="ml-4 text-xl font-medium">Skills</h1>
         </div>
         {isEditing ? (
           <div className="flex items-center space-x-2">
@@ -104,100 +109,227 @@ const Skills = ({
           </Button>
         )}
       </div>
+      {skillCards.length === 0 ? (
+        <div className="py-16 text-center text-xl text-gray-500">
+          <Shield size={50} strokeWidth={1} className="mx-auto text-primary" />
+          <p>No data found.</p>
 
-      {/* Career edit System */}
-
-      {isEditing ? (
-        <div className="mx-auto space-y-4 px-2 py-4">
-          {/* Skill Description */}
-          <Input
-            id="functionalCate"
-            placeholder="Skill Description *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          {/* Extra Curricular Activities */}
-          <Input
-            id="functionalCate"
-            placeholder="Extra Curricular Activities *"
-            className={`mt-1 w-full border border-gray-300`}
-            onBlur={handleBlur}
-          />
-
-          <div className="flex gap-3 py-20">
-            <Button className="w-full !bg-blue-700">Save</Button>
-          </div>
+          <Button className="mt-4 !bg-primary" onClick={handleAddSkillCard}>
+            Add Skill
+          </Button>
         </div>
       ) : (
-        <div className="mt-4 h-screen px-2">
-          <Card className="gap-4 !border-none p-4">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-              <Briefcase className="h-6 w-6 text-gray-500" />
-            </div>
-            <div className="">
-              <p className="text-center text-sm text-gray-500">
-                There is currently no data! To add your training Details, kindly
-                click the following button.
-              </p>
-
-              <div className="w-full rounded-md">
-                <Dialog>
-                  <DialogTrigger className="w-full">
-                    <Button className="mt-3 w-full !bg-blue-500">
-                      + Add Skills
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="h-56">
-                    <h3 className="text-md font-bold">Skill</h3>
-                    <p className="text-sm"> You may add single skill</p>
-                    <DialogHeader>
-                      <DialogDescription>
-                        <Input
-                          id="functionalCate"
-                          placeholder="Add Skill *"
-                          className={`mt-7 w-full border border-gray-300`}
-                          onBlur={handleBlur}
-                        />
-                      </DialogDescription>
-                    </DialogHeader>
-
-                    <div className="mt-7 flex justify-end gap-4">
-                      <Button className="!bg-red-600">Cancel</Button>
-                      <Button className="!bg-blue-600">Save</Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between gap-14">
-              <div className="flex items-center gap-2">
-                <Briefcase /> <span className="text-sm">Skill Description</span>
-              </div>
-              <div
-                onClick={toggleEditMode}
-                className="rounded-md bg-gray-300 p-2"
-              >
-                <Pencil className="h-5 w-5" />
-              </div>
-            </div>
-
-            <div className="mt-3 flex items-center justify-between gap-14">
-              <div className="flex items-center gap-2">
-                <Briefcase />
-                <span className="text-sm">Extra Curricular Activities</span>
-              </div>
-              <div
-                onClick={toggleEditMode}
-                className="rounded-md bg-gray-300 p-2"
-              >
-                <Pencil className="h-5 w-5" />
-              </div>
-            </div>
-          </Card>
-        </div>
+        skillCards.map((card) => (
+          <SkillCardComponent
+            key={card.id}
+            card={card}
+            skillsOption={skillsOption}
+            // @ts-ignore
+            onSave={handleSaveSkillCard}
+            onCancel={handleCancelSkillCard}
+          />
+        ))
       )}
+    </div>
+  )
+}
+
+interface SkillCardComponentProps {
+  card: SkillCard
+  skillsOption: SkillOption[]
+  onSave: (
+    id: number,
+    skills: SkillOption[],
+    ntvq: boolean,
+    learningMethods: string[],
+    company?: string
+  ) => void
+  onCancel: (id: number) => void
+}
+
+const SkillCardComponent: React.FC<SkillCardComponentProps> = ({
+  card,
+  skillsOption,
+  onSave,
+  onCancel,
+}) => {
+  const [selectedSkills, setSelectedSkills] = useState<SkillOption[]>(
+    card.skills
+  )
+  const [ntvq, setNtvq] = useState<boolean>(card.ntvq)
+  const [company, setCompany] = useState<string | undefined>(card.company)
+  const [isEditing, setIsEditing] = useState<boolean>(true) // Track if the card is in edit mode
+  const [learningMethods, setLearningMethods] = useState<string[]>(
+    card.learningMethods
+  )
+
+  const handleSelectChange = (selectedOptions: any) => {
+    setSelectedSkills(selectedOptions)
+  }
+
+  const handleCheckboxChange = (method: string, checked: boolean) => {
+    setLearningMethods((prevMethods) =>
+      checked
+        ? [...prevMethods, method]
+        : prevMethods.filter((m) => m !== method)
+    )
+  }
+
+  const handleSave = () => {
+    // @ts-ignore
+    onSave(card.id, selectedSkills, ntvq, company, learningMethods)
+    setIsEditing(false)
+
+    const obj = { selectedSkills, ntvq, company, learningMethods }
+    console.log("skill data", obj)
+  }
+
+  return (
+    <div className="border">
+      <div className="flex items-center justify-between p-4">
+        <h1 className="text-xl font-semibold">Skill - {card.id}</h1>
+      </div>
+      <div className="bg-gray-50 p-4">
+        {isEditing ? (
+          <div>
+            <label
+              className="mb-2 block text-sm font-medium text-gray-700"
+              htmlFor="skills"
+            >
+              Skills
+            </label>
+            <Select
+              isMulti
+              options={skillsOption}
+              value={selectedSkills}
+              onChange={handleSelectChange}
+              styles={{
+                menu: (provided) => ({ ...provided, zIndex: 500 }),
+                control: (provided, state) => ({
+                  ...provided,
+                  boxShadow: "none",
+                  borderColor: state.isFocused
+                    ? "inherit"
+                    : provided.borderColor,
+                  "&:hover": { borderColor: "inherit" },
+                }),
+                multiValue: (provided) => ({
+                  ...provided,
+                  backgroundColor: "#1b2a69",
+                  color: "white",
+                }),
+                multiValueLabel: (provided) => ({
+                  ...provided,
+                  color: "white",
+                }),
+              }}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            />
+            <h4 className="mt-4 font-[500]">How did you learn the skill?</h4>
+            <ul className="mt-1 flex items-center gap-4">
+              {[
+                { id: "self", label: "Self" },
+                { id: "job", label: "Job" },
+                { id: "education", label: "Educational" },
+                { id: "training", label: "Professional Training" },
+              ].map((item) => (
+                <li key={item.id} className="mt-2 flex items-center gap-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id={item.id}
+                      checked={learningMethods.includes(item.label)}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(item.label, !!checked)
+                      }
+                    />
+                    <label
+                      htmlFor={item.id}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {item.label}
+                    </label>
+                  </div>
+                </li>
+              ))}
+
+              <li className="mt-2 flex items-center gap-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="ntvq"
+                    checked={ntvq}
+                    onCheckedChange={(checked) => setNtvq(!!checked)}
+                  />
+                  <label
+                    htmlFor="ntvq"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    NTVQF
+                  </label>
+                </div>
+              </li>
+
+              {ntvq && (
+                <li className="mt-2 flex items-center gap-2">
+                  <SelectComponent value={company} onValueChange={setCompany}>
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Company</SelectLabel>
+                        <SelectItem value="companyA">Company A</SelectItem>
+                        <SelectItem value="companyB">Company B</SelectItem>
+                        <SelectItem value="companyC">Company C</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </SelectComponent>
+                </li>
+              )}
+            </ul>
+          </div>
+        ) : (
+          <div>
+            <h4 className="font-[500]">Skills:</h4>
+            <ul className="flex flex-wrap gap-2">
+              {selectedSkills.map((skill) => (
+                <li key={skill.value}>
+                  <div className="rounded bg-gray-600 px-3 py-1 text-white">
+                    {skill.label}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <h4 className="mt-4 font-[500]">How did you learn the skill?</h4>
+            <ul className="ml-8 list-inside list-disc">
+              {learningMethods.map((method) => (
+                <li key={method}>{method}</li>
+              ))}
+              {ntvq && <li>NTVQF: {company}</li>}
+            </ul>
+          </div>
+        )}
+        <div className="flex items-center gap-2">
+          {isEditing ? (
+            <Button className="mt-4 !bg-primary !py-1" onClick={handleSave}>
+              Save
+            </Button>
+          ) : (
+            <Button
+              className="mt-4 !bg-primary !py-1"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </Button>
+          )}
+          <Button
+            className="mt-4 !bg-red-500 !py-1"
+            onClick={() => onCancel(card.id)}
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

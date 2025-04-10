@@ -1,29 +1,8 @@
 import React, { useState } from "react"
-import {
-  AlertCircle,
-  BaggageClaimIcon,
-  Briefcase,
-  ChevronLeft,
-  Eye,
-  FileBadge2,
-  GraduationCap,
-  Home,
-  Key,
-  LifeBuoy,
-  LocateIcon,
-  LucideCookie,
-  Pencil,
-  Save,
-  Star,
-  Type,
-  X,
-} from "lucide-react"
+import { ChevronLeft, GraduationCap, Pencil, Plus, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { DateInput, Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -34,32 +13,121 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { EditModal } from "../CommonModal"
+
+interface Education {
+  label: string
+  degree: string
+  board: string
+  institute: string
+  result: string
+  year: string
+}
+
 const AcademicQualification = ({
   setActiveSection,
 }: {
   setActiveSection: (section: string | null) => void
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
+  const [educations, setEducations] = useState<Education[]>([])
+  const [currentEducation, setCurrentEducation] = useState<Education>({
+    label: "",
+    degree: "",
+    board: "",
+    institute: "",
+    result: "",
+    year: "",
+  })
+  const [errors, setErrors] = useState({
+    label: "",
+    degree: "",
+    board: "",
+    institute: "",
+    result: "",
+    year: "",
+  })
 
-  const toggleEditMode = () => setIsEditing(!isEditing)
-  const handleSave = () => {
-    // Handle save logic here
-    setIsEditing(false)
+  const handleAddClick = () => {
+    setCurrentEducation({
+      label: "",
+      degree: "",
+      board: "",
+      institute: "",
+      result: "",
+      year: "",
+    })
+    setIsEditMode(false)
+    setIsDialogOpen(true)
   }
 
-  // Career Edite
-
-  const [objective, setObjective] = useState("")
-  const [error, setError] = useState(false)
-
-  const handleBlur = () => {
-    if (!objective) setError(true)
-    else setError(false)
+  const handleEditClick = (education: Education) => {
+    setCurrentEducation(education)
+    setIsEditMode(true)
+    setIsDialogOpen(true)
   }
 
-  //   const [isForeign, setIsForeign] = useState(false)
+  const handleDeleteClick = (educationIndex: number) => {
+    const updatedEducations = [...educations]
+    updatedEducations.splice(educationIndex, 1)
+    setEducations(updatedEducations)
+  }
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setCurrentEducation((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelectChange = (name: string, value: string) => {
+    setCurrentEducation((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const validateInputs = () => {
+    const newErrors = {
+      label: currentEducation.label ? "" : "Label of Education is required",
+      degree: currentEducation.degree ? "" : "Degree is required",
+      board: currentEducation.board ? "" : "Board is required",
+      institute: currentEducation.institute ? "" : "Institute is required",
+      result: currentEducation.result ? "" : "Result is required",
+      year: currentEducation.year ? "" : "Passing Year is required",
+    }
+    setErrors(newErrors)
+    return !Object.values(newErrors).some((error) => error)
+  }
+
+  const handleSubmit = () => {
+    if (validateInputs()) {
+      if (isEditMode) {
+        const updatedEducations = educations.map((education) =>
+          education === currentEducation ? currentEducation : education
+        )
+        setEducations(updatedEducations)
+      } else {
+        setEducations([...educations, currentEducation])
+      }
+      setIsDialogOpen(false)
+    }
+
+    const obj = {
+      label: currentEducation.label,
+      degree: currentEducation.degree,
+      board: currentEducation.board,
+      institute: currentEducation.institute,
+      result: currentEducation.result,
+      year: currentEducation.year,
+    }
+    console.log("education data", obj)
+  }
+
+  // fksdaf
+  const toggleEditMode = () => setIsDialogOpen(!isDialogOpen)
   return (
-    <div className="text-3xl text-black">
+    <div className="mb-4 w-full space-y-6 py-2">
       <div className="flex items-center justify-between bg-light-theme p-4 text-black dark:bg-dark-theme">
         <div className="flex items-center">
           <Button
@@ -70,9 +138,9 @@ const AcademicQualification = ({
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <h1 className="ml-4 text-xl font-medium">Academic Qualification</h1>
+          <h1 className="ml-4 text-xl font-medium">Academic Qualifica</h1>
         </div>
-        {isEditing ? (
+        {isDialogOpen ? (
           <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
@@ -95,178 +163,196 @@ const AcademicQualification = ({
         )}
       </div>
 
-      {/* Career edit System */}
-
-      {isEditing ? (
-        <div className="mx-auto space-y-4 px-2 py-4">
-          {/* Level of Education */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Level of Education" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Level of Education *</SelectLabel>
-                  <SelectItem value="apple"> PSC/5 pass</SelectItem>
-                  <SelectItem value="banana">JSC/JDC/8 points</SelectItem>
-                  <SelectItem value="blueberry">Secondary</SelectItem>
-                  <SelectItem value="grapes">Higher Secondary</SelectItem>
-                  <SelectItem value="pineapple">Bachelor/Honors</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Exam/ Degree Title  */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Exam/ Degree Title" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Exam/ Degree Title *</SelectLabel>
-                  <SelectItem value="apple"> Bachelor of Arts(BA)</SelectItem>
-                  <SelectItem value="banana">
-                    Bachelor of Science (BSc)
-                  </SelectItem>
-                  <SelectItem value="blueberry">
-                    Bachelor of Law (LLB)
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Concentration /Major/ Group  */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Concentration /Major/ Group" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>
-                    {" "}
-                    Select Concentration /Major/ Group *
-                  </SelectLabel>
-                  <SelectItem value="apple"> PSC/5 pass</SelectItem>
-                  <SelectItem value="banana">JSC/JDC/8 points</SelectItem>
-                  <SelectItem value="blueberry">Secondary</SelectItem>
-                  <SelectItem value="grapes">Higher Secondary</SelectItem>
-                  <SelectItem value="pineapple">Bachelor/Honors</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Institute Name */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Institute Name" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Institute Name *</SelectLabel>
-                  <SelectItem value="apple"> PSC/5 pass</SelectItem>
-                  <SelectItem value="banana">JSC/JDC/8 points</SelectItem>
-                  <SelectItem value="blueberry">Secondary</SelectItem>
-                  <SelectItem value="grapes">Higher Secondary</SelectItem>
-                  <SelectItem value="pineapple">Bachelor/Honors</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Check Box Area */}
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Foreign Institute
-            </label>
-          </div>
-
-          {/* Resul */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Result *" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Result *</SelectLabel>
-                  <SelectItem value="apple"> First Devision</SelectItem>
-                  <SelectItem value="banana">Second Division </SelectItem>
-                  <SelectItem value="blueberry">Third Division</SelectItem>
-                  <SelectItem value="grapes">Grade</SelectItem>
-                  <SelectItem value="pineapple">Enrolled</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Pssing Year */}
-          <div className="">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Passing Year *" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel> Select Passing Year *</SelectLabel>
-                  <SelectItem value="apple"> 2025</SelectItem>
-                  <SelectItem value="banana">2026</SelectItem>
-                  <SelectItem value="blueberry">2027</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* duration */}
-          <Input
-            id="functionalCate"
-            placeholder="Duration"
-            className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
+      {educations.length === 0 ? (
+        <div className="py-8 text-center text-xl text-gray-500">
+          <GraduationCap
+            size={50}
+            strokeWidth={1}
+            className="mx-auto text-primary"
           />
-          {/* Achievement */}
-          <Input
-            id="functionalCate"
-            placeholder="Achievement"
-            className={`mt-1 border border-gray-300`}
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            onBlur={handleBlur}
-          />
-          <div className="py-20">
-            <Button className="w-full">Save</Button>
-          </div>
+          <p>No educations found.</p>
+          {educations.length === 0 && (
+            <Button className="mt-4 px-6" onClick={handleAddClick}>
+              <Plus /> Add{" "}
+            </Button>
+          )}
         </div>
       ) : (
-        <div className="mt-4 h-screen px-2">
-          <Card className="flex items-center gap-4 p-4">
-            <div className="rounded-full bg-gray-200 p-2">
-              <GraduationCap className="h-6 w-6 text-gray-600" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-sm font-semibold">
-                Bachelor of Science (BSc)
-              </h3>
-              <p className="text-sm text-gray-500">
-                Dinajpur Government College
-              </p>
-              <p className="text-xs text-gray-400">Appeared</p>
-            </div>
-          </Card>
-        </div>
+        educations.map((education, index) => (
+          <div
+            key={index}
+            className="rounded-md border bg-gray-50 p-4 dark:bg-gray-800"
+          >
+            <header className="flex items-center justify-between">
+              <h1 className="text-lg font-semibold">{education.label}</h1>
+              <div className="flex items-center gap-3">
+                <Button
+                  className="!bg-primary text-sm"
+                  onClick={() => handleEditClick(education)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="!bg-red-600 text-sm"
+                  onClick={() => handleDeleteClick(index)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </header>
+            <main className="mt-3 grid grid-cols-2 gap-8">
+              <div className="">
+                <h3 className="text-md font-semibold">Label of education</h3>
+                <p className="mt-2 text-gray-500">{education.label}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Exam/Degree Title</h3>
+                <p className="mt-2 text-gray-500">{education.degree}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Board</h3>
+                <p className="mt-2 text-gray-500">{education.board}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Institute Name</h3>
+                <p className="mt-2 text-gray-500">{education.institute}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Result</h3>
+                <p className="mt-2 text-gray-500">{education.result}</p>
+              </div>
+              <div className="">
+                <h3 className="text-md font-semibold">Passing Year</h3>
+                <p className="mt-2 text-gray-500">{education.year}</p>
+              </div>
+            </main>
+          </div>
+        ))
       )}
+
+      {educations.length !== 0 && (
+        <Button className="px-6" onClick={handleAddClick}>
+          <Plus /> Add{" "}
+        </Button>
+      )}
+
+      <EditModal
+        open={isDialogOpen}
+        onOpenChange={handleDialogClose}
+        title={isEditMode ? "Edit Education" : "Add Education"}
+        className="absolute bottom-10 top-10 mx-auto w-[96%]"
+      >
+        <div className="space-y-2">
+          <div className="flex flex-col space-y-2">
+            <label className="font-semibold" htmlFor="labelOfEducation">
+              Label of Education
+            </label>
+            <Select
+              value={currentEducation.label}
+              onValueChange={(value) => handleSelectChange("label", value)}
+            >
+              <SelectTrigger className="input">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Labels</SelectLabel>
+                  <SelectItem value="SSC">SSC</SelectItem>
+                  <SelectItem value="HSC">HSC</SelectItem>
+                  <SelectItem value="BSC">BSC</SelectItem>
+                  <SelectItem value="MSC">MSC</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {errors.label && <p className="text-red-500">{errors.label}</p>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-semibold" htmlFor="degree">
+              Exam/Degree Title
+            </label>
+            <Select
+              value={currentEducation.degree}
+              onValueChange={(value) => handleSelectChange("degree", value)}
+            >
+              <SelectTrigger className="input">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Degrees</SelectLabel>
+                  <SelectItem value="SSC">SSC</SelectItem>
+                  <SelectItem value="HSC">HSC</SelectItem>
+                  <SelectItem value="BSC">BSC</SelectItem>
+                  <SelectItem value="MSC">MSC</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {errors.degree && <p className="text-red-500">{errors.degree}</p>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-semibold" htmlFor="board">
+              Board
+            </label>
+            <Input
+              name="board"
+              value={currentEducation.board}
+              onChange={handleInputChange}
+              type="text"
+            />
+            {errors.board && <p className="text-red-500">{errors.board}</p>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-semibold" htmlFor="institute">
+              Institute Name
+            </label>
+            <Input
+              name="institute"
+              value={currentEducation.institute}
+              onChange={handleInputChange}
+              type="text"
+            />
+            {errors.institute && (
+              <p className="text-red-500">{errors.institute}</p>
+            )}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-semibold" htmlFor="result">
+              Result
+            </label>
+            <Input
+              name="result"
+              value={currentEducation.result}
+              onChange={handleInputChange}
+              type="text"
+            />
+            {errors.result && <p className="text-red-500">{errors.result}</p>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-semibold" htmlFor="year">
+              Passing Year
+            </label>
+            <DateInput
+              type="date"
+              className="w-full"
+              name="year"
+              value={currentEducation.year}
+              onChange={handleInputChange}
+            />
+            {errors.year && <p className="text-red-500">{errors.year}</p>}
+          </div>
+        </div>
+        <div className="mt-2 flex justify-end gap-2">
+          <Button
+            className="!bg-red-500 !text-white"
+            onClick={handleDialogClose}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit}>
+            {isEditMode ? "Update" : "Add"}
+          </Button>
+        </div>
+      </EditModal>
     </div>
   )
 }
