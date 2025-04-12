@@ -11,7 +11,7 @@ import JobTitleBar from './JobTitleBar';
 interface GovJobProps {
   loading: boolean;
   data: {
-    jobs: any[];
+    data: any;
   };
   error: any;
 }
@@ -20,7 +20,7 @@ const GovJob: React.FC<GovJobProps> = ({ loading, data, error }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const jobs = data?.jobs || [];
+  const jobs = data?.data?.jobs || [];
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -105,26 +105,27 @@ const GovJob: React.FC<GovJobProps> = ({ loading, data, error }) => {
         )}
 
         {/* Pagination Buttons */}
-        {!error || visibleItems.length !== 0 && <div className="flex items-center justify-center mt-6 gap-4">
-          <Button
-            size={"sm"}
-            className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            <ArrowLeft size={16} className="mr-1" />
-            Previous
-          </Button>
-          <Button
-            size={"sm"}
-            className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Show More
-            <ArrowRight size={16} className="ml-1" />
-          </Button>
-        </div>}
+        {!loading && !error &&
+          <div className="flex items-center justify-center mt-6 gap-4">
+            <Button
+              size={"sm"}
+              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              <ArrowLeft size={16} className="mr-1" />
+              Previous
+            </Button>
+            <Button
+              size={"sm"}
+              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Show More
+              <ArrowRight size={16} className="ml-1" />
+            </Button>
+          </div>}
       </div>
     </div>
   );

@@ -74,7 +74,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </header>
               <main>
 
-                <div className="flex-1 items-center justify-center">{children}</div>
+                <div className="flex-1 items-center justify-center pt-[80px]">{children}</div>
 
                 <ToastContainer />
               </main>

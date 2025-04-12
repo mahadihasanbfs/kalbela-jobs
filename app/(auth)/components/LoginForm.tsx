@@ -1,34 +1,86 @@
+'use client';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import SecondaryBtn from '@/components/SecondaryBtn';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useUserData, set_user_data } from '@/utils/encript_decript';
+import useApiForPost from '@/app/hooks/useApiForPost';
+import Cookies from 'js-cookie';
+import { googleLogin } from '@/app/hooks/firebse';
 
-interface LoginFormProps {
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    formData: { email: string; password: string };
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    isPasswordVisible: boolean;
-    setPasswordVisible: (visible: boolean) => void;
-    error_message: string;
-    loading: boolean;
-    set_error_message: (message: string) => void;
-    handleLogin: () => void;
+interface FormData {
+    email: string
+    password: string
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({
-    handleSubmit,
-    formData,
-    handleChange,
-    isPasswordVisible,
-    setPasswordVisible,
-    error_message,
-    loading,
-    set_error_message,
-    handleLogin
-}) => {
+const LoginForm: React.FC = () => {
+    const [isPasswordVisible, setPasswordVisible] = useState(false)
+    const router = useRouter() // Next.js Router
+    const [error_message, set_error_message] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [user, setUserData] = useUserData()
+
+    const [formData, setFormData] = useState<FormData>({
+        email: "",
+        password: "",
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+
+    const { apiRequest } = useApiForPost()
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        const { data, error } = await apiRequest<any>(
+            "api/v1/auth/signin-user",
+            "POST",
+            formData
+        )
+
+        setLoading(false)
+        if (error) {
+            set_error_message(error.message)
+            return
+        }
+        if (data) {
+            set_user_data(data.data)
+            set_error_message("")
+
+            router.push("/user")
+        }
+    }
+
+    const handleLogin = async () => {
+        await googleLogin();
+
+        setTimeout(() => {
+            const get_user = Cookies.get("kalbelajobs_user");
+            console.log("get_user::::::::::::", get_user);
+            if (get_user) {
+                router.push('/user');
+            }
+        }, 500);
+    };
+
+    useEffect(() => {
+        if (user) {
+            router.push('/user');
+        }
+    }, [user]);
+
+
     return (
-        <div className="flex items-center justify-center lg:border-2 lg:border-l-0 py-10 rounded-r-lg  sm:py-16 lg:py-24">
+        <div className="flex items-center justify-center lg:border-2 lg:border-l-0  rounded-r-lg  sm:py-16 lg:py-24">
             <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
                 <h2 className="text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl">
                     Login to Celebration
@@ -79,7 +131,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="Enter email to get started"
-                                    className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                                    className="block w-full rounded-md border border-gray-200 bg-gray-50 h-[50px] pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -121,7 +173,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                                     value={formData.password}
                                     onChange={handleChange}
                                     placeholder="Enter your password"
-                                    className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                                    className="block w-full rounded border border-gray-200 bg-gray-50 h-[50px] pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
                                 />
                                 <button
                                     type="button"
@@ -141,7 +193,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                             <p className="mt-2 text-base text-red-600">{error_message}</p>
                         )}
                         <div>
-                            <PrimaryBtn disabled={loading} className="w-full py-3">
+                            <PrimaryBtn disabled={loading} className="w-full h-[50px]">
                                 {loading ? "Loading..." : "Sign in "}
                             </PrimaryBtn>
                         </div>
@@ -151,9 +203,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     <SecondaryBtn
                         // onClick={handlerGoogleLogin}
                         onClick={handleLogin}
-                        className="relative w-full py-3"
+                        className="relative w-full h-[50px]"
                     >
-                        <div className="absolute inset-y-0 left-0 px-4 py-2">
+                        <div className="absolute inset-y-0 left-0 px-4 h-full flex items-center">
                             <img
                                 className="size-7 text-[#2563EB]"
                                 src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
@@ -164,13 +216,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     </SecondaryBtn>
 
 
-                    <SecondaryBtn className="relative w-full py-3">
+                    <SecondaryBtn className="relative w-full h-[50px]">
                         <a
                             href="https://app.kalbelajobs.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <div className="absolute inset-y-0 left-0 px-4 py-2">
+                            <div className="absolute inset-y-0 left-0 px-4 h-full flex items-center">
                                 <img
                                     className="h-6 w-6 text-[#2563EB]"
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzcjpUKJa3emle2LZDQ9QfU0MzvmnCbN2i9A&s"

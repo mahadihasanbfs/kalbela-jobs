@@ -25,7 +25,7 @@ import { toast } from "@/hooks/use-toast"
 import { MobileDialog, MobileDialogContent, MobileMobileDialogTrigger } from "../ui/mobileDialog"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 import { cn } from "@/lib/utils"
-import LoginForm from "@/app/(auth)/login/LoginForm"
+import LoginForm from "@/app/(auth)/components/LoginForm"
 
 const BottomNavProfile = ({ user }: { user: any }) => {
       const router = useRouter()
@@ -77,7 +77,7 @@ const BottomNavProfile = ({ user }: { user: any }) => {
 
             <MobileDialog>
                   <MobileMobileDialogTrigger asChild>
-                        <div className="flex items-center justify-center ">
+                        <div className="flex items-center justify-center mt-[">
                               <button>
                                     <div
                                           data-tooltip-target="tooltip-wallet"
@@ -101,9 +101,9 @@ const BottomNavProfile = ({ user }: { user: any }) => {
                   </MobileMobileDialogTrigger>
                   <MobileDialogContent className="sm:max-w-[425px]">
                         <div className="px-2 font-semibold text-xl font-mono">
-                              {!user ? 'Login' : 'Profile'}
+                              {/* {!user ? 'Login' : 'Profile'} */}
                         </div>
-                        <div className=" mt-2 !max-h-full overflow-y-auto h-[60vh]">
+                        <div className=" !max-h-full overflow-y-auto h-[65vh]">
                               <LoginForm />
                         </div>
                   </MobileDialogContent>

@@ -26,8 +26,24 @@ const FeaturedJobs: React.FC = () => {
             "GET"
       )
 
+      const { data: internJob, loading: loadingIntern, error: errorIntern } = useApiRequest<any>(
+            "jobs/internship ",
+            "GET"
+      )
 
-      console.log("gov job", gov_job);
+      const { data: skilledJob, loading: skilledLoading, error: skilledError } = useApiRequest<any>(
+            "jobs/internship ",
+            "GET"
+      )
+
+      const { data: tendersJob, loading: tendersLoading, error: tendersError } = useApiRequest<any>(
+            "jobs/get-featured-jobs ",
+            "GET"
+      )
+
+
+
+      console.log("gov job>>>>>>>>", skilledJob);
 
       return (
             <section>
@@ -35,7 +51,7 @@ const FeaturedJobs: React.FC = () => {
                         <div className="grid md:grid-cols-4 gap-4">
                               <div className="md:col-span-3">
                                     <HotJobs loading={loading} data={data?.data} error={error} />
-                                    <GovJob loading={gov_load} data={gov_job?.data} error={gov_err} />
+                                    <GovJob loading={gov_load} data={gov_job} error={gov_err} />
                               </div>
 
                               <div className="flex flex-col gap-2">
@@ -87,12 +103,12 @@ const FeaturedJobs: React.FC = () => {
 
                               </div>
                         </div>
-                        <InternShipJob data={data?.data} loading={loading} error={error} />
-                        <SkilledJobs data={data?.data} loading={loading} error={error} />
-                        <Tenders data={data?.data} loading={loading} error={error} />
+                        <InternShipJob data={internJob?.data} loading={loadingIntern} error={errorIntern} />
+                        <SkilledJobs data={skilledJob?.data} loading={skilledLoading} error={skilledError} />
+                        <Tenders data={tendersJob?.data} loading={tendersLoading} error={tendersError} />
                   </div>
             </section>
       )
 }
 
-export default FeaturedJobs
+export default FeaturedJobs;

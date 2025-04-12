@@ -103,6 +103,9 @@ const BottomSearch: React.FC = () => {
             previousSearches.unshift(searchQuery);
         }
         const updatedSearches = previousSearches.slice(0, 5);
+        if (queryParams) {
+            closeModal();
+        }
         Cookies.set("search_history", JSON.stringify(updatedSearches), { expires: 7 });
 
         router.push(`/search-details?${queryParams}`);
