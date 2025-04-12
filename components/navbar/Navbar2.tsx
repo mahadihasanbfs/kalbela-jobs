@@ -85,12 +85,12 @@ const Navbar2 = () => {
 
     return (
         <nav
-            className={`${isScrolled
+            className={` ${isScrolled
                 ? " bg-white/75 backdrop-blur-lg border-b dark:bg-black"
                 : isHomePage
                     ? "bg-transparent"
                     : "dark:bg-[#121a2d]"
-                } shadow-none lg:py-2 md:py-1 py-1  !border-[#cbcacae4]`}
+                } shadow-none  lg:py-2 md:py-1 py-1 fixed top-0 left-0 right-0  `}
         >
             <MaxWidthWrapper className="flex h-[64px] items-center justify-between">
                 <Link href="/">
@@ -169,9 +169,13 @@ const Navbar2 = () => {
                                 <UserMegaMenuDropdown />
                             )}
                         </li>
-                        {<li>
+
+                        <li className="flex items-center gap-2">
+                            <div className="items-center lg:block hidden ">
+                                <UserNav loading={loading} user={user} />
+                            </div>
                             <ThemeToggle />
-                        </li>}
+                        </li>
                     </ul>
                 </div>
 

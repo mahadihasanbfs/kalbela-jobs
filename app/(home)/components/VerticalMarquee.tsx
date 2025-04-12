@@ -27,7 +27,7 @@ const VerticalMarquee = () => {
       };
 
       return (
-            <div className="relative z-0 flex h-[25rem]  flex-row items-center justify-center space-x-12 space-y-[0.5rem] overflow-hidden opacity-30 [perspective:300px]">
+            <div className="relative z-0 flex h-[22rem] flex-row items-center justify-center space-x-12 space-y-[0.5rem] overflow-hidden opacity-30 [perspective:300px]">
                   {rows.map((row, i) => (
                         <Marquee
                               key={i}

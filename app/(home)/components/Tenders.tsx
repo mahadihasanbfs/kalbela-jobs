@@ -5,7 +5,7 @@ import React from 'react';
 import JobTitleBar from './JobTitleBar';
 
 interface TendersProps {
-  data: { jobs: any[] };
+  data: { jobs: any };
   loading: boolean;
   error: any;
 }

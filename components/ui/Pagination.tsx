@@ -47,9 +47,9 @@ const PaginationLink = ({
 }: PaginationLinkProps) => (
       <a
             aria-current={isActive ? "page" : undefined}
-            className={cn(
+            className={cn(`${isActive ? "bg-primary text-white" : ""} cursor-pointer`,
                   buttonVariants({
-                        variant: isActive ? "outline" : "ghost",
+                        variant: isActive ? "default" : "outline",
                         size,
                   }),
                   className
@@ -82,7 +82,7 @@ const PaginationNext = ({
       <PaginationLink
             aria-label="Go to next page"
             size="default"
-            className={cn("gap-1 pr-2.5", className)}
+            className={cn(` gap-1 pr-2.5`, className)}
             {...props}
       >
             <span>Next</span>

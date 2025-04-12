@@ -20,7 +20,7 @@ export function WorldWideJobList() {
                     </div>
                     :
                     <div className="grid grid-cols-1 sm:grid-cols-3 mt-3 gap-4">
-                        {data?.data?.map((company: any, index: number) => (
+                        {data?.data?.jobs?.map((company: any, index: number) => (
                             <div key={index} className={`border border-gray-200 px-2 py-2 `}>
                                 <div className="flex items-center justify-between gap-3">
                                     <div>
