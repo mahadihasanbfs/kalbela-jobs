@@ -11,7 +11,7 @@ import JobTitleBar from './JobTitleBar';
 interface HotJobsProps {
   loading: boolean;
   data: {
-    data: any[];
+    data: any;
   };
   error: any;
 }
@@ -20,12 +20,12 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
 
-  const jobs = data?.data || [];
+  const jobs = data?.data?.jobs || [];
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const visibleItems = jobs.slice(startIndex, endIndex);
+  const visibleItems = jobs?.slice(startIndex, endIndex);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
