@@ -1,30 +1,31 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 
 export default function MapView() {
   const mapRef = useRef<HTMLDivElement>(null)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    // Skip if window is not defined (SSR) or map ref is not available
-    if (typeof window === "undefined" || !mapRef.current) return
+    setIsClient(true)
+  }, [])
 
-    // Make sure the map container has a defined height
+  useEffect(() => {
+    if (!isClient || !mapRef.current) return
+
     if (mapRef.current.style.height === "") {
       mapRef.current.style.height = "400px"
     }
 
-    // Initialize map
-    const map = L.map(mapRef.current).setView([23.7508, 90.3928], 15) // Dhaka coordinates
+    const map = L.map(mapRef.current).setView([23.7508, 90.3928], 15)
 
-    // Add OpenStreetMap tiles
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map)
 
-    // Create custom icon
     const customIcon = L.icon({
       iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
       iconSize: [25, 41],
@@ -34,15 +35,13 @@ export default function MapView() {
       shadowSize: [41, 41],
     })
 
-    // Add marker for BTMC Building
     const marker = L.marker([23.7508, 90.3928], { icon: customIcon }).addTo(map)
     marker.bindPopup("BTMC Building, Level 5, Kawran Bazar, Dhaka-1215").openPopup()
 
-    // Clean up on unmount
     return () => {
       map.remove()
     }
-  }, [])
+  }, [isClient])
 
   return (
     <div className="rounded-lg overflow-hidden shadow-md border border-gray-200">
