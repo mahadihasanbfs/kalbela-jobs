@@ -52,7 +52,7 @@ const HomePage = () => {
 
                         <img
                               alt="map"
-                              className="md:block hidden absolute top-[-99px] opacity-[0.5] left-0 right-0 h-[370px] scale-[]"
+                              className="md:hidden block absolute top-[-99px] opacity-[0.5] left-0 right-0 h-[370px] scale-[]"
                               src="/assets/map.svg " />
                         {/* /assets/map.svg */}
                         {/* 
