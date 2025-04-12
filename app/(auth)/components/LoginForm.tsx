@@ -1,32 +1,84 @@
+'use client';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import SecondaryBtn from '@/components/SecondaryBtn';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useUserData, set_user_data } from '@/utils/encript_decript';
+import useApiForPost from '@/app/hooks/useApiForPost';
+import Cookies from 'js-cookie';
+import { googleLogin } from '@/app/hooks/firebse';
 
-interface LoginFormProps {
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    formData: { email: string; password: string };
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    isPasswordVisible: boolean;
-    setPasswordVisible: (visible: boolean) => void;
-    error_message: string;
-    loading: boolean;
-    set_error_message: (message: string) => void;
-    handleLogin: () => void;
+interface FormData {
+    email: string
+    password: string
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({
-    handleSubmit,
-    formData,
-    handleChange,
-    isPasswordVisible,
-    setPasswordVisible,
-    error_message,
-    loading,
-    set_error_message,
-    handleLogin
-}) => {
+const LoginForm: React.FC = () => {
+    const [isPasswordVisible, setPasswordVisible] = useState(false)
+    const router = useRouter() // Next.js Router
+    const [error_message, set_error_message] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [user, setUserData] = useUserData()
+
+    const [formData, setFormData] = useState<FormData>({
+        email: "",
+        password: "",
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+
+    const { apiRequest } = useApiForPost()
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        const { data, error } = await apiRequest<any>(
+            "api/v1/auth/signin-user",
+            "POST",
+            formData
+        )
+
+        setLoading(false)
+        if (error) {
+            set_error_message(error.message)
+            return
+        }
+        if (data) {
+            set_user_data(data.data)
+            set_error_message("")
+
+            router.push("/user")
+        }
+    }
+
+    const handleLogin = async () => {
+        await googleLogin();
+
+        setTimeout(() => {
+            const get_user = Cookies.get("kalbelajobs_user");
+            console.log("get_user::::::::::::", get_user);
+            if (get_user) {
+                router.push('/user');
+            }
+        }, 500);
+    };
+
+    useEffect(() => {
+        if (user) {
+            router.push('/user');
+        }
+    }, [user]);
+
+
     return (
         <div className="flex items-center justify-center lg:border-2 lg:border-l-0 py-10 rounded-r-lg  sm:py-16 lg:py-24">
             <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">

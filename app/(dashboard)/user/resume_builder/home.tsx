@@ -1,3 +1,4 @@
+'use client';
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -47,6 +48,8 @@ export default function ResumeBuilder() {
             );
       }
 
+
+
       if (error) {
             return (
                   <div className="flex h-screen items-center justify-center">
@@ -54,7 +57,9 @@ export default function ResumeBuilder() {
                               <CardContent className="pt-6">
                                     <div className="text-center">
                                           <p className="text-red-500 mb-4">{error}</p>
-                                          <Button onClick={() => window.location.reload()}>Try Again</Button>
+                                          {window &&
+                                                <Button onClick={() => window.location.reload()}>Try Again</Button>
+                                          }
                                     </div>
                               </CardContent>
                         </Card>
