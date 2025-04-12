@@ -100,7 +100,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </head>
                   <body className="min-h-screen bg-background font-sans">
                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                              <div className="relative flex min-h-screen flex-col justify-between ">
+                              <div className="relative overflow-x-hidden flex min-h-screen flex-col justify-between ">
                                     <header className="sticky top-0  z-[1000]">
                                           <Navbar2 />
                                     </header>
@@ -109,10 +109,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
                                           <DownloadApp />
                                           <ToastContainer />
                                     </main>
-{/*                                     <div className="md:block hidden">
+                                    {/*                                     <div className="md:block hidden">
                                           <ScrollToTop />
                                     </div> */}
                                     <Footer />
+
                               </div>
                               <BottomNav />
                               <ChatBot />

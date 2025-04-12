@@ -148,7 +148,7 @@ const HeroSection = () => {
 
       return (
             <div className=" ">
-                  <MaxWidthWrapper className="flex flex-col items-center space-y-4 md:!h-[330px] !h-[230px] justify-end ">
+                  <MaxWidthWrapper className="relative flex flex-col items-center space-y-4 md:!h-[330px] !h-[230px] justify-end z-10">
                         <div className="rounded-md pt-2 md:pb-2 ">
                               <Link href="/">
                                     <img
@@ -245,6 +245,7 @@ const HeroSection = () => {
                                     setIsOpen={setIsOpen} />
                         </div>
                   </MaxWidthWrapper>
+
             </div>
       )
 }
