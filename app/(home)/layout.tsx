@@ -100,20 +100,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </head>
                   <body className="min-h-screen bg-background font-sans">
                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                              <div className="relative overflow-x-hidden flex min-h-screen flex-col justify-between ">
+                              <div className="relative flex min-h-screen flex-col justify-between ">
                                     <header className="sticky top-0  z-[1000]">
                                           <Navbar2 />
                                     </header>
-                                    <main className="flex-1">
+                                    <main className="flex-1 ">
                                           {children}
                                           <DownloadApp />
                                           <ToastContainer />
                                     </main>
-                                    {/*                                     <div className="md:block hidden">
-                                          <ScrollToTop />
-                                    </div> */}
+                                    <div className="md:block hidden">
+                                          {/* <ScrollToTop /> */}
+                                    </div>
                                     <Footer />
-
                               </div>
                               <BottomNav />
                               <ChatBot />

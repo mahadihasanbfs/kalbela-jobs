@@ -77,7 +77,7 @@ const BottomNavProfile = ({ user }: { user: any }) => {
 
             <MobileDialog>
                   <MobileMobileDialogTrigger asChild>
-                        <div className="flex items-center justify-center mt-[">
+                        <div className="flex items-center justify-center ">
                               <button>
                                     <div
                                           data-tooltip-target="tooltip-wallet"

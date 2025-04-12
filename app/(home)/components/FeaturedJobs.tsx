@@ -34,8 +34,8 @@ const FeaturedJobs: React.FC = () => {
                   <div className="space-y-6 col-span-2">
                         <div className="grid md:grid-cols-4 gap-4">
                               <div className="md:col-span-3">
-                                    <HotJobs loading={loading} data={data} error={error} />
-                                    <GovJob loading={gov_load} data={gov_job} error={gov_err} />
+                                    <HotJobs loading={loading} data={data?.data} error={error} />
+                                    <GovJob loading={gov_load} data={gov_job?.data} error={gov_err} />
                               </div>
 
                               <div className="flex flex-col gap-2">
@@ -87,9 +87,9 @@ const FeaturedJobs: React.FC = () => {
 
                               </div>
                         </div>
-                        <InternShipJob data={data} loading={loading} error={error} />
-                        <SkilledJobs data={data} loading={loading} error={error} />
-                        <Tenders data={data} loading={loading} error={error} />
+                        <InternShipJob data={data?.data} loading={loading} error={error} />
+                        <SkilledJobs data={data?.data} loading={loading} error={error} />
+                        <Tenders data={data?.data} loading={loading} error={error} />
                   </div>
             </section>
       )

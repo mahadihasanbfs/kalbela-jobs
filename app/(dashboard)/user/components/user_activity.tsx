@@ -135,7 +135,7 @@ const UserActivity = () => {
             "GET"
       )
 
-      console.log("data:::", data);
+      console.log("actiity:::", data)
 
       return (
             <div className="md:mt-0 mt-3">

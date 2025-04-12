@@ -60,9 +60,9 @@ const UserNav = ({ loading, user }: { loading: boolean; user: any }) => {
                               {!loading && user ? (
                                     <Button
                                           variant="ghost"
-                                          className="relative h-8 w-8 rounded-full border bg-gray-100"
+                                          className="relative  md:w-8 md:h-8 !h-10 !w-10 rounded-full border bg-gray-100"
                                     >
-                                          <Avatar className="size-9 border">
+                                          <Avatar className="w-full h-full border">
                                                 <AvatarImage src={user?.profile_picture} alt={user?.fullName} />
                                                 <AvatarFallback className="bg-gray-100 dark:text-black">
                                                       {user?.fullName?.charAt(0)}
@@ -72,15 +72,15 @@ const UserNav = ({ loading, user }: { loading: boolean; user: any }) => {
                               ) : (
                                     <Button
                                           variant="ghost"
-                                          className="relative h-8 w-8 rounded-full border bg-gray-100 lg:hidden"
+                                          className="relative !w-10 !h-10 rounded-full border bg-gray-100 lg:hidden"
                                     >
                                           {" "}
-                                          <User className="h-[1.5rem] w-[1.5rem] text-black" />
+                                          <User className="h-[1.5rem] w-[1.5rem]h-[1.5rem] w-[1.5rem] text-black" />
                                     </Button>
                               )}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
-                              className="w-56 rounded-sm border mr-[20px] mt-2 border-gray-300 "
+                              className="w-56 rounded-sm border md:mr-[18px] mr-[20px] mt-2 !bg-white border-gray-300 "
                               align={alignment as any}
                               forceMount
                         >

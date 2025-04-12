@@ -43,16 +43,24 @@ export const metadata: Metadata = {
 const HomePage = () => {
       return (
             <Fragment>
-                  <div className="relative  z-50">
-                        <div className="">
+                  <div className="z-50 ">
+                        <div className="relative z-10">
                               <HeroSection />
                               {/* <Job_type_tag /> */}
                               {/* <JobType /> */}
                         </div>
+
                         <img
                               alt="map"
-                              className="md:hidden block opacity-[0.2] absolute left-0 -top-[100px] w-full h-[50vh] object-cover scale-[1.3]"
-                              src="/assets/map.svg" />
+                              className="md:hidden block absolute top-[-99px] opacity-[0.5] left-0 right-0 h-[370px] scale-[]"
+                              src="/assets/map.svg " />
+                        {/* /assets/map.svg */}
+                        {/* 
+                        <div
+                              style={{
+                                    backgroundImage: "url(/assets/map.svg)"
+                              }}
+                              className="absolute top-0 left-0 right-0 h-[340px] object-fill w-full bg-start" /> */}
 
                         <div className="pointer-events-none absolute right-0 top-0 lg:block md:hidden w-full">
                               <VerticalMarquee />
