@@ -137,7 +137,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                               </button>
                               <motion.div
                                     onClick={(e) => e.stopPropagation()}
-                                    className="md:mx-0  mx-2 relative  w-full max-w-4xl p-6 overflow-hidden rounded-lg "
+                                    className="md:mx-0 md:mt-0 mt-16 relative  w-full max-w-4xl p-3 overflow-hidden rounded-lg "
                                     initial={{ scale: 0.8, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0.8, opacity: 0 }}
