@@ -6,7 +6,7 @@ import React from 'react';
 import JobTitleBar from './JobTitleBar';
 
 interface SkilledJobsProps {
-  data: { data: any[] };
+  data: { jobs: any[] };
   loading: boolean;
   error: any;
 }
@@ -36,7 +36,7 @@ const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading, error }) => {
                 <NotFoundVector />
               </div>
             ) : (
-              data?.data?.slice(0, 8)?.map((job: any) => (
+              data?.jobs?.slice(0, 8)?.map((job: any) => (
                 <Link
                   href={`/jobs/${job.url}`}
                   key={job._id}

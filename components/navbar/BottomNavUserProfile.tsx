@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react"
 import Link from "next/link"
-import { Briefcase, LogIn, User, UserPlus } from "lucide-react"
+import { Briefcase, LogIn, User, UserPlus, Users } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -25,6 +25,7 @@ import { toast } from "@/hooks/use-toast"
 import { MobileDialog, MobileDialogContent, MobileMobileDialogTrigger } from "../ui/mobileDialog"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 import { cn } from "@/lib/utils"
+import LoginForm from "@/app/(auth)/login/LoginForm"
 
 const BottomNavProfile = ({ user }: { user: any }) => {
       const router = useRouter()
@@ -59,14 +60,24 @@ const BottomNavProfile = ({ user }: { user: any }) => {
             }, 500);
       }
 
-      if (!isClient) return null; // Ensures the component is rendered only on the client side
-
+      if (!isClient) return (
+            <button>
+                  <div
+                        data-tooltip-target="tooltip-wallet"
+                        className={cn(
+                              "group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 dark:text-black",
+                        )}
+                  >
+                        <User className="h-5 w-5" />
+                  </div>
+            </button>
+      );
       console.log('user', user);
       return (<div>
 
             <MobileDialog>
                   <MobileMobileDialogTrigger asChild>
-                        <div className="flex items-center justify-center mt-[10px]">
+                        <div className="flex items-center justify-center ">
                               <button>
                                     <div
                                           data-tooltip-target="tooltip-wallet"
@@ -80,7 +91,7 @@ const BottomNavProfile = ({ user }: { user: any }) => {
                                                             <User className="h-5 w-5" />
                                                       </TooltipTrigger>
                                                       <TooltipContent>
-                                                            <p>Dashboard</p>
+                                                            <p>Profile</p>
                                                       </TooltipContent>
                                                 </Tooltip>
                                           </TooltipProvider>
@@ -90,10 +101,10 @@ const BottomNavProfile = ({ user }: { user: any }) => {
                   </MobileMobileDialogTrigger>
                   <MobileDialogContent className="sm:max-w-[425px]">
                         <div className="px-2 font-semibold text-xl font-mono">
-                              Shortcut
+                              {!user ? 'Login' : 'Profile'}
                         </div>
                         <div className=" mt-2 !max-h-full overflow-y-auto h-[60vh]">
-                              {/* Additional content */}
+                              <LoginForm />
                         </div>
                   </MobileDialogContent>
             </MobileDialog>

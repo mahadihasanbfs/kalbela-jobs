@@ -5,13 +5,13 @@ import React from 'react';
 import JobTitleBar from './JobTitleBar';
 
 interface InternShipJobProps {
-  data: { data: any[] };
+  data: { jobs: any[] };
   loading: boolean;
   error: any;
 }
 
 const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading, error }) => {
-  const jobs = data?.data || [];
+  const jobs = data?.jobs || [];
 
   return (
     <div>

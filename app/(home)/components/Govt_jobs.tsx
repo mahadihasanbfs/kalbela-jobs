@@ -11,7 +11,7 @@ import JobTitleBar from './JobTitleBar';
 interface GovJobProps {
   loading: boolean;
   data: {
-    data: any[];
+    jobs: any[];
   };
   error: any;
 }
@@ -20,7 +20,7 @@ const GovJob: React.FC<GovJobProps> = ({ loading, data, error }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const jobs = data?.data || [];
+  const jobs = data?.jobs || [];
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;

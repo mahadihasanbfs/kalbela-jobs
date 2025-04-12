@@ -104,13 +104,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
                                     <header className="sticky top-0  z-[1000]">
                                           <Navbar2 />
                                     </header>
-                                    <main className="flex-1">
+                                    <main className="flex-1 ">
                                           {children}
                                           <DownloadApp />
                                           <ToastContainer />
                                     </main>
                                     <div className="md:block hidden">
-                                          <ScrollToTop />
+                                          {/* <ScrollToTop /> */}
                                     </div>
                                     <Footer />
                               </div>

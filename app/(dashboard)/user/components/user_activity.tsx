@@ -135,6 +135,8 @@ const UserActivity = () => {
             "GET"
       )
 
+      console.log("actiity:::", data)
+
       return (
             <div className="md:mt-0 mt-3">
                   <Card className="overflow-hidden rounded-xl border border-gray-200 ">
@@ -146,7 +148,7 @@ const UserActivity = () => {
                         </CardHeader>
                         <CardContent>
                               <ScrollArea className="">
-                                    {data?.data.slice(0, 5)?.map((job: any) => (
+                                    {data?.data?.jobs.slice(0, 5)?.map((job: any) => (
                                           <div
                                                 key={job._id}
                                                 className={`mb-4 py-2 rounded-lg flex items-start justify-between `}
