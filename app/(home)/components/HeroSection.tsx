@@ -148,8 +148,8 @@ const HeroSection = () => {
 
       return (
             <div className=" ">
-                  <MaxWidthWrapper className="relative flex flex-col items-center space-y-4 md:!h-[22rem] !h-[230px] justify-center z-10">
-                        <div className="rounded-md pt- md:pb-2 ">
+                  <MaxWidthWrapper className="relative flex flex-col items-center space-y-4 md:!h-[21rem]  !h-[230px] justify-center z-10">
+                        <div className="rounded-md  ">
                               <Link href="/">
                                     <img
                                           className={`
@@ -172,10 +172,10 @@ const HeroSection = () => {
                                     {/* <TypingRandomizedTextEffect text="Find Your Dream Jobs" /> */}
                               </h1>
 
-                              <p className="!mb-2 mt-4 md:block hidden  md:max-w-4xl text-balance text-center text-lg font-medium md:text-sm">
+                              <p className="!mb-1 mt-2 md:block hidden  md:max-w-4xl text-balance text-center text-lg font-medium md:text-sm">
                                     Your Career Starts Here with Kalbela Jobs! Discover the latest job opportunities in Bangladesh.
                               </p>
-                              <p className="!mb-2 mt-4 md:hidden  block  md:max-w-4xl  text-center text-sm font-medium md:text-sm">
+                              <p className="!mb-2 mt-2 md:hidden  block  md:max-w-4xl  text-center text-sm font-medium md:text-sm">
                                     Your Career Starts Here with Kalbela  Jobs! <br />Discover the latest job opportunities in Bangladesh.
                               </p>
                         </div>

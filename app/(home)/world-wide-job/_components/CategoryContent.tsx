@@ -13,6 +13,28 @@ const CategoryContent = () => {
         { name: 'Healthcare', totalJobs: 200 },
     ];
 
+    const loading = false;
+
+    if (loading) {
+        return (
+            <div className='h-[200px] w-full border bg-gray-50 rounded-lg flex flex-col gap-1 items-center justify-center py-20'>
+                <span className="loader"></span>
+                <p className="mt-12">Loading....</p>
+            </div>
+        );
+    }
+    if (categories.length === 0) {
+        return <div>
+            <img
+                className='w-[240px] m-auto'
+                src={'/icons/job_search.svg'}
+                alt="search"
+            />
+            <h2 className="font-semibold text-center">No Category Found</h2>
+        </div>;
+    }
+
+
     return (
         <div>
             <div className="grid lg:grid-cols-3 gap-4">

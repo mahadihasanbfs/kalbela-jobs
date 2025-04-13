@@ -1,50 +1,33 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Accordion2, AccordionContent2, AccordionItem2, AccordionTrigger2 } from "@/components/ui/accordion2";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ArrowRight, ChevronRight, Link2, MapPin } from "lucide-react";
 import Link from "next/link";
+import JobByCategoryModal from "./JobByCategoryModal";
 
-const MobileCategory = ({ jobByCategory, jobByLocation, jobByIndustry, governmentJobs, jobBySection, moreLinks }: { jobByCategory: any, jobByLocation: any, jobByIndustry: any, governmentJobs: any, jobBySection: any, moreLinks: any }) => {
+const MobileCategory = ({
+    jobByCategory,
+    jobByLocation,
+    jobByIndustry,
+    governmentJobs,
+    jobBySection,
+    moreLinks,
+    categoryData
+}: {
+    jobByCategory: any,
+    jobByLocation: any,
+    jobByIndustry: any,
+    governmentJobs: any,
+    jobBySection: any,
+    moreLinks: any,
+    categoryData: any,
+}) => {
+
     return (
-        <div className="lg:hidden block mb-4 ">
-            <MaxWidthWrapper className="grid grid-cols-3 gap-3 !p-0">
+        <div className="lg:hidden block mb-4 !relative !z-[3000] ">
+            <div className="grid grid-cols-3 gap-3 !p-0">
                 {/* job by category */}
-                <Dialog>
-                    <DialogTrigger className="!p-0" asChild>
-                        <button
-                            className={`relative bg-gray-100 hover:bg-white rounded-md border`}
-                        >
-                            <div className="p-2  hover:text-primary_blue flex flex-col items-center justify-center text-xs text-center text-primary duration-300 cursor-pointer gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width={28} height={28} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layout-list">
-                                    <rect width={7} height={7} x={3} y={3} rx={1} />
-                                    <rect width={7} height={7} x={3} y={14} rx={1} />
-                                    <path d="M14 4h7" />
-                                    <path d="M14 9h7" />
-                                    <path d="M14 15h7" />
-                                    <path d="M14 20h7" />
-                                </svg>
-                                Job By Category
-                            </div>
-                        </button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px] h-[70vh] overflow-y-auto">
+                <JobByCategoryModal categoryData={categoryData} />
 
-                        <ul className="mt-3">
-                            {
-                                jobByCategory.map((itm: any, index: number) => <li key={index}>
-                                    <Link className="font-medium  hover:text-primary_blue py-1 rounded duration-200 flex items-center gap-1" href="#">
-                                        <span>
-                                            <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                                        </span>
-                                        <span>
-                                            {itm}
-                                        </span>
-                                    </Link>
-                                </li>)
-                            }
-                        </ul>
-                    </DialogContent>
-                </Dialog>
 
                 {/* job by industry */}
                 <Dialog>
@@ -284,7 +267,7 @@ const MobileCategory = ({ jobByCategory, jobByLocation, jobByIndustry, governmen
                 </Dialog>
 
 
-            </MaxWidthWrapper>
+            </div>
         </div >
     );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import SemiJobHeader from '../components/SemiJobHeader';
 import SearchAction from '../search-details/components/SearchAction';
 import JobTabs from './_components/JobTabs';
+import LocalJobSearchAction from './_components/LocalJobSeachAction';
 import { ProfessionalFeaturedJob } from './_components/ProfessionalFeaturedJob';
 import { QuickLinks } from './_components/QuickLinks';
 
@@ -13,9 +14,9 @@ const WorldWideJobsPage = () => {
                     style={{
                         backgroundImage: "linear-gradient(30deg, #000000b7, #000000be), url(/company-cover-image.jpg)"
                     }}
-                    className="bg-li md:h-[270px] h-[490px] md:pt-12 pt-4 backdrop-blur-md bg-cover object-cover">
+                    className="bg-li md:h-[290px] h-[580px] md:pt-12 pt-4 backdrop-blur-md bg-cover object-cover">
                     <div className='mx-auto h-full w-full max-w-screen-3xl px-4 md:px-20 lg:px-6 2xl:max-w-screen-xl'>
-                        <SearchAction title='PBO Professionals' />
+                        <LocalJobSearchAction title='Jobs in Bangladesh' />
                     </div>
                 </div>
 
@@ -23,8 +24,8 @@ const WorldWideJobsPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div className="md:col-span-3 bg-white p-4 shadow-md rounded">
                             <SemiJobHeader
-                                title="KALBELA / PBO Professional Jobs"
-                                description="In this customized search panel, anyone can search their desired job which posted by NRB-PBO & Foreign employers around the world. Here, jobs are offered to NRB-PBO Professionals, Skilled, Semi & Un-skilled workers by NRB-PBO & Foreign employers worldwide. From our customized and advanced job searching panel, applicants' can find their suitable jobs according to their demand within the country they live or any popular cities within their local community. The customized search panel will help you narrow down your desired location to find jobs. This section is very useful for those applicants who want their job to a specific location." />
+                                title="Jobs in Bangladesh"
+                                description="This section is for only Bangladeshi job seekers and employers. Here, the employers can post their jobs within Bangladesh and at the same time job seekers can search their desired jobs in any location within Bangladesh. " />
                             <JobTabs />
 
                             {/* Job Listings */}

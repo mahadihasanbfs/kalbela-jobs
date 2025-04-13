@@ -68,7 +68,7 @@ const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading, error }) => {
       </div>
       {!loading && (error || jobs.length === 0) && (
         <div className="md:h-[400px] border m-auto w-full h-[230px] flex items-center justify-center">
-          <NotFoundVector title="Internship Jobs Not Available" />
+          <NotFoundVector title="Skilled Jobs Not Available" />
         </div>
       )}
     </div>
@@ -76,7 +76,7 @@ const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading, error }) => {
   return (
     <div>
       <div>
-        <JobTitleBar title="🔥 Internship" viewBtn={false} />
+        <JobTitleBar title="🔥 Skilled Jobs" viewBtn={false} />
 
         <div className="grid  md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4">
           {loading
