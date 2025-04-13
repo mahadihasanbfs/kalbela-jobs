@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import Link from "next/link";
 
 const CategoryContent = () => {
@@ -12,7 +13,6 @@ const CategoryContent = () => {
         { name: 'Data Science', totalJobs: 110 },
         { name: 'Healthcare', totalJobs: 200 },
     ];
-
     const loading = false;
 
     if (loading) {
@@ -33,7 +33,6 @@ const CategoryContent = () => {
             <h2 className="font-semibold text-center">No Category Found</h2>
         </div>;
     }
-
 
     return (
         <div>

@@ -36,9 +36,9 @@ const JobTabs = () => {
 
     const clickHandler = (key: string) => {
         if (key === 'newly posted') {
-            router.push('/newly-post/pbo-professional');
+            router.push('/newly-post/semi-unskilled-worker');
         } else if (key === 'earlies_deadline') {
-            router.push('/earlies_deadline/pbo-professional');
+            router.push('/earlies_deadline/semi-unskilled-worker');
         }
         else {
             setActiveTab(key);

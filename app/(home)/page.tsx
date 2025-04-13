@@ -21,6 +21,7 @@ import VideoGallery from "./components/VideoGellary"
 import Pricing from "./components/Pricing"
 import DownloadOurMobileApp from "./components/DownloadOurMobileApp"
 import ShortAdd from "./components/ShortAdd"
+import Link from "next/link"
 
 export const metadata: Metadata = {
       title: "Kalbela Jobs || Find Your Dream Job Today",
@@ -51,13 +52,14 @@ const HomePage = () => {
                         </div>
                         <img
                               alt="map"
-                              className="md:hidden block opacity-[0.2] absolute left-0 -top-[100px] w-full h-[50vh]  object-cover scale-[1.3]"
+                              className="md:hidden border-6 border-[green] block opacity-[0.2] absolute left-0 -top-[100px] w-full h-[280px]  object-cover scale-[1.3] z-4"
                               src="/assets/map.svg" />
 
                         <div className="pointer-events-none absolute right-0 top-0 lg:block md:hidden w-full">
                               <VerticalMarquee />
                         </div>
                   </div>
+
                   <MaxWidthWrapper>
                         <JobCategory2 />
                         <ShortAdd />
