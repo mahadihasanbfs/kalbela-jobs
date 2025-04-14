@@ -33,15 +33,15 @@ export function QuickLinks() {
             </div>
 
             <div className="flex flex-col gap-1 mt-3">
-                <Link href={'#'} className="mt-3 w-full">
+                <a target={'_blank'} href={'https://digitalsolutions.ltd/'} className="mt-3 w-full">
                     <Image
-                        src="/add3.jpg"
+                        src="/add6.jpg"
                         alt="NBS Resources"
                         width={500}
                         height={500}
                         className="w-full"
                     />
-                </Link>
+                </a>
 
                 <Link href={'#'} className="w-full">
                     <Image

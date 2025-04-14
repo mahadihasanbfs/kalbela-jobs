@@ -6,7 +6,6 @@ const Footer: React.FC = () => {
       const { theme } = useTheme()
       return (
             <>
-
                   {/* <footer className="bg-[#f2f2f2] py-8 text-[#616161] dark:border-t dark:border-t-gray-500 dark:bg-transparent">
                         <MaxWidthWrapper className="z-50 divide-y">
                               <div className="container mx-auto flex flex-col justify-between space-y-8 py-10 lg:flex-row lg:space-y-0">

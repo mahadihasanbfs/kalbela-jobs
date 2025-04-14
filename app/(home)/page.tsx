@@ -22,6 +22,7 @@ import Pricing from "./components/Pricing"
 import DownloadOurMobileApp from "./components/DownloadOurMobileApp"
 import ShortAdd from "./components/ShortAdd"
 import Link from "next/link"
+import SpecialItemTab from "./components/SpecialItemTab"
 
 export const metadata: Metadata = {
       title: "Kalbela Jobs || Find Your Dream Job Today",
@@ -65,7 +66,7 @@ const HomePage = () => {
                               style={{
                                     boxShadow: "rgb(0 0 0 / 4%) 0px -20px 20px 0px",
                               }}
-                              className="relative bg-white px-4 py-12 rounded-xl z-50">
+                              className="relative bg-white px-4 md:py-12 py-4 rounded-xl z-50">
                               <div>
                                     <JobCategory2 />
                                     <ShortAdd />
@@ -79,6 +80,7 @@ const HomePage = () => {
                                     <FeaturedJobs />
                               </div>
                         </div>
+                        <SpecialItemTab />
                   </MaxWidthWrapper>
                   <OurFeature />
                   <VideoGallery />

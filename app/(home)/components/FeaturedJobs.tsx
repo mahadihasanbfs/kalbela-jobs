@@ -26,24 +26,13 @@ const FeaturedJobs: React.FC = () => {
             "GET"
       )
 
-      const { data: internJob, loading: loadingIntern, error: errorIntern } = useApiRequest<any>(
-            "jobs/internship ",
-            "GET"
-      )
 
-      const { data: skilledJob, loading: skilledLoading, error: skilledError } = useApiRequest<any>(
-            "jobs/internship ",
-            "GET"
-      )
 
       const { data: tendersJob, loading: tendersLoading, error: tendersError } = useApiRequest<any>(
             "jobs/get-featured-jobs ",
             "GET"
       )
 
-
-
-      console.log("gov job>>>>>>>>", skilledJob);
 
       return (
             <section>
@@ -103,8 +92,6 @@ const FeaturedJobs: React.FC = () => {
 
                               </div>
                         </div>
-                        <InternShipJob data={internJob?.data} loading={loadingIntern} error={errorIntern} />
-                        <SkilledJobs data={skilledJob?.data} loading={skilledLoading} error={skilledError} />
                         <Tenders data={tendersJob?.data} loading={tendersLoading} error={tendersError} />
                   </div>
             </section>

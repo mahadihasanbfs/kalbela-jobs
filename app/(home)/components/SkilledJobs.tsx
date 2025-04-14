@@ -76,7 +76,7 @@ const SkilledJobs: React.FC<SkilledJobsProps> = ({ data, loading, error }) => {
   return (
     <div>
       <div>
-        <JobTitleBar title="🔥 Skilled Jobs" viewBtn={false} />
+        {/* <JobTitleBar title="🔥 Skilled Jobs" viewBtn={false} /> */}
 
         <div className="grid  md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4">
           {loading
