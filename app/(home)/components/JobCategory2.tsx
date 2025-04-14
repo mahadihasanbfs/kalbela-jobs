@@ -394,7 +394,7 @@ const JobCategory2 = () => {
 
     return (
         <div className="relative z-20 opacity-100">
-            <div className="lg:block hidden bg-gray-100">
+            <div className="lg:block hidden rounded-md border bg-gray-100">
                 <MaxWidthWrapper className="!py-0 !px-0 relative ">
                     <div className="grid lg:grid-cols-6 md:grid-cols-3  w-full justify-between items-center gap-2">
                         {/* Job By Category */}
@@ -476,9 +476,9 @@ const JobCategory2 = () => {
                                 Government Jobs
                             </div>
                             {(openMenu == 'gov_job' &&
-                                <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] shadow-xl rounded-b-xl overflow-y-auto scrollbar-">
                                     <div
-                                        className="border p-4 shadow-lg bg-white"
+                                        className="border p-4 bg-white rounded-b-xl shadow-b-xl"
                                         onMouseEnter={() => handleMouseEnter('gov_job')}
                                         onMouseLeave={handleMouseLeave}
                                     >
@@ -539,7 +539,7 @@ const JobCategory2 = () => {
                                 Job By Section
                             </div>
                             {(openMenu == 'job_by_section' &&
-                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] shadow-xl rounded-b-xl overflow-y-auto scrollbar-">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('job_by_section')}
@@ -587,7 +587,7 @@ const JobCategory2 = () => {
                                 Job By Location
                             </div>
                             {(openMenu == 'job_by_location' &&
-                                <div className="!py-0  w-[420px] absolute left-0 right-0 top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] shadow-xl rounded-b-xl overflow-y-auto scrollbar-">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('job_by_location')}
@@ -635,7 +635,7 @@ const JobCategory2 = () => {
                                 More Links
                             </div>
                             {(openMenu == 'more_links' &&
-                                <div className="!py-0  w-[420px] absolute left-[-184px] top-14 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                <div className="!py-0  w-[420px] absolute left-[-184px] top-14 max-h-[400px] overflow-y-auto shadow-xl rounded-b-xl scrollbar-">
                                     <div
                                         className="border p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('more_links')}
@@ -687,7 +687,7 @@ const JobCategory2 = () => {
             {openMenu === 'category' && (
                 <MaxWidthWrapper className="!py-0 !px-0 absolute left-0 right-0 top-14">
                     <div
-                        className="border p-4 shadow-lg bg-white"
+                        className="border-xl rounded-b-lg p-4 shadow-lg bg-white"
                         onMouseEnter={() => handleMouseEnter('category')}
                         onMouseLeave={handleMouseLeave}
                     >
@@ -797,9 +797,9 @@ const JobCategory2 = () => {
 
             {/* industry Jobs Dropdown */}
             {openMenu === 'job_industry' && (
-                <MaxWidthWrapper className="!py-0 absolute left-0 right-0 top-14">
+                <MaxWidthWrapper className="!py-0 !px-0 absolute left-0 right-0 top-14">
                     <div
-                        className="border p-4 shadow-lg bg-white"
+                        className="border p-4  rounded-b-lg shadow-xl bg-white"
                         onMouseEnter={() => handleMouseEnter('job_industry')}
                         onMouseLeave={handleMouseLeave}
                     >
