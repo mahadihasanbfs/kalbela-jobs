@@ -12,7 +12,7 @@ const SpecialItemTab = () => {
     )
 
     const { data: skilledJob, loading: skilledLoading, error: skilledError } = useApiRequest<any>(
-        "jobs/internship ",
+        "jobs/skilled-jobs ",
         "GET"
     )
     return (
