@@ -43,15 +43,15 @@ export function QuickLinks() {
                     />
                 </Link>
 
-                <Link href={'#'} className="w-full">
+                <a target={'_blank'} href={'https://digitalsolutions.ltd/'} className="w-full">
                     <Image
-                        src="/banner/3.png"
+                        src="/add4.jpg"
                         alt="NBS Resources"
                         width={500}
                         height={500}
                         className="w-full"
                     />
-                </Link>
+                </a>
 
                 <Link href={'#'} className="w-full">
                     <Image

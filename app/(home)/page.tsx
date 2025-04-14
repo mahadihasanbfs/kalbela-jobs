@@ -66,7 +66,7 @@ const HomePage = () => {
                               style={{
                                     boxShadow: "rgb(0 0 0 / 4%) 0px -20px 20px 0px",
                               }}
-                              className="relative bg-white px-4 py-12 rounded-xl z-50">
+                              className="relative bg-white px-4 md:py-12 py-4 rounded-xl z-50">
                               <div>
                                     <JobCategory2 />
                                     <ShortAdd />
