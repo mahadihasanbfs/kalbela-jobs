@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
       return (
             <Fragment>
-                  <div className="relative  z-50">
+                  <div className="relative ">
                         <div className="">
                               <HeroSection />
                               {/* <Job_type_tag /> */}
@@ -61,14 +61,23 @@ const HomePage = () => {
                   </div>
 
                   <MaxWidthWrapper>
-                        <JobCategory2 />
-                        <ShortAdd />
-                        <StaticsBar />
-                  </MaxWidthWrapper>
-                  <br />
-                  <MaxWidthWrapper className="py-0 md:py-2 ">
-                        <div className=" opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
-                              <FeaturedJobs />
+                        <div
+                              style={{
+                                    boxShadow: "rgb(0 0 0 / 4%) 0px -20px 20px 0px",
+                              }}
+                              className="relative bg-white px-4 py-12 rounded-xl z-50">
+                              <div>
+                                    <JobCategory2 />
+                                    <ShortAdd />
+                                    <StaticsBar />
+                              </div>
+
+                        </div>
+                        <br />
+                        <div className="py-0 md:py-2 ">
+                              <div className=" opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
+                                    <FeaturedJobs />
+                              </div>
                         </div>
                   </MaxWidthWrapper>
                   <OurFeature />
