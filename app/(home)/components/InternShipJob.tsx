@@ -16,7 +16,7 @@ const InternShipJob: React.FC<InternShipJobProps> = ({ data, loading, error }) =
   return (
     <div>
       <div>
-        <JobTitleBar title="🔥 Internship" viewBtn={false} />
+        {/* <JobTitleBar title="🔥 Internship" viewBtn={false} /> */}
 
         <div className="grid  md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4">
           {loading

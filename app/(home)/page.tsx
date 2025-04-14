@@ -22,6 +22,7 @@ import Pricing from "./components/Pricing"
 import DownloadOurMobileApp from "./components/DownloadOurMobileApp"
 import ShortAdd from "./components/ShortAdd"
 import Link from "next/link"
+import SpecialItemTab from "./components/SpecialItemTab"
 
 export const metadata: Metadata = {
       title: "Kalbela Jobs || Find Your Dream Job Today",
@@ -79,6 +80,7 @@ const HomePage = () => {
                                     <FeaturedJobs />
                               </div>
                         </div>
+                        <SpecialItemTab />
                   </MaxWidthWrapper>
                   <OurFeature />
                   <VideoGallery />

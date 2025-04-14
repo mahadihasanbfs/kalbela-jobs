@@ -43,7 +43,7 @@ export default function OurFeature() {
                 Search, view apply to any jobs from anywhere.
               </p>
             </Link>
-            <Link href={'/search-details'} className="md:p-8 group lg:p-14 md:border-l md:border-gray-200">
+            <Link href={'/search-details'} className="md:p-8 group lg:p-8 md:border-l md:border-gray-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -67,7 +67,7 @@ export default function OurFeature() {
                 Apply to machine jobs from different sections.
               </p>
             </Link>
-            <Link href={'/user/resume_builder'} className="md:p-8 group lg:p-14 md:border-l md:border-gray-200">
+            <Link href={'/user/resume_builder'} className="md:p-8 group lg:p-8 md:border-l md:border-gray-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -92,7 +92,7 @@ export default function OurFeature() {
                 Find a suitable candidate from out large resume database.
               </p>
             </Link>
-            <Link href={'/'} className="md:p-8 duration-200 group lg:p-14 md:border-t md:border-gray-200">
+            <Link href={'/'} className="md:p-8 duration-200 group lg:p-8 md:border-t md:border-gray-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -117,7 +117,7 @@ export default function OurFeature() {
                 Get notify about new job posting matched jobs, and more.
               </p>
             </Link>
-            <Link href={"/"} className="md:p-8 duration-200 group lg:p-14 md:border-l md:border-gray-200 md:border-t">
+            <Link href={"/"} className="md:p-8 duration-200 group lg:p-8 md:border-l md:border-gray-200 md:border-t">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -141,7 +141,7 @@ export default function OurFeature() {
                 Very easy to make payment for your purchased services.
               </p>
             </Link>
-            <Link href={"/contact"} className="md:p-8 group lg:p-14 md:border-l md:border-gray-200 md:border-t">
+            <Link href={"/contact"} className="md:p-8 group lg:p-8 md:border-l md:border-gray-200 md:border-t">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
