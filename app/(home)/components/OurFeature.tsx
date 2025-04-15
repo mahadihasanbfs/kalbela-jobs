@@ -4,7 +4,7 @@ import React from 'react'
 export default function OurFeature() {
   return (
     <div>
-      <section className="py-12 bg-white sm:py-16 lg:py-20">
+      <section className="py-10 bg-white sm:py-10 lg:py-8">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center">
             <div className=" font-bold md:text-[1.8rem]  text-2xl">

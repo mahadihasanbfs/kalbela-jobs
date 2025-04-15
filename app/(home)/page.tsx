@@ -23,6 +23,7 @@ import DownloadOurMobileApp from "./components/DownloadOurMobileApp"
 import ShortAdd from "./components/ShortAdd"
 import Link from "next/link"
 import SpecialItemTab from "./components/SpecialItemTab"
+import DevelopmentAlert from "./components/DevelopmentAlert"
 
 export const metadata: Metadata = {
       title: "Kalbela Jobs || Find Your Dream Job Today",
@@ -61,30 +62,29 @@ const HomePage = () => {
                         </div>
                   </div>
 
-                  <MaxWidthWrapper>
+                  <MaxWidthWrapper className="">
                         <div
                               style={{
                                     boxShadow: "rgb(0 0 0 / 4%) 0px -20px 20px 0px",
                               }}
-                              className="relative bg-white px-4 md:py-12 py-4 rounded-xl z-50">
+                              className="relative bg-gradient-to-t from-[#ff1c1c00] to-[#ffffff] px-4 md:p-6 p-4 rounded-xl z-50">
                               <div>
                                     <JobCategory2 />
                                     <ShortAdd />
                                     <StaticsBar />
                               </div>
 
-                        </div>
-                        <br />
-                        <div className="py-0 md:py-2 ">
-                              <div className=" opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
-                                    <FeaturedJobs />
+                              <div className="py-0 ">
+                                    <div className=" opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
+                                          <FeaturedJobs />
+                                    </div>
                               </div>
                         </div>
                         <SpecialItemTab />
+                        <OurFeature />
+                        <VideoGallery />
+                        <Pricing />
                   </MaxWidthWrapper>
-                  <OurFeature />
-                  <VideoGallery />
-                  <Pricing />
                   <div className="bg-gradient-to-t from-[transparent] to-[#cfe1ffa4] absolute top-0 left-0 right-0 md:h-[450px] h-[290px] w-full" />
                   <TopCompanies />
                   {/* <InterviewQuestions /> */}
@@ -92,6 +92,8 @@ const HomePage = () => {
                   <Sponsors />
                   <DownloadOurMobileApp />
                   <NesLetter />
+
+                  <DevelopmentAlert />
             </Fragment>
       )
 }

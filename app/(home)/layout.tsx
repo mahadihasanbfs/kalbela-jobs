@@ -118,6 +118,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
                               <BottomNav />
                               <ChatBot />
                         </ThemeProvider>
+
+                        <div id="modal-root"></div>
                   </body>
             </html>
       )

@@ -75,6 +75,14 @@ module.exports = {
       },
 
       keyframes: {
+        "zoom-fade-in": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "zoom-fade-out": {
+          "0%": { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0", transform: "scale(0.95)" },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -101,6 +109,8 @@ module.exports = {
         },
       },
       animation: {
+        "zoom-fade-in": "zoom-fade-in 0.3s ease-out",
+        "zoom-fade-out": "zoom-fade-out 0.2s ease-in",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         marquee: "marquee var(--duration) linear infinite",
