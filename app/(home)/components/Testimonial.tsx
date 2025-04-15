@@ -51,7 +51,7 @@ const Testimonial = () => {
   return (
     <MaxWidthWrapper>
       <div className="bg-background py-6 md:py-10">
-        <CustomTitle title="What people are saying" />
+        <CustomTitle title="What people are saying" position="start" />
         <br />
         <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg">
           <Marquee pauseOnHover className="[--duration:30s]">

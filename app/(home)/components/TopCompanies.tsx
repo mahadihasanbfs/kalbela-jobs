@@ -42,7 +42,7 @@ const TopCompanies: React.FC = () => {
   return (
     <section className="py-6 md:py-10">
       <MaxWidthWrapper>
-        <CustomTitle title="Top companies hiring now" />
+        <CustomTitle title="Top companies hiring now" position="start" />
         <br />
         <Carousel
           opts={{ loop: true }}
