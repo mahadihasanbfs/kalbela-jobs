@@ -96,8 +96,8 @@ const Pricing = () => {
 
     return (
         <section className="py-12 bg-white sm:py-16 lg:py-20">
-            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div className="max-w-xl px-8 mx-auto text-center md:px-0">
+            <div className="px-0 mx-auto max-w-7xl sm:px-2 lg:px-8">
+                <div className="text-center ">
                     <h2 className="font-bold md:text-[1.4rem] text-2xl uppercase font-pj">
                         Service Package
 
@@ -111,7 +111,7 @@ const Pricing = () => {
                         Various packages are available for job posting, membership, resume banks, and customized plans.
                     </p>
                 </div>
-                <div className="grid max-w-sm grid-cols-1 md:gap-6 gap-10 mx-auto mt-8 text-center md:text-left overflow-hidden py-8 px-4 md:mt-16 md:max-w-6xl md:grid-cols-3">
+                <div className="grid grid-cols-1 md:gap-6 gap-10 mx-auto mt-8 text-center md:text-left overflow-hidden py-8 px-2 md:mt-16 md:max-w-6xl md:grid-cols-3">
                     {plans.map((plan, index) => (
                         <PricingCard2 key={index} plan={plan} />
                     ))}

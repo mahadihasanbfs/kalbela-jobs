@@ -2,7 +2,7 @@
 import useApiRequest from "@/app/hooks/useApiRequest";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Accordion2, AccordionContent2, AccordionItem2, AccordionTrigger2 } from "@/components/ui/accordion2";
-import { ArrowBigRight, ArrowRight, ChevronRight, Factory, Link2, MapPin } from "lucide-react";
+import { ArrowBigRight, ArrowRight, ArrowUpRight, ChevronRight, Factory, Link2, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import MobileCategory from "./MobileCategory";
@@ -342,9 +342,21 @@ const JobCategory2 = () => {
         'Salary Insights',
     ];
 
-
+    //============ Category ============//
     const { data: categoryData, loading: categoryLoading, error: categoryError } = useApiRequest<any>(
         "category/top-five",
+        "GET"
+    )
+
+    //============ industry ============//
+    const { data: industry, loading: industryLoading, error: industriesError } = useApiRequest<any>(
+        "config/get-job-by-industry",
+        "GET"
+    )
+
+    //============ government ============//
+    const { data: gov_job, loading: govLoading, error: govError } = useApiRequest<any>(
+        "jobs/get-all-org-jobs",
         "GET"
     )
 
@@ -360,14 +372,20 @@ const JobCategory2 = () => {
         setOpenMenu(prev => (prev === menu ? null : menu));
     };
 
+    //============ Category ============//
     const functionalCategory = categoryData?.data?.filter((itm: any) => itm?.megaCategory === 'Functional') ?? [];
 
     const industrialCategory = categoryData?.data?.filter((itm: any) => itm?.megaCategory === 'Industrial') ?? [];
 
     const specialCategory = categoryData?.data?.filter((itm: any) => itm?.megaCategory === 'Special Skills Job') ?? [];
 
-    console.log("=======>>>>>>>", categoryData?.data);
+    //============ Industry ============//
 
+
+
+
+
+    console.log("=======>>>>>>>", gov_job);
     const handleSearch = (searchQuery: string) => {
         if (!searchQuery) return
 
@@ -478,33 +496,46 @@ const JobCategory2 = () => {
                             {(openMenu == 'gov_job' &&
                                 <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] shadow-xl rounded-b-xl overflow-y-auto scrollbar-">
                                     <div
-                                        className="border p-4 bg-white rounded-b-xl shadow-b-xl"
+                                        className="border p-6 bg-white rounded-b-xl shadow-b-xl"
                                         onMouseEnter={() => handleMouseEnter('gov_job')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
-                                            {governmentJobs?.map((item, index) => <AccordionItem2 key={index} value={`item-${index + 1}`}>
-                                                <AccordionTrigger2>{item?.category}</AccordionTrigger2>
-                                                <AccordionContent2>
-                                                    <ul className="list-inside space-y-1">
-                                                        {
-                                                            item?.subCategories?.map((subCategory, i) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
-                                                                <Link href="#" key={i} className="ml-6 flex gap-2">
-                                                                    <span>
-                                                                        <ArrowRight
-                                                                            size={16}
-                                                                            strokeWidth={1.4} absoluteStrokeWidth />
-                                                                    </span>
-                                                                    <span>
-                                                                        {subCategory}
-                                                                    </span>
-                                                                </Link>
-                                                            </li>)
-                                                        }
+                                        <ul className=" gap-2">
+                                            <li className="">
+                                                <h4 className="font-semibold pb-2 mb-4 border-b">Government Jobs ({gov_job?.data.length})</h4>
+
+                                                {govLoading
+                                                    ?
+                                                    <ul className="space-y-3 animate-pulse">
+                                                        {Array.from({ length: 5 }).map((_, index) => (
+                                                            <li
+                                                                key={index}
+                                                                className="h-5 bg-gray-200 dark:bg-neutral-700 rounded w-3/4"
+                                                            />
+                                                        ))}
                                                     </ul>
-                                                </AccordionContent2>
-                                            </AccordionItem2>)}
-                                        </Accordion2>
+                                                    :
+                                                    gov_job?.data?.map((itm: any, i: number) => (
+                                                        <div key={i}>
+                                                            <Link className="group p-1 border hover;border-gray-200 hover:bg-gray-50 hover:text-primary_blue py-1  rounded duration-200 text-md flex items-center gap-1" href={`/search-details?${itm?.name}`}>
+                                                                {/* <span>
+                                                    <ArrowBigRight size={16} strokeWidth={1.6} />
+                                                </span> */}
+                                                                <div className="flex w-full grid-cols-4 gap-2">
+                                                                    <div className="border bg-gray-50  group-hover:border-primary_blue duration-200 w-12 h-10 overflow-hidden rounded-md flex gap-2">
+                                                                        <img
+                                                                            src={itm?.logo ? itm?.logo : '/fallback_img.png'}
+                                                                            className="w-full h-full object-scale-down" />
+                                                                    </div>
+                                                                    <div className="col-span-3">
+                                                                        <h1 className="font-medium text-sm full">{itm?.name} ({itm?.jobCount})</h1>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    ))}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             )}
@@ -677,8 +708,9 @@ const JobCategory2 = () => {
                     industrialCategory,
                     specialCategory
                 ]}
-                jobByIndustry={jobByIndustry}
-                governmentJobs={governmentJobs}
+                jobByIndustry={industry}
+                governmentJobs={gov_job}
+                govLoading={govLoading}
                 jobByLocation={jobByLocation}
                 jobBySection={jobBySection}
                 moreLinks={moreLinks}
@@ -687,13 +719,13 @@ const JobCategory2 = () => {
             {openMenu === 'category' && (
                 <MaxWidthWrapper className="!py-0 !px-0 absolute left-0 right-0 top-14">
                     <div
-                        className="border-xl rounded-b-lg p-4 shadow-lg bg-white"
+                        className="border-xl border rounded-b-lg p-0 shadow-2xl bg-white"
                         onMouseEnter={() => handleMouseEnter('category')}
                         onMouseLeave={handleMouseLeave}
                     >
                         <ul className="grid md:grid-cols-3 gap-2">
-                            <li className="">
-                                <h4 className="font-semibold ">Functional</h4>
+                            <li className=" border-r  p-6">
+                                <h4 className="font-semibold ">Functional ({functionalCategory[0]?.categories.length})</h4>
 
                                 {categoryLoading
                                     ?
@@ -725,8 +757,8 @@ const JobCategory2 = () => {
                                     ))}
                             </li>
 
-                            <li className="">
-                                <h4 className="font-semibold ">Industrial</h4>
+                            <li className="border-r p-6">
+                                <h4 className="font-semibold ">Industrial ({industrialCategory[0]?.categories.length})</h4>
 
                                 {categoryLoading
                                     ?
@@ -758,8 +790,8 @@ const JobCategory2 = () => {
                                     ))}
                             </li>
 
-                            <li className="">
-                                <h4 className="font-semibold ">Special</h4>
+                            <li className="border-r p-6">
+                                <h4 className="font-semibold ">Special ({specialCategory[0]?.categories.length})</h4>
 
                                 {categoryLoading
                                     ?
@@ -799,19 +831,24 @@ const JobCategory2 = () => {
             {openMenu === 'job_industry' && (
                 <MaxWidthWrapper className="!py-0 !px-0 absolute left-0 right-0 top-14">
                     <div
-                        className="border p-4  rounded-b-lg shadow-xl bg-white"
+                        className="border p-6  rounded-b-lg shadow-2xl bg-white"
                         onMouseEnter={() => handleMouseEnter('job_industry')}
                         onMouseLeave={handleMouseLeave}
                     >
+                        <h2 className="font-semibold border-b mb-3 pb-2">Industries ({industry?.data.length})</h2>
                         <ul className="grid md:grid-cols-3 gap-2">
-                            {jobByIndustry?.map((itm, i) => (
+                            {industry?.data?.map((itm: any, i: number) => (
                                 <li key={i}>
-                                    <Link className=" hover:text-primary_blue py-1 rounded duration-200 flex text-md items-center gap-1" href="#">
+                                    <Link className=" hover:text-primary_blue py-1 rounded duration-200 flex text-md items-center gap-1"
+                                        href={`/search-details?${itm?.industry}`}>
                                         <span>
-                                            <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                                            <ArrowUpRight
+                                                size={20} strokeWidth={1.2}
+                                                className="text-primary shrink-0 transition-transform duration-200"
+                                            />
                                         </span>
                                         <span>
-                                            {itm}
+                                            {itm?.industry} ({itm?.job_count})
                                         </span>
                                     </Link>
                                 </li>

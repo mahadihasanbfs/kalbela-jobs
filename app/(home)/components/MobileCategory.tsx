@@ -1,7 +1,8 @@
 import { Accordion2, AccordionContent2, AccordionItem2, AccordionTrigger2 } from "@/components/ui/accordion2";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowRight, ChevronRight, Link2, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronRight, Link2, MapPin } from "lucide-react";
 import Link from "next/link";
+import Development from "./Development";
 import JobByCategoryModal from "./JobByCategoryModal";
 
 const MobileCategory = ({
@@ -11,7 +12,8 @@ const MobileCategory = ({
     governmentJobs,
     jobBySection,
     moreLinks,
-    categoryData
+    categoryData,
+    govLoading
 }: {
     jobByCategory: any,
     jobByLocation: any,
@@ -20,6 +22,7 @@ const MobileCategory = ({
     jobBySection: any,
     moreLinks: any,
     categoryData: any,
+    govLoading: boolean
 }) => {
 
     return (
@@ -58,20 +61,25 @@ const MobileCategory = ({
                             </div>
                         </button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px] h-[70vh] overflow-y-auto">
-                        <ul className="mt-3">
-                            {
-                                jobByIndustry?.map((itm: any, i: number) => <li key={i}>
-                                    <Link className="font-medium hover:text-primary_blue py-1 rounded duration-200 flex items-start gap-1" href="#">
+                    <DialogContent className="sm:max-w-[425px] h-[70vh] ">
+                        <h2 className="font-semibold border-b mb-3 pb-2">Industries ({jobByIndustry?.data.length})</h2>
+                        <ul className="grid md:grid-cols-3 gap-2 w-full h-full overflow-y-auto">
+                            {jobByIndustry?.data?.map((itm: any, i: number) => (
+                                <li key={i}>
+                                    <Link className=" hover:text-primary_blue py-1 rounded duration-200 flex text-md items-center gap-1"
+                                        href={`/search-details?${itm?.industry}`}>
                                         <span>
-                                            <ChevronRight className="h-4 w-4 shrink-0 mt-1 transition-transform duration-200" />
+                                            <ArrowUpRight
+                                                size={20} strokeWidth={1.2}
+                                                className="text-primary shrink-0 transition-transform duration-200"
+                                            />
                                         </span>
                                         <span>
-                                            {itm}
+                                            {itm?.industry} ({itm?.job_count})
                                         </span>
                                     </Link>
-                                </li>)
-                            }
+                                </li>
+                            ))}
                         </ul>
                     </DialogContent>
                 </Dialog>
@@ -109,29 +117,42 @@ const MobileCategory = ({
                         </button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px] h-[70vh] overflow-y-auto">
-                        <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
-                            {governmentJobs?.map((item: any, index: number) => <AccordionItem2 key={index} value={`item-${index + 1}`}>
-                                <AccordionTrigger2>{item?.category}</AccordionTrigger2>
-                                <AccordionContent2>
-                                    <ul className="list-inside space-y-1">
-                                        {
-                                            item?.subCategories?.map((subCategory: any, i: number) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
-                                                <Link href="#" key={i} className="ml-6 flex gap-2">
-                                                    <span>
-                                                        <ArrowRight
-                                                            size={16}
-                                                            strokeWidth={1.4} absoluteStrokeWidth />
-                                                    </span>
-                                                    <span>
-                                                        {subCategory}
-                                                    </span>
-                                                </Link>
-                                            </li>)
-                                        }
+                        <ul className=" gap-2">
+                            <li className="">
+                                <h4 className="font-semibold pb-2 mb-4 border-b">Government Jobs ({governmentJobs?.data.length})</h4>
+
+                                {govLoading
+                                    ?
+                                    <ul className="space-y-3 animate-pulse">
+                                        {Array.from({ length: 5 }).map((_, index) => (
+                                            <li
+                                                key={index}
+                                                className="h-5 bg-gray-200 dark:bg-neutral-700 rounded w-3/4"
+                                            />
+                                        ))}
                                     </ul>
-                                </AccordionContent2>
-                            </AccordionItem2>)}
-                        </Accordion2>
+                                    :
+                                    governmentJobs?.data?.map((itm: any, i: number) => (
+                                        <div key={i}>
+                                            <Link className="group p-1 border hover;border-gray-200 hover:bg-gray-50 hover:text-primary_blue py-1  rounded duration-200 text-md flex items-center gap-1" href={`/search-details?${itm?.name}`}>
+                                                {/* <span>
+                                                    <ArrowBigRight size={16} strokeWidth={1.6} />
+                                                </span> */}
+                                                <div className="flex w-full grid-cols-4 gap-2">
+                                                    <div className="border bg-gray-50  group-hover:border-primary_blue duration-200 w-12 h-10 overflow-hidden rounded-md flex gap-2">
+                                                        <img
+                                                            src={itm?.logo ? itm?.logo : '/fallback_img.png'}
+                                                            className="w-full h-full object-scale-down" />
+                                                    </div>
+                                                    <div className="col-span-3">
+                                                        <h1 className="font-medium text-sm full">{itm?.name} ({itm?.jobCount})</h1>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    ))}
+                            </li>
+                        </ul>
                     </DialogContent>
                 </Dialog>
 
@@ -164,30 +185,10 @@ const MobileCategory = ({
                             </div>
                         </button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px] h-[70vh] overflow-y-auto">
-                        <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
-                            {jobBySection?.map((item: any, index: number) => <AccordionItem2 key={index} value={`item-${index + 1}`}>
-                                <AccordionTrigger2>{item?.section}</AccordionTrigger2>
-                                <AccordionContent2>
-                                    <ul className="list-inside space-y-1">
-                                        {
-                                            item?.subCategories?.map((itm: any, i: number) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
-                                                <Link href="#" key={i} className="ml-6 flex gap-2">
-                                                    <span>
-                                                        <ArrowRight
-                                                            size={16}
-                                                            strokeWidth={1.4} absoluteStrokeWidth />
-                                                    </span>
-                                                    <span>
-                                                        {itm}
-                                                    </span>
-                                                </Link>
-                                            </li>)
-                                        }
-                                    </ul>
-                                </AccordionContent2>
-                            </AccordionItem2>)}
-                        </Accordion2>
+                    <DialogContent className="sm:max-w-[425px] overflow-hidden h-[70vh] overflow-y-auto">
+                        <div className="mt-8">
+                            <Development height={'h-[300px]'} />
+                        </div>
                     </DialogContent>
                 </Dialog>
 
