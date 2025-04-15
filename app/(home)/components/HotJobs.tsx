@@ -1,52 +1,34 @@
 'use client';
 
+import { usePaginatedFetch } from '@/app/hooks/usePaginationFetch';
 import NotFoundVector from '@/components/NotFoundVector';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import JobTitleBar from './JobTitleBar';
 
-interface HotJobsProps {
-  loading: boolean;
-  data: {
-    jobs: any;
-  };
-  error: any;
-}
 
-const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+const HotJobs: React.FC = () => {
+  const {
+    data: jobs,
+    loading,
+    error,
+    currentPage,
+    totalPages,
+    nextPage,
+    prevPage,
+  } = usePaginatedFetch(`/jobs/get-featured-jobs`)
 
-  const jobs = data?.jobs || [];
-  const totalPages = Math.ceil(jobs.length / itemsPerPage);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const visibleItems = jobs?.slice(startIndex, endIndex);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
 
   return (
     <div className="pb-8">
       <div className="md:col-span-3">
         <JobTitleBar title="🔥 Hot Jobs" viewBtn={true} path="/hotjob" />
-
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
           {loading
-            ? new Array(itemsPerPage).fill(null).map((_, index) => (
+            ? new Array(15).fill(null).map((_, index) => (
               <div key={index} className="flex flex-col items-start rounded-sm border p-4 md:flex-row">
                 <Skeleton className="mr-3 h-14 w-14 rounded-full" />
                 <div className="flex-grow">
@@ -55,8 +37,8 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
                 </div>
               </div>
             ))
-            : visibleItems.length > 0 ? (
-              visibleItems.map((job: any) => (
+            : (
+              jobs?.map((job: any) => (
                 <Link
                   href={`/jobs/${job.url}`}
                   key={job._id}
@@ -89,8 +71,6 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
                   </div>
                 </Link>
               ))
-            ) : (
-              <></>
             )}
         </div>
 
@@ -106,7 +86,7 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
             <Button
               size={"sm"}
               className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-              onClick={handlePrevPage}
+              onClick={prevPage}
               disabled={currentPage === 1}
             >
               <ArrowLeft size={16} className="mr-1" />
@@ -115,13 +95,15 @@ const HotJobs: React.FC<HotJobsProps> = ({ loading, data, error }) => {
             <Button
               size={"sm"}
               className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-              onClick={handleNextPage}
+              onClick={nextPage}
               disabled={currentPage === totalPages}
             >
               Show More
               <ArrowRight size={16} className="ml-1" />
             </Button>
           </div>}
+
+
       </div>
     </div>
   );

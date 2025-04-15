@@ -134,7 +134,7 @@ const HeroSection = () => {
                         result.push(<span key={`text-${i}`}>{parts[i]}</span>)
                   }
             }
-            return result
+            return result;
       }
 
       const removeFromHistory = (itemToRemove: string, e: React.MouseEvent) => {
@@ -144,7 +144,6 @@ const HeroSection = () => {
             setFilteredSearchHistory(updatedHistory.filter((item) => item.toLowerCase().includes(searchQuery.toLowerCase())))
             Cookies.set("search_history", JSON.stringify(updatedHistory), { expires: 7 })
       }
-
 
       return (
             <div className=" ">
