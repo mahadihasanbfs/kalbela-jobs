@@ -33,7 +33,7 @@ type Job = {
 
 type JobCardProps = {
   job_data: Job
-  key: string
+  key: number | string
   statusColor: string
 }
 

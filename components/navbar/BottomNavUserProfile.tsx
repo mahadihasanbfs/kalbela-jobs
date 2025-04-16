@@ -1,11 +1,33 @@
-'use client'
+"use client"
 
-import { Fragment, useEffect, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import Link from "next/link"
-import { Briefcase, LogIn, User, UserPlus, Users } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { logout, useUserData } from "@/utils/encript_decript"
+import { Briefcase, Home, LayoutDashboardIcon, LogIn, LogOut, Menu, Search, Settings, User, UserPlus } from "lucide-react"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import {
+      Sheet,
+      SheetContent,
+      SheetDescription,
+      SheetHeader,
+      SheetTitle,
+      SheetTrigger,
+} from "@/components/ui/sheet"
+import {
+      Tooltip,
+      TooltipContent,
+      TooltipProvider,
+      TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+import { Sidebar } from "../app/(dashboard)/user/components/Sideber"
+import MobileNav from "./navbar/MobileNav"
+import BottomSearch from "./BottomSearch"
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog"
+import { Button } from "./ui/button"
+import ShortCutMenu from "./ShortCutMenu"
 import {
       DropdownMenu,
       DropdownMenuContent,
@@ -13,32 +35,29 @@ import {
       DropdownMenuItem,
       DropdownMenuLabel,
       DropdownMenuSeparator,
-      DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import PrimaryBtn from "../PrimaryBtn"
-import SecondaryBtn from "../SecondaryBtn"
-import { logout } from "@/utils/encript_decript"
-import { useRouter } from "next/navigation"
+      DropdownMenuShortcut,
+      DropdownMenuSubTrigger,
+      DropdownMenuTrigger
+} from "./ui/dropdown-menu"
+import UserNav from "./navbar/UserNav"
 import Cookies from "js-cookie"
 import { toast } from "@/hooks/use-toast"
-import { MobileDialog, MobileDialogContent, MobileMobileDialogTrigger } from "../ui/mobileDialog"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
-import { cn } from "@/lib/utils"
-import LoginForm from "@/app/(auth)/login/LoginForm"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import BottomNavProfile from "./navbar/BottomNavUserProfile"
+import { SheetContentSideBar, SheetDescriptionSideBar, SheetHeaderSideBar, SheetSideBar, SheetTitleSideBar, SheetTriggerSideBar } from "./ui/shetSideBar"
+import ScrollToTopSm from "./ScrollToTopSm"
 
-const BottomNavProfile = ({ user }: { user: any }) => {
-      const router = useRouter()
+const BottomNav: React.FC = () => {
+      const [isDashboardSidebarOpen, setIsDashboardSidebarOpen] = useState(false)
+      const pathname = usePathname()
+      const [user] = useUserData()
+      const router = useRouter();
+
       const [alignment, setAlignment] = useState("start");
-      const [isClient, setIsClient] = useState(false);
-
       useEffect(() => {
             const handleResize = () => {
                   setAlignment(window.innerWidth >= 1024 ? "end" : "start");
             };
-
-            // Check if running in the browser (client side)
-            setIsClient(true);
 
             window.addEventListener("resize", handleResize);
             handleResize(); // Set initial alignment
@@ -47,6 +66,7 @@ const BottomNavProfile = ({ user }: { user: any }) => {
 
       const handleLogout = () => {
             logout()
+            // router.push("/login")
 
             setTimeout(() => {
                   const get_user = Cookies.get("kalbelajobs_user");
@@ -60,55 +80,115 @@ const BottomNavProfile = ({ user }: { user: any }) => {
             }, 500);
       }
 
-      if (!isClient) return (
-            <button>
-                  <div
-                        data-tooltip-target="tooltip-wallet"
-                        className={cn(
-                              "group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 dark:text-black",
-                        )}
-                  >
-                        <User className="h-5 w-5" />
-                  </div>
-            </button>
-      );
-      console.log('user', user);
-      return (<div>
 
-            <MobileDialog>
-                  <MobileMobileDialogTrigger asChild>
-                        <div className="flex items-center justify-center mt-[">
-                              <button>
-                                    <div
-                                          data-tooltip-target="tooltip-wallet"
-                                          className={cn(
-                                                "group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 dark:text-black",
-                                          )}
-                                    >
-                                          <TooltipProvider>
-                                                <Tooltip>
-                                                      <TooltipTrigger>
-                                                            <User className="h-5 w-5" />
-                                                      </TooltipTrigger>
-                                                      <TooltipContent>
-                                                            <p>Profile</p>
-                                                      </TooltipContent>
-                                                </Tooltip>
-                                          </TooltipProvider>
+      return (
+            <div>
+                  <Fragment>
+
+                        <div
+                              style={{
+                                    boxShadow: "#00000038 0px -4px 29px 0px"
+                              }}
+                              className=" fixed bottom-0 left-1/2 z-50 h-16 w-full max-w-lg -translate-x-1/2 rounded-t-xl border-b-0 bg-white backdrop-blur-md lg:hidden border ">
+                              <ScrollToTopSm />
+                              <div className="mx-auto grid  h-full max-w-lg grid-cols-5">
+                                    {/* All menu */}
+                                    <div className="flex items-center justify-center">
+                                          <div
+                                                onClick={() => setIsDashboardSidebarOpen(true)}
+                                                data-tooltip-target="tooltip-home"
+                                                className="group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 dark:text-black"
+                                          >
+                                                <TooltipProvider>
+                                                      <Tooltip>
+                                                            <TooltipTrigger>
+                                                                  <Menu className="h-5 w-5" />
+                                                            </TooltipTrigger>
+                                                            <TooltipContent>
+                                                                  <p>All Menu</p>
+                                                            </TooltipContent>
+                                                      </Tooltip>
+                                                </TooltipProvider>
+                                          </div>
                                     </div>
-                              </button>
+
+                                    {/* Dashboard */}
+                                    <ShortCutMenu />
+
+                                    {/* home */}
+                                    <div className="flex items-center justify-center">
+                                          <Link href="/">
+                                                <div
+                                                      data-tooltip-target="tooltip-new"
+                                                      className={cn(
+                                                            "group inline-flex h-10 w-10 flex-col items-center justify-center rounded-full",
+                                                            pathname === "/"
+                                                                  ? "bg-blue-600 text-white"
+                                                                  : "bg-gray-200 hover:bg-gray-300 dark:text-black"
+                                                      )}
+                                                >
+                                                      <TooltipProvider>
+                                                            <Tooltip>
+                                                                  <TooltipTrigger>
+                                                                        <Home className="h-5 w-5" />
+                                                                  </TooltipTrigger>
+                                                                  <TooltipContent>
+                                                                        <p>Home</p>
+                                                                  </TooltipContent>
+                                                            </Tooltip>
+                                                      </TooltipProvider>
+                                                </div>
+                                          </Link>
+                                    </div>
+
+                                    {/* Search */}
+                                    <BottomSearch />
+                                    {/* Profile */}
+                                    <div className="flex items-center justify-center">
+                                          <BottomNavProfile user={user} />
+                                    </div>
+                              </div>
                         </div>
-                  </MobileMobileDialogTrigger>
-                  <MobileDialogContent className="sm:max-w-[425px]">
-                        <div className="px-2 font-semibold text-xl font-mono">
-                              {!user ? 'Login' : 'Profile'}
+
+                        {/* Dashboard sidebar */}
+                        <div className="md:hidden ">
+                              <SheetSideBar
+                                    open={isDashboardSidebarOpen}
+                                    onOpenChange={setIsDashboardSidebarOpen}
+                              >
+                                    <SheetTriggerSideBar asChild>
+                                          <div />
+                                    </SheetTriggerSideBar>
+
+                                    <SheetContentSideBar
+                                          side="left"
+                                          className={`h-full w-[73%] overflow-y-auto bg-white pt-[14px] text-gray-800 dark:bg-gray-900 dark:text-slate-200`}
+                                    >
+                                          <SheetHeaderSideBar>
+                                                <SheetTitleSideBar className="text-start">
+                                                      <Link href="/">
+                                                            <img className="h-auto w-[170px]" src="/logo.png" alt="logo" />
+                                                      </Link>
+                                                </SheetTitleSideBar>
+                                                <SheetDescriptionSideBar className="sr-only">
+                                                      Dasboard Didebar Navigations
+                                                </SheetDescriptionSideBar>
+                                          </SheetHeaderSideBar>
+                                          {
+
+                                                !user
+                                                      ? <MobileNav setIsMobileNavOpen={setIsDashboardSidebarOpen} />
+                                                      : <Sidebar
+                                                            setIsDashboardSidebarOpen={setIsDashboardSidebarOpen}
+                                                      />
+                                          }
+
+                                    </SheetContentSideBar>
+                              </SheetSideBar>
                         </div>
-                        <div className=" mt-2 !max-h-full overflow-y-auto h-[60vh]">
-                              <LoginForm />
-                        </div>
-                  </MobileDialogContent>
-            </MobileDialog>
-      </div>);
+                  </Fragment>
+            </div>
+      )
 }
 
-export default BottomNavProfile;
+export default BottomNav

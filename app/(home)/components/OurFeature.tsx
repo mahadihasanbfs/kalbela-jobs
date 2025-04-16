@@ -1,19 +1,14 @@
 import Link from 'next/link'
 import React from 'react'
+import CustomTitle from './CustomTitle'
 
 export default function OurFeature() {
   return (
     <div>
-      <section className="py-12 bg-white sm:py-16 lg:py-20">
+      <section className="py-10 bg-white sm:py-10 lg:py-8">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className=" font-bold md:text-[1.8rem]  text-2xl">
-              Offering the best deal
-              <div className="flex items-center justify-center gap-1 mt-3 ">
-                <span className="bg-primary_blue w-[30px] h-1 rounded-full"></span>
-                <span className="bg-gray-200 w-[50px] h-1 rounded-full"></span>
-              </div>
-            </div>
+            <CustomTitle title="Offering the best deal" position='center' />
             {/* <p className="mt-4 text-base leading-7 text-gray-600 sm:mt-8 font-pj">
                             Lorem ipsum dolor sit amet, consectetur adipis elit
                         </p> */}
@@ -43,7 +38,7 @@ export default function OurFeature() {
                 Search, view apply to any jobs from anywhere.
               </p>
             </Link>
-            <Link href={'/search-details'} className="md:p-8 group lg:p-14 md:border-l md:border-gray-200">
+            <Link href={'/search-details'} className="md:p-8 group lg:p-8 md:border-l md:border-gray-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -67,7 +62,7 @@ export default function OurFeature() {
                 Apply to machine jobs from different sections.
               </p>
             </Link>
-            <Link href={'/user/resume_builder'} className="md:p-8 group lg:p-14 md:border-l md:border-gray-200">
+            <Link href={'/user/resume_builder'} className="md:p-8 group lg:p-8 md:border-l md:border-gray-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -92,7 +87,7 @@ export default function OurFeature() {
                 Find a suitable candidate from out large resume database.
               </p>
             </Link>
-            <Link href={'/'} className="md:p-8 duration-200 group lg:p-14 md:border-t md:border-gray-200">
+            <Link href={'/'} className="md:p-8 duration-200 group lg:p-8 md:border-t md:border-gray-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -117,7 +112,7 @@ export default function OurFeature() {
                 Get notify about new job posting matched jobs, and more.
               </p>
             </Link>
-            <Link href={"/"} className="md:p-8 duration-200 group lg:p-14 md:border-l md:border-gray-200 md:border-t">
+            <Link href={"/"} className="md:p-8 duration-200 group lg:p-8 md:border-l md:border-gray-200 md:border-t">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}
@@ -141,7 +136,7 @@ export default function OurFeature() {
                 Very easy to make payment for your purchased services.
               </p>
             </Link>
-            <Link href={"/contact"} className="md:p-8 group lg:p-14 md:border-l md:border-gray-200 md:border-t">
+            <Link href={"/contact"} className="md:p-8 group lg:p-8 md:border-l md:border-gray-200 md:border-t">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={40}

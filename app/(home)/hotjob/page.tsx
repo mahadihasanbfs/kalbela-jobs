@@ -15,7 +15,6 @@ const HotJobPage: React.FC = () => {
         error,
     } = useApiRequest<any>("jobs/get-featured-jobs", "GET");
 
-
     if (loading) {
         return (
             <div className='h-[70vh] flex items-center justify-center py-20'>
@@ -66,7 +65,7 @@ const HotJobPage: React.FC = () => {
                 {/* Job Listing Section */}
                 <div>
                     <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
-                        {data?.data?.slice(0, 300)?.map((job: any) => (
+                        {data?.data?.jobs?.slice(0, 300)?.map((job: any) => (
                             <Link
                                 href={`/jobs/${job.url}`}
                                 key={job._id}
@@ -101,7 +100,7 @@ const HotJobPage: React.FC = () => {
                         ))}
                     </div>
 
-                    {!data?.data && (
+                    {!data?.data?.jobs && (
                         <div className='md:h-[400px] h-[230px] flex items-center justify-center'>
                             <NotFoundVector />
                         </div>

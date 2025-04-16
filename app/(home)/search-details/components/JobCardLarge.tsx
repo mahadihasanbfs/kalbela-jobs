@@ -6,7 +6,6 @@ import { ArrowRight, Banknote, Bookmark, Calendar, CalendarCheck, Heart, MapPin 
 import { formatDate } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-import fallback_image from "../../../../public/fallback_img.png"
 import { useUserData } from "@/utils/encript_decript"
 import { toast } from "react-toastify"
 import useApiForPost from "@/app/hooks/useApiForPost"
@@ -109,7 +108,7 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                                                       <Link href={`/companies/${job?.company_info?.website}`}>
                                                             <Image
                                                                   className="rounded-lg bg-gray-200 w-full h-full object-scale-down p-2 "
-                                                                  src={job.company_info?.logo || fallback_image.src}
+                                                                  src={job.company_info?.logo || '/fallback_img.png'}
                                                                   width={400}
                                                                   height={400}
                                                                   alt={`${job.company_info?.name} logo`}
@@ -262,7 +261,7 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                                           <div className="w-9 h-8 border  rounded-lg overflow-hidden">
                                                 <Image
                                                       className="rounded-lg bg-gray-200 w-full h-full object-scale-down "
-                                                      src={job.company_info?.logo || fallback_image.src}
+                                                      src={job.company_info?.logo || '/fallback_img.png'}
                                                       width={400}
                                                       height={400}
                                                       alt={`${job.company_info?.name} logo`}

@@ -2,6 +2,7 @@
 import useApiRequest from "@/app/hooks/useApiRequest"
 import Image from "next/image"
 import Link from "next/link";
+import JobCard from "../../components/JobCard";
 
 export function WorldWideJobList() {
     const { data, loading, error } = useApiRequest<any>(
@@ -15,34 +16,14 @@ export function WorldWideJobList() {
             <h2 className="bg-primary_gray px-2 py-1.5 text-sm font-semibold">Worldwide Jobs from Kalbela Jobs Foreign Employers</h2>
             {
                 loading ?
-                    <div className="flex items-center pt-[10%] text-center justify-center">
-                        Loading Jobs...
+                    <div className='h-[200px] w-full border bg-gray-50 rounded-lg flex flex-col gap-1 items-center justify-center py-20'>
+                        <span className="loader"></span>
+                        <p className="mt-12">Loading....</p>
                     </div>
                     :
                     <div className="grid grid-cols-1 sm:grid-cols-3 mt-3 gap-4">
-                        {data?.data?.map((company: any, index: number) => (
-                            <div key={index} className={`border border-gray-200 px-2 py-2 `}>
-                                <div className="flex items-center justify-between gap-3">
-                                    <div>
-                                        <Link href={`/jobs/${company?.url}`}>
-                                            <h3 className="text-sm font-medium text-primary">{company?.company_info?.name.slice(0, 45)} {company?.company_info?.name.length > 45 && '...'}</h3>
-                                        </Link>
-                                        <Link href={`/jobs/${company?.url}`}>
-                                            <p className="text-xs mt- text-gray-600">{company?.job_title.slice(0, 40)} {company?.job_title.length > 40 && '...'} </p>
-                                        </Link>
-                                    </div>
-                                    <Link href={`/jobs/${company?.url}`}>
-                                        <img
-                                            src={company?.company_info?.logo || "/placeholder.svg"}
-                                            alt={company?.job_title.slice(0, 45)}
-                                            width={90}
-                                            height={90}
-                                            onError={(e) => (e.currentTarget.src = "/fallback_img.png")}
-                                            className="border border-gray-300 w-[60px] h-[60px] object-scale-down rounded"
-                                        />
-                                    </Link>
-                                </div>
-                            </div>
+                        {data?.data?.jobs?.map((company: any, index: number) => (
+                            <JobCard key={index} data={company} />
                         ))}
                     </div>
             }

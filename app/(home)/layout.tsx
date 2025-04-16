@@ -101,10 +101,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <body className="min-h-screen bg-background font-sans">
                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                               <div className="relative overflow-x-hidden flex min-h-screen flex-col justify-between ">
-                                    <header className="sticky top-0  z-[1000]">
+                                    <header className="relative  z-[1000]">
                                           <Navbar2 />
                                     </header>
-                                    <main className="flex-1">
+                                    <main className="flex-1 pt-[80px]">
                                           {children}
                                           <DownloadApp />
                                           <ToastContainer />
@@ -118,6 +118,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
                               <BottomNav />
                               <ChatBot />
                         </ThemeProvider>
+
+                        <div id="modal-root"></div>
                   </body>
             </html>
       )

@@ -18,64 +18,6 @@ import SecondaryBtn from "@/components/SecondaryBtn"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import CustomTitle from "./CustomTitle"
 
-const topCompaniessArr = [
-  {
-    company_name: "Fortune 500",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Walton",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500 LTD.",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Brack Bank",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500 Chain",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Pathao",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-  {
-    company_name: "Fortune 500",
-    job_title: "Leading global telecom company.",
-    logo: "/company-logo.png",
-  },
-]
-
 const TopCompanies: React.FC = () => {
   const [api, setApi] = useState<CarouselApi | null>(null)
   const { data, loading, error } = useApiRequest<any>(
@@ -100,7 +42,7 @@ const TopCompanies: React.FC = () => {
   return (
     <section className="py-6 md:py-10">
       <MaxWidthWrapper>
-        <CustomTitle title="Top companies hiring now" />
+        <CustomTitle title="Top companies hiring now" position="start" />
         <br />
         <Carousel
           opts={{ loop: true }}

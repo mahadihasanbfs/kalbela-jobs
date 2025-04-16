@@ -80,7 +80,7 @@ const LoginForm: React.FC = () => {
 
 
     return (
-        <div className="flex items-center justify-center lg:border-2 lg:border-l-0 py-10 rounded-r-lg  sm:py-16 lg:py-24">
+        <div className="flex items-center justify-center lg:border-2 lg:border-l-0  rounded-r-lg  sm:py-16 lg:py-24">
             <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
                 <h2 className="text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl">
                     Login to Celebration
@@ -131,7 +131,7 @@ const LoginForm: React.FC = () => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="Enter email to get started"
-                                    className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                                    className="block w-full rounded-md border border-gray-200 bg-gray-50 h-[50px] pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -173,7 +173,7 @@ const LoginForm: React.FC = () => {
                                     value={formData.password}
                                     onChange={handleChange}
                                     placeholder="Enter your password"
-                                    className="block w-full rounded-md border border-gray-200 bg-gray-50 py-4 pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
+                                    className="block w-full rounded border border-gray-200 bg-gray-50 h-[50px] pl-10 pr-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:bg-white focus:outline-none"
                                 />
                                 <button
                                     type="button"
@@ -193,7 +193,7 @@ const LoginForm: React.FC = () => {
                             <p className="mt-2 text-base text-red-600">{error_message}</p>
                         )}
                         <div>
-                            <PrimaryBtn disabled={loading} className="w-full py-3">
+                            <PrimaryBtn disabled={loading} className="w-full h-[50px]">
                                 {loading ? "Loading..." : "Sign in "}
                             </PrimaryBtn>
                         </div>
@@ -203,9 +203,9 @@ const LoginForm: React.FC = () => {
                     <SecondaryBtn
                         // onClick={handlerGoogleLogin}
                         onClick={handleLogin}
-                        className="relative w-full py-3"
+                        className="relative w-full h-[50px]"
                     >
-                        <div className="absolute inset-y-0 left-0 px-4 py-2">
+                        <div className="absolute inset-y-0 left-0 px-4 h-full flex items-center">
                             <img
                                 className="size-7 text-[#2563EB]"
                                 src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
@@ -216,13 +216,13 @@ const LoginForm: React.FC = () => {
                     </SecondaryBtn>
 
 
-                    <SecondaryBtn className="relative w-full py-3">
+                    <SecondaryBtn className="relative w-full h-[50px]">
                         <a
                             href="https://app.kalbelajobs.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <div className="absolute inset-y-0 left-0 px-4 py-2">
+                            <div className="absolute inset-y-0 left-0 px-4 h-full flex items-center">
                                 <img
                                     className="h-6 w-6 text-[#2563EB]"
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzcjpUKJa3emle2LZDQ9QfU0MzvmnCbN2i9A&s"

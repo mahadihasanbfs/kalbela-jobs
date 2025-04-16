@@ -1,12 +1,16 @@
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import PricingCard from "./PricingCard";
+import PricingCard2 from "./PricingCard2";
 
 const Pricing = () => {
     const plans = [
         {
             id: 1,
-            name: "Regular Plan",
+            name: "Standard",
+            subTitle: "A simple start for everyone",
             price: "$99",
+            isPopular: false,
             description: "Best for individuals and small businesses.",
             features: [
                 { text: "Category Job (Single Job Post)", available: true },
@@ -32,8 +36,10 @@ const Pricing = () => {
         },
         {
             id: 2,
-            name: "Business Plan",
+            name: "Premium",
+            subTitle: "For small to medium size business",
             price: "$199",
+            isPopular: true,
             description: "Ideal for growing businesses and recruitment agencies.",
             features: [
                 { text: "Category Job (Unlimited Posts)", available: true },
@@ -59,8 +65,10 @@ const Pricing = () => {
         },
         {
             id: 3,
-            name: "Enterprise Plan",
+            name: "Customizable ",
+            subTitle: "Solution for big organizations Customize circular posting is available.Based on Circular posting demand we offer amazing deals.The fees will vary and negotiable based on: ",
             price: "$499",
+            isPopular: false,
             description: "Best for large enterprises with high hiring needs.",
             features: [
                 { text: "Category Job (Unlimited Posts)", available: true },
@@ -88,8 +96,8 @@ const Pricing = () => {
 
     return (
         <section className="py-12 bg-white sm:py-16 lg:py-20">
-            <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div className="max-w-xl px-8 mx-auto text-center md:px-0">
+            <div className="px-0 mx-auto max-w-7xl sm:px-2 lg:px-8">
+                <div className="text-center ">
                     <h2 className="font-bold md:text-[1.4rem] text-2xl uppercase font-pj">
                         Service Package
 
@@ -103,39 +111,9 @@ const Pricing = () => {
                         Various packages are available for job posting, membership, resume banks, and customized plans.
                     </p>
                 </div>
-                <div className="grid max-w-sm grid-cols-1 gap-6 mx-auto mt-8 text-center md:text-left md:mt-16 md:max-w-6xl md:grid-cols-3">
+                <div className="grid grid-cols-1 md:gap-6 gap-10 mx-auto mt-8 text-center md:text-left overflow-hidden py-8 px-2 md:mt-16 md:max-w-6xl md:grid-cols-3">
                     {plans.map((plan, index) => (
-                        <div key={index} className="relative group">
-                            <div className="relative group overflow-hidden hover:bg-[#DFDFF8] duration-200 border border-gray-200 rounded-2xl">
-                                <div className="p-6 lg:px-10 lg:py-8">
-                                    {/* <h3 className="text-lg font-bold group-hover:text-black font-pj">{plan.name}</h3> */}
-                                    <h2 className="mt-3 group-hover:text-black duration-150 text-3xl font-bold font-pj">{plan?.name}</h2>
-                                    <p className="mt-5 text-base font-normal leading-7 text-gray-600 group-hover:text-gray-600 font-pj">
-                                        {plan.description}
-                                    </p>
-                                    <Link
-                                        href={`/pricing/${plan?.id}`}
-                                        className="inline-flex items-center justify-center px-8 py-3.5 w-full mt-8 text-base font-bold text-gray-900 group-hover:bg-white hover:bg-white transition-all border-gray-400 duration-200 border-2 group-hover:border-transparent focus:ring-offset-gray-900 rounded-xl font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white hover:bg-opacity-90"
-                                        role="button"
-                                    >
-                                        Get Started
-                                    </Link>
-                                    <div className="">
-                                        <p className="mt-8 text-base text-start font-bold group-hover:text-black font-pj">
-                                            What's included:
-                                        </p>
-                                        <ul className="mt-4 space-y-3 text-base text-start font-pj">
-                                            {plan.features.map((feature, idx) => (
-                                                <li key={idx} className={`flex gap-1 duration-150 ${feature.available ? 'text-green-600 group-hover:text-green-600' : 'text-red-600 group-hover:text-red-600'}`}>
-                                                    {feature.available ? <Check strokeWidth={1} /> : <X strokeWidth={1} />}
-                                                    <span>{feature.text}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <PricingCard2 key={index} plan={plan} />
                     ))}
                 </div>
             </div>

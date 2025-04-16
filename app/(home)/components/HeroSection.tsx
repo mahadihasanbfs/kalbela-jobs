@@ -134,7 +134,7 @@ const HeroSection = () => {
                         result.push(<span key={`text-${i}`}>{parts[i]}</span>)
                   }
             }
-            return result
+            return result;
       }
 
       const removeFromHistory = (itemToRemove: string, e: React.MouseEvent) => {
@@ -145,11 +145,10 @@ const HeroSection = () => {
             Cookies.set("search_history", JSON.stringify(updatedHistory), { expires: 7 })
       }
 
-
       return (
             <div className=" ">
-                  <MaxWidthWrapper className="relative flex flex-col items-center space-y-4 md:!h-[330px] !h-[230px] justify-end z-10">
-                        <div className="rounded-md pt-2 md:pb-2 ">
+                  <MaxWidthWrapper className="relative flex flex-col items-center space-y-4 md:!h-[21rem]  !h-[230px] justify-center z-10">
+                        <div className="rounded-md  ">
                               <Link href="/">
                                     <img
                                           className={`
@@ -162,7 +161,7 @@ const HeroSection = () => {
 
                               </Link>
                               <h1
-                                    className="mt-[1.5rem] bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:text-[2rem]"
+                                    className="mt-[1.3rem] bg-clip-text animate-marquee text-center text-[27px] font-bold leading-tight  md:text-4xl lg:text-[2rem]"
                                     style={{
                                           backgroundImage: "linear-gradient(to right, #001968, #0a4d92)",
                                           WebkitBackgroundClip: "text",
@@ -172,10 +171,10 @@ const HeroSection = () => {
                                     {/* <TypingRandomizedTextEffect text="Find Your Dream Jobs" /> */}
                               </h1>
 
-                              <p className="!mb-2 mt-4 md:block hidden  md:max-w-4xl text-balance text-center text-lg font-medium md:text-sm">
+                              <p className="!mb-1 mt-2 md:block hidden  md:max-w-4xl text-balance text-center text-lg font-medium md:text-sm">
                                     Your Career Starts Here with Kalbela Jobs! Discover the latest job opportunities in Bangladesh.
                               </p>
-                              <p className="!mb-2 mt-4 md:hidden  block  md:max-w-4xl  text-center text-sm font-medium md:text-sm">
+                              <p className="!mb-2 mt-2 md:hidden  block  md:max-w-4xl  text-center text-sm font-medium md:text-sm">
                                     Your Career Starts Here with Kalbela  Jobs! <br />Discover the latest job opportunities in Bangladesh.
                               </p>
                         </div>

@@ -6,7 +6,6 @@ const Footer: React.FC = () => {
       const { theme } = useTheme()
       return (
             <>
-
                   {/* <footer className="bg-[#f2f2f2] py-8 text-[#616161] dark:border-t dark:border-t-gray-500 dark:bg-transparent">
                         <MaxWidthWrapper className="z-50 divide-y">
                               <div className="container mx-auto flex flex-col justify-between space-y-8 py-10 lg:flex-row lg:space-y-0">
@@ -151,37 +150,50 @@ const Footer: React.FC = () => {
                               <div className="">
                                     <div className="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-4 md:gap-x-12">
                                           <div>
-                                                <p className="text-base text-gray-500">ABOUT KALBELA JOBS</p>
+                                                <img className=" h-auto w-32 md:w-48 transition-all duration-300 ease-in-out"
+                                                      src={"/logo_dark.png"}
+                                                      alt="logo" />
+
                                                 <ul className="mt-8 space-y-4">
                                                       <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/about"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
                                                                   About{" "}
-                                                            </a>
+                                                            </Link>
                                                       </li>
                                                       <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/contact"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
-                                                                  Features{" "}
-                                                            </a>
+                                                                  Contact{" "}
+                                                            </Link>
                                                       </li>
                                                       <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/help"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
-                                                                  FAQ{" "}
-                                                            </a>
+                                                                  Help{" "}
+                                                            </Link>
+                                                      </li>
+                                                      <li>
+                                                            <Link
+                                                                  href="/overview"
+                                                                  title=""
+                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                                                            >
+                                                                  {" "}
+                                                                  Overview{" "}
+                                                            </Link>
                                                       </li>
                                                       <li>
                                                             <Link
@@ -273,30 +285,51 @@ const Footer: React.FC = () => {
                                                       </li>
                                                 </ul>
                                           </div>
+
                                           <div>
                                                 <p className="text-base text-gray-500">JOBS BY SECTION</p>
                                                 <ul className="mt-8 space-y-4">
                                                       <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/local-jobs"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
                                                                   Local Jobs{" "}
-                                                            </a>
+                                                            </Link>
                                                       </li>
                                                       <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/govt-jobs"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
-                                                                  Govt Jobs{" "}
-                                                            </a>
+                                                                  Government Jobs{" "}
+                                                            </Link>
                                                       </li>
                                                       <li>
+                                                            <Link
+                                                                  href="/world-wide-job"
+                                                                  title=""
+                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                                                            >
+                                                                  {" "}
+                                                                  World Wide Jobs{" "}
+                                                            </Link>
+                                                      </li>
+                                                      <li>
+                                                            <Link
+                                                                  href="/pbo-professional"
+                                                                  title=""
+                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                                                            >
+                                                                  {" "}
+                                                                  Kalbela/PBO Professional Jobs{" "}
+                                                            </Link>
+                                                      </li>
+                                                      {/* <li>
                                                             <a
                                                                   href="#"
                                                                   title=""
@@ -305,38 +338,29 @@ const Footer: React.FC = () => {
                                                                   {" "}
                                                                   Newspaper Jobs{" "}
                                                             </a>
-                                                      </li>
+                                                      </li> */}
                                                       <li>
-                                                            <a
-                                                                  href="#"
-                                                                  title=""
-                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
-                                                            >
-                                                                  {" "}
-                                                                  Internship{" "}
-                                                            </a>
-                                                      </li>
-
-                                                      <li>
-                                                            <a
-                                                                  href="#"
-                                                                  title=""
-                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
-                                                            >
-                                                                  {" "}
-                                                                  Skilled Worker Jobs{" "}
-                                                            </a>
-                                                      </li>
-                                                      <li>
-                                                            <a
-                                                                  href="#"
+                                                            <Link
+                                                                  href="/semi-unskilled-worker"
                                                                   title=""
                                                                   className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
                                                             >
                                                                   {" "}
                                                                   Semi/Unskilled worker jobs{" "}
-                                                            </a>
+                                                            </Link>
                                                       </li>
+
+                                                      <li>
+                                                            <Link
+                                                                  href="/skilled-worker"
+                                                                  title=""
+                                                                  className="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                                                            >
+                                                                  {" "}
+                                                                  Skilled Worker Jobs{" "}
+                                                            </Link>
+                                                      </li>
+
                                                 </ul>
                                           </div>
 
@@ -383,9 +407,6 @@ const Footer: React.FC = () => {
                                     </div>
                                     <hr className="md:mt-16 mt-10 md:mb-10 mb-4 border-gray-800" />
                                     <div className="flex flex-wrap items-center justify-between">
-                                          <img className="h-auto md:w-32 w-20"
-                                                src={"/logo_dark.png"}
-                                                alt="logo" />
                                           <ul className="flex items-center space-x-3 md:order-3">
                                                 <li>
                                                       <a
