@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { BellRing, Filter, Menu } from "lucide-react"
+import { BellRing, Filter, Grid, Menu } from "lucide-react"
 import { useTheme } from "next-themes"
 import { selectCustomStyles } from "@/lib/utils"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -238,13 +238,6 @@ const SearchDetails: React.FC = () => {
                         </div>
                   </MaxWidthWrapper>
 
-                  <MaxWidthWrapper>
-                        {/* <div className="">
-                              <h1 className="text-2xl font-bold text-center">{totalJobs} {jobs.length === 1 ? "Job" : "Jobs"}</h1>
-                              <p className="text-center text-gray-600 mt-3">Latest Web Development Intern Jobs in Bangladesh</p>
-                        </div> */}
-                  </MaxWidthWrapper>
-
                   <MaxWidthWrapper className="flex flex-col gap-6 p-4 lg:flex-row sticky top-[56px]">
                         <aside className="hidden h-fit w-full  md:sticky md:top-20 lg:block lg:w-1/4 pt-5 ">
 
@@ -286,7 +279,7 @@ const SearchDetails: React.FC = () => {
                         <div className="flex-grow lg:w-3/4">
                               <br />
 
-                              <div className="flex justify-end mb-2">
+                              <div className="flex justify-end mb-2 gap-2">
                                     <div className="flex items-center gap-2">
                                           Jobs Per Page   <Select>
                                                 <SelectTrigger className="w-[100px]">
@@ -302,6 +295,11 @@ const SearchDetails: React.FC = () => {
                                                       </SelectGroup>
                                                 </SelectContent>
                                           </Select>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                          <Button variant={'outline'} size="icon" className="">
+                                                <Grid />
+                                          </Button>
                                     </div>
                               </div>
                               {loading ? (

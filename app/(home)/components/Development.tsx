@@ -2,7 +2,7 @@ import React from 'react';
 
 const Development = ({ height }: any) => {
     return (
-        <main className="flex-1 h-full" id="course-content-area">
+        <main className=" flex-1 h-full" id="course-content-area">
             <div
                 className={`w-full md:h-[400px] ${height} aspect-video `}
                 data-sentry-component="FeatureComingSoon"
@@ -13,7 +13,16 @@ const Development = ({ height }: any) => {
                     data-sentry-element="Card"
                     data-sentry-source-file="FeatureComingSoon.tsx"
                 >
-                    <div className="animate-gradient absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 opacity-80" />
+
+                    <div className="animate-gradient absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 opacity-100" >
+                        <img
+                            src="/logo.png"
+                            alt='logo'
+                            className="absolute top-0 left-0 right-0 bottom-0 m-auto opacity-[0.1] md:w-[660px] w-80 rounded-full"
+                        />
+                    </div>
+
+
                     <div
                         className="relative z-10 flex h-full flex-col items-center justify-center p-2 text-center sm:p-6"
                         data-sentry-element="CardContent"
@@ -38,7 +47,7 @@ const Development = ({ height }: any) => {
 
                         </div>
                         <div className="animate-fade-in max-w-md space-y-1 sm:space-y-2">
-                            <h3 className="text-xl font-bold tracking-tight sm:text-2xl">
+                            <h3 className="md:text-4xl text-xl font-bold tracking-tight sm:text-2xl">
                                 Coming Soon
                             </h3>
                             <p className="text-sm text-muted-foreground sm:text-base">

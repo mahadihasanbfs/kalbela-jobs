@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import CustomTitle from './CustomTitle'
 
 export default function OurFeature() {
   return (
@@ -7,13 +8,7 @@ export default function OurFeature() {
       <section className="py-10 bg-white sm:py-10 lg:py-8">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className=" font-bold md:text-[1.8rem]  text-2xl">
-              Offering the best deal
-              <div className="flex items-center justify-center gap-1 mt-3 ">
-                <span className="bg-primary_blue w-[30px] h-1 rounded-full"></span>
-                <span className="bg-gray-200 w-[50px] h-1 rounded-full"></span>
-              </div>
-            </div>
+            <CustomTitle title="Offering the best deal" position='center' />
             {/* <p className="mt-4 text-base leading-7 text-gray-600 sm:mt-8 font-pj">
                             Lorem ipsum dolor sit amet, consectetur adipis elit
                         </p> */}

@@ -1,5 +1,6 @@
 'use client';
 
+import useApiRequest from '@/app/hooks/useApiRequest';
 import { usePaginatedFetch } from '@/app/hooks/usePaginationFetch';
 import NotFoundVector from '@/components/NotFoundVector';
 import { Button } from '@/components/ui/button';
@@ -7,23 +8,29 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import JobCard2 from './JobCard2';
 import JobTitleBar from './JobTitleBar';
+import PaginationController from './PaginationController';
 
 
-const HotJobs: React.FC = () => {
-  const {
-    data: jobs,
-    loading,
-    error,
-    currentPage,
-    totalPages,
-    nextPage,
-    prevPage,
-  } = usePaginatedFetch(`/jobs/get-all-govt-jobs`)
+const GovJob: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const limit = 6;
 
+  const { data, loading, error } = useApiRequest<any>(
+    `jobs/get-all-govt-jobs?page=${page}&limit=${limit}`,
+    'GET'
+  );
+
+  const jobs = data?.data?.jobs || [];
+  const totalPages = data?.data?.pagination?.totalPages || 1;
 
   return (
-    <div className="pb-8">
+    <div className='bg-cover'
+      style={{
+        backgroundImage: `linear-gradient(180deg, #ffffffef, #ffffffef), url(/jobbg.jpeg)`,
+      }}
+    >
       <div className="md:col-span-3">
         <JobTitleBar
           title="Government Jobs"
@@ -31,53 +38,44 @@ const HotJobs: React.FC = () => {
           viewBtn={true}
           path="/govt-jobs"
         />
-        <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
-          {loading
-            ? new Array(15).fill(null).map((_, index) => (
-              <div key={index} className="flex flex-col items-start rounded-sm border p-4 md:flex-row">
-                <Skeleton className="mr-3 h-14 w-14 rounded-full" />
-                <div className="flex-grow">
-                  <Skeleton className="mb-2 h-5 w-24" />
-                  <Skeleton className="h-4 w-32" />
-                </div>
-              </div>
-            ))
-            : (
-              jobs?.map((job: any) => (
-                <Link
-                  href={`/jobs/${job.url}`}
-                  key={job._id}
-                  className="group flex justify-start flex-col md:flex-row w-full items-start gap-2 overflow-hidden hover:bg-gray-50 rounded-lg border md:p-4 p-2 shadow-sm transition-all hover:border-gray-300"
-                >
-                  <div className="md:block md:w-auto flex w-full justify-center">
-                    <div className="h-16 w-16 m-auto">
-                      {job?.company_info?.logo ? (
-                        <img
-                          className="h-full w-20 rounded border border-gray-300 bg-white object-contain p-2"
-                          src={job.company_info.logo}
-                          alt={job.company_info.name || 'Company Logo'}
-                          onError={(e) => (e.currentTarget.src = '/fallback_img.png')}
-                        />
-                      ) : (
-                        <div className="flex justify-center items-center h-full rounded border-2 border-gray-300 bg-white p-2 shadow-md">
-                          <span className="text-xl font-semibold text-gray-600">
-                            {job?.company_info?.name?.charAt(0).toUpperCase() || 'C'}
-                          </span>
+        {
+          loading
+            ?
+            <div className="md:h-[300px]">
+              <div className="grid px-2 md:h-[200px] grid-cols-3 md:gap-4 gap-2">
+                {
+                  new Array(6).fill('.').map((_, index) => (
+                    <div key={index}>
+                      <div className="group flex bg-white justify-start flex-col md:flex-row w-full items-start gap-2 overflow-hidden rounded-lg border md:p-4 p-2 shadow-sm">
+                        <div className="md:block md:w-auto flex w-full justify-center">
+                          <div className="h-16 w-16 m-auto">
+                            <div className="h-full w-20 rounded border border-gray-300 bg-gray-200 animate-pulse" />
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  </div>
 
-                  <div className="flex-grow gap-1 text-center md:text-start mx-auto">
-                    <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">
-                      {job.job_title}
-                    </h3>
-                    <p className="text-xs">{job.company_info?.name}</p>
+                        <div className="flex-grow gap-1 text-center ml-4 md:text-start mx-auto">
+                          <div className="h-4 w-40 bg-gray-200 rounded-md animate-pulse mb-2" />
+                          <div className="h-3 w-24 bg-gray-200 rounded-md animate-pulse" />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+            :
+            <div className="grid md:px-4 px-0  md:h-[300px] md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
+              {
+                jobs?.map((job: any) => (
+                  <div key={job._id}>
+                    <JobCard2 job={job} />
                   </div>
-                </Link>
-              ))
-            )}
-        </div>
+                ))
+              }
+            </div>
+        }
+
+
 
         {error && (
           <div className="md:h-[400px] h-[230px] flex items-center justify-center">
@@ -86,32 +84,19 @@ const HotJobs: React.FC = () => {
         )}
 
         {/* Pagination Buttons */}
-        {!loading && !error &&
-          <div className="flex items-center justify-center mt-6 gap-4">
-            <Button
-              size={"sm"}
-              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-              onClick={prevPage}
-              disabled={currentPage === 1}
-            >
-              <ArrowLeft size={16} className="mr-1" />
-              Previous
-            </Button>
-            <Button
-              size={"sm"}
-              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-              onClick={nextPage}
-              disabled={currentPage === totalPages}
-            >
-              Show More
-              <ArrowRight size={16} className="ml-1" />
-            </Button>
-          </div>}
-
+        {!loading && totalPages > 1 && (
+          <div className="flex justify-center pb-6">
+            <PaginationController
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
+          </div>
+        )}
 
       </div>
     </div>
   );
 };
 
-export default HotJobs;
+export default GovJob;
