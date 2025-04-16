@@ -13,7 +13,7 @@ import JobTitleBar from './JobTitleBar';
 import PaginationController from './PaginationController';
 
 
-const HotJobs: React.FC = () => {
+const GovJob: React.FC = () => {
   const [page, setPage] = useState(1);
   const limit = 6;
 
@@ -99,4 +99,4 @@ const HotJobs: React.FC = () => {
   );
 };
 
-export default HotJobs;
+export default GovJob;
