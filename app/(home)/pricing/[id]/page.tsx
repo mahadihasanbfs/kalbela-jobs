@@ -99,6 +99,16 @@ const PricingPage = () => {
 
     return (
         <div>
+            <header
+                className='package-bannerIn flex flex-col items-center justify-center bg-[#f7f5f5cc]'>
+                <img
+                    src='/3d2.png'
+                    alt='icon'
+                    className='w-24 mt-8'
+                />
+                <h2 className="md:text-3xl text-2xl font-bold mt-2">Service Package
+                </h2>
+            </header>
             <div className="min-h-screen text-black py-12 px-4 md:px-6">
                 <div className="max-w-6xl mx-auto">
                     <Services service={data?.services} />
@@ -111,3 +121,4 @@ const PricingPage = () => {
 };
 
 export default PricingPage;
+

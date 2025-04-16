@@ -11,14 +11,15 @@ export function usePaginatedFetch<T>(baseUrl: string) {
     const [data, setData] = useState<T[]>([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
     const fetchData = async () => {
         setLoading(true)
         setError(null)
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/${baseUrl}?page=${currentPage}`)
+            // https://server.kalbelajobs.com/api/v1/jobs/get-featured-jobs?page=2&lemit=1
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/${baseUrl}?page=${currentPage}&lemit=1`)
             if (!res.ok) throw new Error('Failed to fetch data')
             const json = await res.json()
             setData(json?.data?.jobs || [])

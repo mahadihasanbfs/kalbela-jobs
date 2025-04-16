@@ -587,3 +587,39 @@ audio::-webkit-media-controls-timeline {
   from { transform: translateY(-20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+.package-bannerIn {
+  margin: -85px 0 0;
+  height: 300px;
+  position: relative;
+  text-align: center;
+  border-radius: 50% / 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Mobile and small screens */
+@media (max-width: 768px) {
+.package-bannerIn {
+        margin: -81px 0 0;
+        height: 200px;
+        position: relative;
+        /* text-align: center; */
+        border-radius: 216% / 100%;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .package-bannerIn {
+        margin: -81px 0 0;
+        height: 280px;
+        position: relative;
+        /* text-align: center; */
+        border-radius: 216% / 100%;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}

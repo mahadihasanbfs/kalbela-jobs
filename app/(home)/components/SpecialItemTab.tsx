@@ -8,11 +8,6 @@ import InternShipJob from './InternShipJob';
 import SkilledJobs from './SkilledJobs';
 
 const SpecialItemTab = () => {
-    const { data: internJob, loading: loadingIntern, error: errorIntern } = useApiRequest<any>(
-        "jobs/internship ",
-        "GET"
-    )
-
     const { data: skilledJob, loading: skilledLoading, error: skilledError } = useApiRequest<any>(
         "jobs/skilled-jobs",
         "GET"
@@ -56,7 +51,9 @@ const SpecialItemTab = () => {
                 <br />
                 {/* intern */}
                 <TabsContent2 value="intern">
-                    <InternShipJob data={internJob?.data} loading={loadingIntern} error={errorIntern} />
+                    <div className="lg:w-[1000px] m-auto">
+                        <Development />
+                    </div>
                 </TabsContent2>
 
                 {/* skilled */}

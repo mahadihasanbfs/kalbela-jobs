@@ -5,17 +5,9 @@ import Image from "next/image"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import HotJobs from "./HotJobs"
 import GovJob from "./Govt_jobs"
-import Tenders from "./Tenders"
 import Link from "next/link"
 
 const FeaturedJobs: React.FC = () => {
-
-      const { data: tendersJob, loading: tendersLoading, error: tendersError } = useApiRequest<any>(
-            "jobs/get-featured-jobs ",
-            "GET"
-      )
-
-
       return (
             <section>
                   <div className="space-y-6 col-span-2">
@@ -60,8 +52,6 @@ const FeaturedJobs: React.FC = () => {
                                     </Link>
                               </div>
                         </div>
-
-                        <Tenders data={tendersJob?.data} loading={tendersLoading} error={tendersError} />
                   </div>
             </section>
       )

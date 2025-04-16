@@ -9,6 +9,7 @@ import MobileCategory from "./MobileCategory";
 import { reducer } from '../../../hooks/use-toast';
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import Development from "./Development";
 
 const JobCategory2 = () => {
     const [openMenu, setOpenMenu] = useState<'category' | 'job_industry' | 'gov_job' | 'job_by_section' | 'job_by_location' | 'more_links' | null>(null);
@@ -572,34 +573,13 @@ const JobCategory2 = () => {
                             {(openMenu == 'job_by_section' &&
                                 <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] shadow-xl rounded-b-xl overflow-y-auto scrollbar-">
                                     <div
-                                        className="border p-4 shadow-lg bg-white"
+                                        className="border h-[400px] p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('job_by_section')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-
-                                        <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
-                                            {jobBySection?.map((item, index) => <AccordionItem2 key={index} value={`item-${index + 1}`}>
-                                                <AccordionTrigger2>{item?.section}</AccordionTrigger2>
-                                                <AccordionContent2>
-                                                    <ul className="list-inside space-y-1">
-                                                        {
-                                                            item?.subCategories?.map((subCategory, i) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
-                                                                <Link href="#" key={i} className="ml-6 flex gap-2">
-                                                                    <span>
-                                                                        <ArrowRight
-                                                                            size={16}
-                                                                            strokeWidth={1.4} absoluteStrokeWidth />
-                                                                    </span>
-                                                                    <span>
-                                                                        {subCategory}
-                                                                    </span>
-                                                                </Link>
-                                                            </li>)
-                                                        }
-                                                    </ul>
-                                                </AccordionContent2>
-                                            </AccordionItem2>)}
-                                        </Accordion2>
+                                        <div>
+                                            <Development height="!h-[300px]" />
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -624,30 +604,9 @@ const JobCategory2 = () => {
                                         onMouseEnter={() => handleMouseEnter('job_by_location')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-
-                                        <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
-                                            {jobByLocation?.map((item, index) => <AccordionItem2 key={index} value={`item-${index + 1}`}>
-                                                <AccordionTrigger2>{item?.location}</AccordionTrigger2>
-                                                <AccordionContent2>
-                                                    <ul className="list-inside space-y-1">
-                                                        {
-                                                            item?.jobs?.map((job, i) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
-                                                                <Link href="#" key={i} className="ml-6 flex gap-2">
-                                                                    <span>
-                                                                        <ArrowRight
-                                                                            size={16}
-                                                                            strokeWidth={1.4} absoluteStrokeWidth />
-                                                                    </span>
-                                                                    <span>
-                                                                        {job}
-                                                                    </span>
-                                                                </Link>
-                                                            </li>)
-                                                        }
-                                                    </ul>
-                                                </AccordionContent2>
-                                            </AccordionItem2>)}
-                                        </Accordion2>
+                                        <div>
+                                            <Development height="!h-[300px]" />
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -672,25 +631,9 @@ const JobCategory2 = () => {
                                         onMouseEnter={() => handleMouseEnter('more_links')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-
-                                        <ul className="list-inside space-y-4">
-                                            {
-                                                moreLinks?.map((items: any, i: any) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
-                                                    <Link href="#" key={i} className="ml-6 flex gap-2">
-                                                        <span>
-                                                            <Link2
-                                                                size={16}
-                                                                strokeWidth={1.4} absoluteStrokeWidth />
-                                                        </span>
-                                                        <span>
-                                                            {items}
-                                                        </span>
-                                                    </Link>
-                                                </li>)
-                                            }
-                                        </ul>
-
-
+                                        <div>
+                                            <Development height="!h-[200px]" />
+                                        </div>
                                     </div>
                                 </div>
                             )}

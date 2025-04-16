@@ -150,7 +150,10 @@ const Footer: React.FC = () => {
                               <div className="">
                                     <div className="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-4 md:gap-x-12">
                                           <div>
-                                                <p className="text-base text-gray-500">ABOUT KALBELA JOBS</p>
+                                                <img className=" h-auto w-32 md:w-48 transition-all duration-300 ease-in-out"
+                                                      src={"/logo_dark.png"}
+                                                      alt="logo" />
+
                                                 <ul className="mt-8 space-y-4">
                                                       <li>
                                                             <Link
@@ -404,9 +407,6 @@ const Footer: React.FC = () => {
                                     </div>
                                     <hr className="md:mt-16 mt-10 md:mb-10 mb-4 border-gray-800" />
                                     <div className="flex flex-wrap items-center justify-between">
-                                          <img className="h-auto md:w-32 w-20"
-                                                src={"/logo_dark.png"}
-                                                alt="logo" />
                                           <ul className="flex items-center space-x-3 md:order-3">
                                                 <li>
                                                       <a

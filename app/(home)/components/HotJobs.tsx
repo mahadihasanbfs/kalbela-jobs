@@ -1,25 +1,40 @@
 'use client';
 
+import useApiRequest from '@/app/hooks/useApiRequest';
 import { usePaginatedFetch } from '@/app/hooks/usePaginationFetch';
 import NotFoundVector from '@/components/NotFoundVector';
 import { Button } from '@/components/ui/button';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/Pagination';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import JobCard2 from './JobCard2';
 import JobTitleBar from './JobTitleBar';
+import PaginationController from './PaginationController';
 
 
 const HotJobs: React.FC = () => {
-  const {
-    data: jobs,
-    loading,
-    error,
-    currentPage,
-    totalPages,
-    nextPage,
-    prevPage,
-  } = usePaginatedFetch(`/jobs/get-featured-jobs`)
+  // const {
+  //   data: jobs,
+  //   loading,
+  //   error,
+  //   currentPage,
+  //   totalPages,
+  //   nextPage,
+  //   prevPage,
+  // } = usePaginatedFetch(`/`)
+
+  const [page, setPage] = useState(1);
+  const limit = 6;
+
+  const { data, loading, error } = useApiRequest<any>(
+    `jobs/get-featured-jobs?page=${page}&limit=${limit}`,
+    'GET'
+  );
+
+  const jobs = data?.data?.jobs || [];
+  const totalPages = data?.data?.pagination?.totalPages || 1;
 
 
   return (
@@ -39,37 +54,7 @@ const HotJobs: React.FC = () => {
             ))
             : (
               jobs?.map((job: any) => (
-                <Link
-                  href={`/jobs/${job.url}`}
-                  key={job._id}
-                  className="group flex justify-start flex-col md:flex-row w-full items-start gap-2 overflow-hidden hover:bg-gray-50 rounded-lg border md:p-4 p-2 shadow-sm transition-all hover:border-gray-300"
-                >
-                  <div className="md:block md:w-auto flex w-full justify-center">
-                    <div className="h-16 w-16 m-auto">
-                      {job?.company_info?.logo ? (
-                        <img
-                          className="h-full w-20 rounded border border-gray-300 bg-white object-contain p-2"
-                          src={job.company_info.logo}
-                          alt={job.company_info.name || 'Company Logo'}
-                          onError={(e) => (e.currentTarget.src = '/fallback_img.png')}
-                        />
-                      ) : (
-                        <div className="flex justify-center items-center h-full rounded border-2 border-gray-300 bg-white p-2 shadow-md">
-                          <span className="text-xl font-semibold text-gray-600">
-                            {job?.company_info?.name?.charAt(0).toUpperCase() || 'C'}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex-grow gap-1 text-center md:text-start mx-auto">
-                    <h3 className="font-semibold text-sm capitalize group-hover:text-blue-500">
-                      {job.job_title}
-                    </h3>
-                    <p className="text-xs">{job.company_info?.name}</p>
-                  </div>
-                </Link>
+                <JobCard2 key={job?._id} job={job} />
               ))
             )}
         </div>
@@ -81,28 +66,16 @@ const HotJobs: React.FC = () => {
         )}
 
         {/* Pagination Buttons */}
-        {!loading && !error &&
-          <div className="flex items-center justify-center mt-6 gap-4">
-            <Button
-              size={"sm"}
-              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-              onClick={prevPage}
-              disabled={currentPage === 1}
-            >
-              <ArrowLeft size={16} className="mr-1" />
-              Previous
-            </Button>
-            <Button
-              size={"sm"}
-              className="bg-gray-200 duration-200 text-primary_blue hover:text-white border border-primary_blue hover:bg-primary rounded"
-              onClick={nextPage}
-              disabled={currentPage === totalPages}
-            >
-              Show More
-              <ArrowRight size={16} className="ml-1" />
-            </Button>
-          </div>}
 
+        {!loading && totalPages > 1 && (
+          <div className="flex justify-center pb-6">
+            <PaginationController
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
+          </div>
+        )}
 
       </div>
     </div>
