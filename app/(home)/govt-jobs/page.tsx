@@ -1,34 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import { Star, User, Search } from "lucide-react"
+import { Star, User, Search, ChevronDown } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Input } from "@/components/ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import { useRouter } from "next/navigation"
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
-import NotFoundVector from "@/components/NotFoundVector"
 
 const Page = () => {
+      const [openPopover, setOpenPopover] = useState<string | null>(null)
+      const { data, loading } = useApiRequest<any>("jobs/get-all-org-jobs", "GET")
       const [searchTerm, setSearchTerm] = useState("")
-      const { data, loading, error } = useApiRequest<any>("jobs/get-all-govt-jobs", "GET")
       const router = useRouter()
 
-      const get_org_all_jobs = (jobs: any) => data?.data?.jobs.reduce((acc: number, job: any) => acc + job.vacancy, 0)
+      const get_org_all_jobs = (jobs: any) => jobs.reduce((acc: number, job: any) => acc + job.vacancy, 0)
 
-
-      const filteredData = data?.data?.jobs?.filter((org: any) => org?.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      const filteredData = data?.data?.filter((org: any) => org.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
       const handleJobSelect = (orgId: string, jobId: string) => {
             router.push(`/govt-jobs/${jobId}`)
       }
 
       return (
-            <div className="min-h-screen bg-light-theme dark:bg-dark-theme pt-10 pb-8">
+            <div className="min-h-screen bg-light-theme  dark:bg-dark-theme py-8">
                   <div className="container mx-auto px-4">
-                        <h1 className="mb-8 text-center md:text-3xl text-xl font-bold">
+                        <h1 className="mb-8 text-center text-3xl font-bold">
                               <img
                                     src="https://image.kalbelajobs.com/api/v1/image/679674886283397bf670bc7d.png"
                                     alt="Government Jobs"
@@ -37,7 +37,7 @@ const Page = () => {
                               Government Jobs
                         </h1>
 
-                        <div className="mb-6 flex md:flex-row flex-col md:gap-0 gap-2 items-center justify-between">
+                        <div className="mb-6 flex items-center justify-between">
                               <div className="relative bg-gray-50 rounded-md w-full max-w-md">
                                     <Input
                                           type="text"
@@ -53,10 +53,9 @@ const Page = () => {
                               </p>
                         </div>
 
-                        {/* Show loading skeleton when data is loading */}
-                        {loading && (
-                              <div className="grid gap-6  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                    {Array.from({ length: 15 }).map((_, index) => (
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                              {loading
+                                    ? Array.from({ length: 16 }).map((_, index) => (
                                           <div key={index} className="flex flex-col rounded-lg border bg-white p-4 shadow-sm">
                                                 <div className="flex items-center gap-4">
                                                       <Skeleton className="h-16 w-16 rounded-full" />
@@ -67,39 +66,19 @@ const Page = () => {
                                                 </div>
                                                 <Skeleton className="mt-4 h-10 w-full" />
                                           </div>
-                                    ))}
-                              </div>
-                        )}
-
-                        {/* Show error or empty state when there is an error */}
-                        {filteredData?.length === 0 && error && (
-                              <div className="md:h-[320px] mt-8 h-[230px] flex items-center justify-center">
-                                    <NotFoundVector title="Error: Failed to load government jobs" />
-                              </div>
-                        )}
-
-                        {/* Show no data message when no results are available */}
-                        {filteredData?.length === 0 && !loading && !error && (
-                              <div className="md:h-[320px] mt-8 h-[230px] flex items-center justify-center">
-                                    <NotFoundVector title="No Government Jobs Available" />
-                              </div>
-                        )}
-
-                        {/* Show organizations if data is available */}
-                        {data?.data?.jobs?.length > 0 && !loading && !error && (
-                              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                    {data?.data?.jobs?.map((org: any) => (
+                                    ))
+                                    : filteredData?.map((org: any) => (
                                           <div
                                                 key={org._id}
                                                 className="flex flex-col justify-between rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow-md"
                                           >
                                                 <div className="flex items-start gap-4">
                                                       <Avatar className="h-16 w-16 rounded-lg border bg-gray-100 p-2 transition-transform group-hover:scale-110">
-                                                            <AvatarImage src={org.logo} alt={org?.title} className="object-contain" />
-                                                            <AvatarFallback>{org?.title.substring(0, 2).toUpperCase()}</AvatarFallback>
+                                                            <AvatarImage src={org.logo} alt={org.name} className="object-contain" />
+                                                            <AvatarFallback>{org.name.substring(0, 2).toUpperCase()}</AvatarFallback>
                                                       </Avatar>
                                                       <div className="flex-1">
-                                                            <h3 className="font-semibold capitalize leading-tight line-clamp-2">{org?.title}</h3>
+                                                            <h3 className="font-semibold capitalize leading-tight line-clamp-2">{org.name}</h3>
                                                             <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-600">
                                                                   <span className="flex items-center">
                                                                         <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -123,34 +102,26 @@ const Page = () => {
                                                       <div
                                                             className="w-full absolute top-[3.6rem] left-0 p-2 border bg-white rounded-md shadow-lg hidden group-hover:block"
                                                       >
-                                                            {org?.jobs ? org?.jobs.length > 0 ? (
-                                                                  org?.jobs?.map((job: any) => (
+                                                            {org.jobs.length > 0 ? (
+                                                                  org.jobs.map((job: any) => (
                                                                         <div
-                                                                              key={job?._id}
-                                                                              onClick={() => handleJobSelect(org?._id, job?._id)}
+                                                                              key={job._id}
+                                                                              onClick={() => handleJobSelect(org._id, job._id)}
                                                                               className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer rounded-md"
                                                                         >
-                                                                              {job?.title}
+                                                                              {job.title}
                                                                         </div>
                                                                   ))
                                                             ) : (
-                                                                  <div className="md:h-[320px] mt-8 h-[230px] flex items-center justify-center">
-                                                                        <NotFoundVector title="Error: Failed to load government jobs" />
-                                                                  </div>
-                                                            )
-                                                                  :
-                                                                  <div className="md:h-[320px] mt-8 h-[230px] flex items-center justify-center">
-                                                                        <NotFoundVector title="Error: Failed to load government jobs" />
-                                                                  </div>
-                                                            }
+                                                                  <p className="text-gray-500 text-sm text-center">No jobs available</p>
+                                                            )}
                                                       </div>
                                                 </div>
                                           </div>
                                     ))}
-                              </div>
-                        )}
+                        </div>
                   </div>
-            </div>
+            </div >
       )
 }
 
