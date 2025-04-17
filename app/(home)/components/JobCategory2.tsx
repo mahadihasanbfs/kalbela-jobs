@@ -386,7 +386,6 @@ const JobCategory2 = () => {
 
 
 
-    console.log("=======>>>>>>>", gov_job);
     const handleSearch = (searchQuery: string) => {
         if (!searchQuery) return
 

@@ -37,8 +37,6 @@ const ApplySort = () => {
 
       const jobs = data?.data || []
 
-      console.log('my job : ', jobs);
-
       const getStatusColor = (status: Job["status"]) => {
             switch (status) {
                   case "Applied":

@@ -33,7 +33,6 @@ const BloodGroup = () => {
       }
 
       const handleSave = () => {
-            console.log("Blood Group data:", formData)
             update_contact()
             setEditBloodGroupOpen(false)
       }

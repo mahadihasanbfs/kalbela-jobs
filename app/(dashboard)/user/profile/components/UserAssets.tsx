@@ -16,7 +16,6 @@ const UserAssets = () => {
     const [accomplishmentData, setAccomplishmentData] = useState<AccomplishmentData[]>([]);
 
     const handleSaveAccomplishment = (data: AccomplishmentData) => {
-        console.log("Saving accomplishment:", data);
         // @ts-ignore
         setAccomplishmentData([...accomplishmentData, { ...data, type: activeDialog }]);
     }

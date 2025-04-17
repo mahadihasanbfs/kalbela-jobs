@@ -65,11 +65,11 @@ const DownloadApp: React.FC<PropsType> = ({ size = "default" }) => {
 
             deferredPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === "accepted") {
-                    console.log("User accepted the A2HS prompt")
+                    // console.log("User accepted the A2HS prompt")
                     // Save to localStorage that the user has installed the app
                     localStorage.setItem("appDownloadInteracted", "installed")
                 } else {
-                    console.log("User dismissed the A2HS prompt")
+                    // console.log("User dismissed the A2HS prompt")
                 }
                 setDeferredPrompt(null)
                 setIsOpen(false)

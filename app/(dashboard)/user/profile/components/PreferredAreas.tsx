@@ -58,7 +58,6 @@ const PreferredAreas: React.FC = () => {
             return data.data;
         },
     });
-    console.log(categoriesList, "location : ");
 
     const [checkedLocations, setCheckedLocations] = useState<string[]>([]);
     const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
@@ -144,8 +143,6 @@ const PreferredAreas: React.FC = () => {
             countries: selectedCountries,
             organizationTypes: selectedOrganizationTypes
         }
-
-        console.log("data : ", data);
         setIsEditing(false);
     }
 

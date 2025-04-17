@@ -26,9 +26,6 @@ const GovJob: React.FC = () => {
   const jobs = data?.data?.jobs || [];
   const totalPages = data?.data?.pagination?.totalPages || 1;
 
-
-  console.log("test : :  :: ", jobs);
-
   if (loading) {
     return (
       <div className='bg-cover'

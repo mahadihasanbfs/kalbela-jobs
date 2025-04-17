@@ -50,7 +50,6 @@ const BottomNavProfile = ({ user }: { user: any }) => {
 
             setTimeout(() => {
                   const get_user = Cookies.get("kalbelajobs_user");
-                  console.log("get_user::::::::::::", get_user);
                   if (!get_user) {
                         toast({
                               title: "Successfully logged out",
@@ -72,7 +71,6 @@ const BottomNavProfile = ({ user }: { user: any }) => {
                   </div>
             </button>
       );
-      console.log('user', user);
       return (<div>
 
             <MobileDialog>

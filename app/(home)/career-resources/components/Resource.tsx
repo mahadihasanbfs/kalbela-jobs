@@ -15,9 +15,6 @@ const Resource = ({
             `resource/category-resource?slag=${resourceSlugFromQuery}`,
             "GET"
       )
-
-      console.log("data", data)
-
       if (error) {
             return <p>Error loading data</p>
       }

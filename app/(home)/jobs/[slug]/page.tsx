@@ -113,8 +113,6 @@ const JobsDetails = () => {
                   .join(", ");
       };
 
-      console.log("job data", jobData);
-
       return (
             <MaxWidthWrapper>
                   <Head>

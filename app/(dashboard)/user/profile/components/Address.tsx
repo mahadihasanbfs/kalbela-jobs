@@ -109,7 +109,6 @@ const Address = () => {
             permanentFullAddress: '',
       })
 
-      console.log(addressData)
       useEffect(() => {
             if (user?.address) {
                   setAddressData({
@@ -212,7 +211,6 @@ const Address = () => {
       })
 
       const handleSave = () => {
-            console.log('Address data:', addressData)
             update_contact()
             setEditAddressOpen(false)
       }
@@ -262,8 +260,6 @@ const Address = () => {
                   setEditAddressOpen(false)
             }
       }
-
-      console.log("addresss.......", addressData);
 
       return (
             <div className="mb-4 px-4 py-2 w-full">

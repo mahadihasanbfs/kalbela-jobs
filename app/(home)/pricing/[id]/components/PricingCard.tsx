@@ -63,7 +63,7 @@ function PricingCard({ cardData }: { cardData: any }) {
     const [selectedPlan, setSelectedPlan] = useState("RB8");
 
     const handleSubmitPlan = (data: any) => {
-        console.log("data :  : : :", data);
+        // 
     }
 
     return (

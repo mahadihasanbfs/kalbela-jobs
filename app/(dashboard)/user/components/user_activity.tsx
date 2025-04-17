@@ -135,8 +135,6 @@ const UserActivity = () => {
             "GET"
       )
 
-      console.log("data:::", data);
-
       return (
             <div className="md:mt-0 mt-3">
                   <Card className="overflow-hidden rounded-xl border border-gray-200 ">

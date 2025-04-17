@@ -26,8 +26,6 @@ const TopCompanies: React.FC = () => {
     "GET"
   )
 
-  console.log("company data>>>", data)
-
   useEffect(() => {
     if (!api) return
   }, [api])

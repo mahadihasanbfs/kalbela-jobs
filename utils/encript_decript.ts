@@ -40,7 +40,6 @@ export const logout = () => {
 
 //   useEffect(() => {
 //     const encryptedUserData = Cookies.get("kalbelajobs_user");
-//     console.log("encryptedUserData", encryptedUserData);
 //     if (encryptedUserData) {
 //       const decryptedData = decryptData(encryptedUserData)
 //       setUserData(decryptedData)

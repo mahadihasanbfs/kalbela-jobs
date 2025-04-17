@@ -5,7 +5,6 @@ import Image from "next/image";
 import GovJobShareActions from "./GovJobShareActions";
 
 const GovJobHeader = ({ data }: { data: any | null }) => {
-      console.log(data);
       return (
             <div
                   className="relative w-full h-[240px] flex flex-col items-center justify-center bg-center"

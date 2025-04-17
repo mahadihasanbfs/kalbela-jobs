@@ -76,7 +76,6 @@ const JobcardLarge: React.FC<JobcardLargeProps> = ({ job }) => {
                   .join(", ");
       };
 
-      console.log("Job....", job);
       return (
             <div>
                   <div

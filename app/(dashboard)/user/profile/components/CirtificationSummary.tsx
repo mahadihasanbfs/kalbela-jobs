@@ -100,8 +100,6 @@ const CertificationSummary = () => {
             from: currentCertificationRef.current.from,
             to: currentCertificationRef.current.to
         }
-
-        console.log("cirtification : ", obj);
     };
 
     return (

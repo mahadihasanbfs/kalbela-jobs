@@ -44,7 +44,6 @@ const Skills = () => {
                   }
                   const data = await res.json()
                   if (!data?.data) return []
-                  console.log("data", data)
                   return data?.data?.map((skill: string) => ({
                         value: skill,
                         label: skill,

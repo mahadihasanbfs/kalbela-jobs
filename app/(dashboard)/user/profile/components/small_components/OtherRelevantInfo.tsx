@@ -55,11 +55,7 @@ const OtherRelevantInfo = ({
       return
     }
 
-    console.log({
-      keywords: selectedKeywords,
-      careerSummary,
-      specialQualification,
-    })
+
     setIsEditMode(false)
   }
 
@@ -143,15 +139,15 @@ const OtherRelevantInfo = ({
                   color: "white",
                 }),
               }}
-              // styles={{
-              //     control: (provided, state) => ({
-              //         ...provided,
-              //         borderColor: state.isFocused ? 'red' : provided.borderColor,
-              //         '&:hover': {
-              //             borderColor: state.isFocused ? 'red' : provided.borderColor,
-              //         },
-              //     }),
-              // }}
+            // styles={{
+            //     control: (provided, state) => ({
+            //         ...provided,
+            //         borderColor: state.isFocused ? 'red' : provided.borderColor,
+            //         '&:hover': {
+            //             borderColor: state.isFocused ? 'red' : provided.borderColor,
+            //         },
+            //     }),
+            // }}
             />
             {errors.keywords && (
               <p className="text-red-500">{errors.keywords}</p>

@@ -45,7 +45,6 @@ export default function DisabilityInformation() {
             difficultyCommunicate,
             difficultyCare
         };
-        console.log(data);
         setIsEditMode(false);
     }
 

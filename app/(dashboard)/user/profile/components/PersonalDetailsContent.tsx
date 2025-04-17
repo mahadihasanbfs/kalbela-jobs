@@ -103,7 +103,6 @@ const PersonalDetailsContent: React.FC<PersonalDetailsContentProps> = ({
 
     const saveData = async (data: any) => {
         const finalData = { ...formData, ...data }
-        console.log('Updated data:', finalData);
         // handleSave(finalData);
 
         setLoading(true)

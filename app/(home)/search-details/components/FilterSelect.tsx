@@ -93,10 +93,6 @@ const FilterSelect: FC<FilterSelectProps> = ({
             )
       }
 
-
-
-      console.log('Debug : ', job_type, '||', jobTypes);
-
       return (
             <div>
                   <div className="mb-5">

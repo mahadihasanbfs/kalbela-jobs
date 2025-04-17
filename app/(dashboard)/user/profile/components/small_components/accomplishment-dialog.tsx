@@ -71,7 +71,6 @@ export function AccomplishmentDialog({ type, open, onOpenChange, onSave }: Accom
             if (validateInputs()) {
                   onSave(data)
                   onOpenChange(false)
-                  console.log(data)  // Log all data to the console
                   setData({ title: '', issuedOn: '', url: '', description: '', thumbnail: null })
                   setErrors({ title: '', issuedOn: '', url: '', description: '' })
             }

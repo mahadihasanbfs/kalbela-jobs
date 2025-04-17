@@ -159,7 +159,6 @@ const EmploymentRetired = ({
       arms: currentTraining.arms,
     }
 
-    console.log("employee history--->", obj)
   }
 
   // console.log("checked")

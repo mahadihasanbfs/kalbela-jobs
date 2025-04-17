@@ -19,8 +19,6 @@ const GoogleDoodles = () => {
         fetchDoodles();
     }, []);
 
-    console.log("dudools :  : :", doodles);
-
     return (
         <div className="grid grid-cols-3 gap-4 p-4">
 

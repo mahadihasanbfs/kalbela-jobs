@@ -181,7 +181,6 @@ const SkillCardComponent: React.FC<SkillCardComponentProps> = ({
     setIsEditing(false)
 
     const obj = { selectedSkills, ntvq, company, learningMethods }
-    console.log("skill data", obj)
   }
 
   return (

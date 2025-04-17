@@ -44,12 +44,6 @@ const OtherReleventInfo: React.FC = () => {
         if (!validateInputs()) {
             return;
         }
-
-        console.log({
-            keywords: selectedKeywords,
-            careerSummary,
-            specialQualification
-        });
         setIsEditMode(false);
     };
 
