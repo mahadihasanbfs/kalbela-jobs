@@ -26,15 +26,16 @@ const HotJobs: React.FC = () => {
   // } = usePaginatedFetch(`/`)
 
   const [page, setPage] = useState(1);
-  const limit = 6;
+  const limit = 15;
 
   const { data, loading, error } = useApiRequest<any>(
     `jobs/get-featured-jobs?page=${page}&limit=${limit}`,
     'GET'
   );
 
+  console.log('clg', data);
   const jobs = data?.data?.jobs || [];
-  const totalPages = data?.data?.pagination?.totalPages || 1;
+  const totalPages = data?.data?.total_pages || 1;
 
   if (loading) {
     return (
@@ -74,7 +75,7 @@ const HotJobs: React.FC = () => {
   }
 
   return (
-    <div className="pb-8">
+    <div className="pb-4">
       <div className="md:col-span-3">
         <JobTitleBar title="🔥 Hot Jobs" viewBtn={true} path="/hotjob" />
         <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-3">
@@ -86,7 +87,7 @@ const HotJobs: React.FC = () => {
         </div>
 
         {/* Pagination Buttons */}
-        {!loading && totalPages > 1 && (
+        {(
           <div className="flex justify-center pb-6">
             <PaginationController
               currentPage={page}
