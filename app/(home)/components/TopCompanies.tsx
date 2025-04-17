@@ -17,6 +17,7 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import SecondaryBtn from "@/components/SecondaryBtn"
 import useApiRequest from "@/app/hooks/useApiRequest"
 import CustomTitle from "./CustomTitle"
+import NotFoundVector from "@/components/NotFoundVector"
 
 const TopCompanies: React.FC = () => {
   const [api, setApi] = useState<CarouselApi | null>(null)
@@ -37,6 +38,36 @@ const TopCompanies: React.FC = () => {
 
   const handlePrevClick = () => {
     if (api) api.scrollPrev()
+  }
+
+  if (loading) {
+    return (
+      <section className="py-6 md:py-10">
+        <MaxWidthWrapper>
+          <CustomTitle title="Top companies hiring now" position="start" />
+          <br />
+          <div className="grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 md:gap-4 gap-2">
+            {
+              new Array(5).fill('.').map((_, index) => (
+                <Skeleton key={index} className=" w-full md:h-[200px] h-[160px]" />
+              ))
+            }
+          </div>
+        </MaxWidthWrapper>
+      </section>
+    )
+  }
+
+  if (error || !data) {
+    return (
+      <section className="py-6 md:py-10">
+        <MaxWidthWrapper>
+          <CustomTitle title="Top companies hiring now" position="start" />
+          <br />
+          <h2 className="text-xl text-center text-gray-400">No companies found</h2>
+        </MaxWidthWrapper>
+      </section>
+    )
   }
 
   return (
@@ -66,11 +97,8 @@ const TopCompanies: React.FC = () => {
           </div>
 
           <CarouselContent className="flex">
-            {loading
-              ? Array.from({ length: 5 }).map((_, index) => (
-                <Skeleton key={index} className="mx-2 h-auto w-full" />
-              ))
-              : data?.data?.map((company: any) => (
+            {
+              data?.data?.map((company: any) => (
                 <CarouselItem
                   key={company._id}
                   className="min-w-48 basis-1/2 md:basis-1/4 lg:basis-1/5"
@@ -93,7 +121,8 @@ const TopCompanies: React.FC = () => {
                     <SecondaryBtn className="mt-2">View jobs</SecondaryBtn>
                   </Link>
                 </CarouselItem>
-              ))}
+              ))
+            }
           </CarouselContent>
 
           <div className="h-6 w-6">

@@ -573,12 +573,12 @@ const JobCategory2 = () => {
                             {(openMenu == 'job_by_section' &&
                                 <div className="!py-0 text-black w-[420px] absolute left-0 right-0 top-14 max-h-[400px] shadow-xl rounded-b-xl overflow-y-auto scrollbar-">
                                     <div
-                                        className="border h-[400px] p-4 shadow-lg bg-white"
+                                        className="border h-[240px] p-4 shadow-lg bg-white"
                                         onMouseEnter={() => handleMouseEnter('job_by_section')}
                                         onMouseLeave={handleMouseLeave}
                                     >
                                         <div>
-                                            <Development height="!h-[300px]" />
+                                            <Development height="!h-[200px]" />
                                         </div>
                                     </div>
                                 </div>
@@ -605,7 +605,7 @@ const JobCategory2 = () => {
                                         onMouseLeave={handleMouseLeave}
                                     >
                                         <div>
-                                            <Development height="!h-[300px]" />
+                                            <Development height="!h-[200px]" />
                                         </div>
                                     </div>
                                 </div>

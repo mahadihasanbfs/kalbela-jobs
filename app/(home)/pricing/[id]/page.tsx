@@ -1,9 +1,11 @@
 'use client';
+import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import Consulting from './components/Consulting';
+import PricingCard2 from './components/PricingCard';
 import Question from './components/Question';
 import Services from './components/Services';
 
@@ -98,9 +100,10 @@ const PricingPage = () => {
     const data = plans?.find(itm => itm?.id.toString() === id.toString());
 
     return (
-        <div>
+        <div className='bg-gray-100'>
+            {/* header */}
             <header
-                className='package-bannerIn flex flex-col items-center justify-center bg-[#f7f5f5cc]'>
+                className='package-bannerIn flex flex-col items-center justify-center bg-[#fff]'>
                 <img
                     src='/3d2.png'
                     alt='icon'
@@ -109,12 +112,30 @@ const PricingPage = () => {
                 <h2 className="md:text-3xl text-2xl font-bold mt-2">Service Package
                 </h2>
             </header>
-            <div className="min-h-screen text-black py-12 px-4 md:px-6">
-                <div className="max-w-6xl mx-auto">
-                    <Services service={data?.services} />
-                    <Question question={data?.questions} />
-                    <Consulting />
-                </div>
+
+            {/* line title */}
+            <div className="relative flex items-center justify-center mt-4">
+                <h3
+                    className="bg-gray-100 flex items-center justify-center font-bold py-2 px-4 md:text-3xl text-sm relative after:absolute md:after:w-10 after:w-6 md:after:h-10 after:h-6 after:rounded-full after:m-auto after:bg-primary_blue after:bottom-0 after:top-0 md:after:-left-10 after:-left-6 before:absolute md:before:w-10 before:w-6 md:before:h-10 before:h-6 before:rounded-full before:bg-primary_blue before:m-auto before:bottom-0 before:top-0 md:before:-right-10 before:-right-6 z-10"
+                >
+                    RESUME BANK (RB)
+                </h3>
+                <span className="bg-gray-500 border border-dashed h-[1px] w-full absolute -z-1"></span>
+            </div>
+            {/* plan cards */}
+            <div className="bg-white py-4 mt-6">
+                <MaxWidthWrapper>
+                    <div className="mt-12 pb-16">
+                        <PricingCard2 />
+                    </div>
+                    <div className="min-h-screen hidden text-black py-12 px-4 md:px-6">
+                        <div className="max-w-6xl mx-auto">
+                            <Services service={data?.services} />
+                            <Question question={data?.questions} />
+                            <Consulting />
+                        </div>
+                    </div>
+                </MaxWidthWrapper>
             </div>
         </div>
     );
