@@ -1,145 +1,118 @@
-'use client';
-import MaxWidthWrapper from '@/components/MaxWidthWrapper';
-import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import React, { useState } from 'react';
-import Consulting from './components/Consulting';
-import PricingCard2 from './components/PricingCard';
-import Question from './components/Question';
-import Services from './components/Services';
+import { Fragment } from "react"
+import { Metadata } from "next"
 
-const PricingPage = () => {
-    const { id } = useParams();
+import FeaturedJobs from "./components/FeaturedJobs"
+import Govt_jobs from "./components/Govt_jobs"
+import HeroSection from "./components/HeroSection"
+import InterviewQuestions from "./components/InterviewQuestions"
+import JobType from "./components/JobType"
+import Job_type_tag from "./components/Job_type_tag"
+import NesLetter from "./components/NesLetter"
+import Testimonial from "./components/Testimonial"
+import TopCompanies from "./components/TopCompanies"
+import VerticalMarquee from "./components/VerticalMarquee"
+import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import StaticsBar from "./components/StaticsBar"
+import Sponsors from "./components/Sponsors"
+import JobCategory from "./components/JobCategory"
+import JobCategory2 from "./components/JobCategory2"
+import OurFeature from "./components/OurFeature"
+import VideoGallery from "./components/VideoGellary"
+import Pricing from "./components/Pricing"
+import DownloadOurMobileApp from "./components/DownloadOurMobileApp"
+import ShortAdd from "./components/ShortAdd"
+import Link from "next/link"
+import SpecialItemTab from "./components/SpecialItemTab"
+import DevelopmentAlert from "./components/DevelopmentAlert"
+import Tenders from "./components/Tenders"
+import HotJobs from "./components/HotJobs"
+import InternShipJob from "./components/InternShipJob"
 
-    const plans = [
-        {
-            id: 1,
-            name: "Regular Plan",
-            price: "$99",
-            description: "Best for individuals and small businesses.",
-            features: [
-                { text: "Category Job (Single Job Post)", available: true },
-                { text: "Feature Job Post (Single Job Post)", available: true },
-                { text: "Category Membership (CM1-CM10)", available: false },
-                { text: "Feature Membership (FM1-FM10)", available: true },
-                { text: "Resume Bank (RB1-RB10)", available: true },
-                { text: "Home Page Banner Ad (Top, Middle & Bottom)", available: true },
-                { text: "Inner Page Banner Ad (Top & Right Side)", available: true },
-            ],
-            services: [
-                { title: "Job Alerts", description: "Get notified about new job postings." },
-                { title: "Resume Review", description: "Professional resume review and feedback." },
-                { title: "Career Counseling", description: "Expert advice for career growth." },
-                { title: "Application Tracking", description: "Track the status of your applications." },
-            ],
-            questions: [
-                { id: 1, question: "How do I post a job?", answer: "You can post a job from your dashboard." },
-                { id: 2, question: "What payment methods are available?", answer: "We accept credit cards and PayPal." },
-                { id: 3, question: "Can I edit a job posting?", answer: "Yes, you can edit job postings anytime." },
-                { id: 4, question: "Is there a refund policy?", answer: "Refunds are available within 7 days of purchase." },
-            ],
-        },
-        {
-            id: 2,
-            name: "Business Plan",
-            price: "$199",
-            description: "Ideal for growing businesses and recruitment agencies.",
-            features: [
-                { text: "Category Job (Unlimited Posts)", available: true },
-                { text: "Feature Job Post (5 per month)", available: true },
-                { text: "Category Membership (CM1-CM20)", available: true },
-                { text: "Feature Membership (FM1-FM20)", available: true },
-                { text: "Resume Bank (RB1-RB50)", available: true },
-                { text: "Home Page Banner Ad (Top, Middle & Bottom)", available: true },
-                { text: "Inner Page Banner Ad (Top & Right Side)", available: true },
-            ],
-            services: [
-                { title: "Dedicated Support", description: "Priority customer support available 24/7." },
-                { title: "Advanced Analytics", description: "Detailed insights into job applications." },
-                { title: "Employer Branding", description: "Boost your company's visibility." },
-                { title: "API Integration", description: "Integrate job postings into your platform." },
-            ],
-            questions: [
-                { id: 1, question: "Can I cancel my subscription?", answer: "Yes, you can cancel anytime." },
-                { id: 2, question: "Is there a trial available?", answer: "Yes, we offer a 14-day free trial." },
-                { id: 3, question: "Do you provide invoicing?", answer: "Yes, invoices are available upon request." },
-                { id: 4, question: "Can I upgrade my plan?", answer: "Yes, you can upgrade at any time." },
-            ],
-        },
-        {
-            id: 3,
-            name: "Enterprise Plan",
-            price: "$499",
-            description: "Best for large enterprises with high hiring needs.",
-            features: [
-                { text: "Category Job (Unlimited Posts)", available: true },
-                { text: "Feature Job Post (Unlimited)", available: true },
-                { text: "Category Membership (CM1-CM50)", available: true },
-                { text: "Feature Membership (FM1-FM50)", available: true },
-                { text: "Resume Bank (Unlimited Access)", available: true },
-                { text: "Home Page Banner Ad (Exclusive Placement)", available: true },
-                { text: "Inner Page Banner Ad (Exclusive Placement)", available: true },
-            ],
-            services: [
-                { title: "Custom Hiring Solutions", description: "Tailored solutions for your hiring needs." },
-                { title: "Dedicated Account Manager", description: "A dedicated expert to assist you." },
-                { title: "White Label Job Board", description: "Brand the platform as your own." },
-                { title: "AI-Powered Job Matching", description: "Smart job matching for better hiring." },
-            ],
-            questions: [
-                { id: 1, question: "Do you offer enterprise discounts?", answer: "Yes, contact sales for bulk pricing." },
-                { id: 2, question: "Is API access included?", answer: "Yes, API access is included in this plan." },
-                { id: 3, question: "How does onboarding work?", answer: "We provide full onboarding support." },
-                { id: 4, question: "Can I request custom features?", answer: "Yes, we offer custom feature development." },
-            ],
-        },
-    ];
+export const metadata: Metadata = {
+      title: "Kalbela Jobs || Find Your Dream Job Today",
+      description:
+            "Discover top jobs and career opportunities on Kalbela Jobs. Explore featured jobs, top companies, and expert interview tips to boost your career.",
+      keywords: [
+            "jobs",
+            "job portal",
+            "career opportunities",
+            "Kalbela",
+            "featured jobs",
+            "top companies",
+            "interview tips",
+      ],
+      icons: {
+            icon: "/favicon.ico",
+      },
+}
 
-
-    const data = plans?.find(itm => itm?.id.toString() === id.toString());
-
-    return (
-        <div className='bg-gray-100'>
-            {/* header */}
-            <header
-                className='package-bannerIn flex flex-col items-center justify-center bg-[#fff]'>
-                <img
-                    src='/3d2.png'
-                    alt='icon'
-                    className='w-24 mt-8'
-                />
-                <h2 className="md:text-3xl text-2xl font-bold mt-2">Service Package
-                </h2>
-            </header>
-
-            {/* line title */}
-            <div className="relative flex items-center justify-center mt-4">
-                <h3
-                    className="bg-gray-100 flex items-center justify-center font-bold py-2 px-4 md:text-3xl text-sm relative after:absolute md:after:w-10 after:w-6 md:after:h-10 after:h-6 after:rounded-full after:m-auto after:bg-primary_blue after:bottom-0 after:top-0 md:after:-left-10 after:-left-6 before:absolute md:before:w-10 before:w-6 md:before:h-10 before:h-6 before:rounded-full before:bg-primary_blue before:m-auto before:bottom-0 before:top-0 md:before:-right-10 before:-right-6 z-10"
-                >
-                    RESUME BANK (RB)
-                </h3>
-                <span className="bg-gray-500 border border-dashed h-[1px] w-full absolute -z-1"></span>
-            </div>
-            {/* plan cards */}
-            <div className="bg-white py-4 mt-6">
-                <MaxWidthWrapper>
-                    <div className="mt-12 pb-16">
-                        <PricingCard2 />
-                    </div>
-                    <div className="min-h-screen hidden text-black py-12 px-4 md:px-6">
-                        <div className="max-w-6xl mx-auto">
-                            <Services service={data?.services} />
-                            <Question question={data?.questions} />
-                            <Consulting />
+const HomePage = () => {
+      return (
+            <Fragment>
+                  <div className=" ">
+                        <div className="">
+                              <HeroSection />
+                              {/* <Job_type_tag /> */}
+                              {/* <JobType /> */}
                         </div>
-                    </div>
-                </MaxWidthWrapper>
-            </div>
-        </div>
-    );
-};
+                        <img
+                              alt="map"
+                              className="md:hidden border-6 border-[green] block opacity-[0.2] absolute left-0 -top-[100px] w-full h-[280px]  object-cover scale-[1.3] z-4"
+                              src="/assets/map.svg" />
 
-export default PricingPage;
+                        <div className="pointer-events-none absolute right-0 border-6 border-[red] top-0 lg:block md:hidden w-full">
+                              <VerticalMarquee />
+                        </div>
+                  </div>
+                  <div
+                  // style={{
+                  //       backgroundImage: `linear-gradient(180deg, #ffffffef, #ffffffef), url(/jobbg.jpeg)`,
+                  //       backgroundAttachment: "fixed",
+                  // }}
+                  >
+                        <MaxWidthWrapper className="md:!px-6 !px-3">
+                              <div
+                                    style={{
+                                          boxShadow: "rgb(0 0 0 / 4%) 0px -20px 20px 0px",
+                                    }}
+                                    className="relative bg-gradient-to-t from-[#ff1c1c00] to-[#ffffff] px-4 md:p-6 p-4 rounded-xl z-50">
+                                    <div>
+                                          <JobCategory2 />
+                                          <ShortAdd />
+                                          <StaticsBar />
+                                    </div>
 
+                                    <div className="py-0 ">
+                                          <div className=" opacity-100 rounded-[38px] bg-gradient-to-tl from-[#ffffff21] to-[#fff]">
+                                                <FeaturedJobs />
+                                          </div>
+                                    </div>
+                              </div>
+                              <div
+                              // className='bg-cover'
+                              // style={{
+                              // backgroundImage: `linear-gradient(180deg, #ffffffef, #ffffffef), url(/jobbg.jpeg)`,
+                              // }}
+                              >
+                                    <InternShipJob />
+                                    <Tenders />
+                              </div>
+                              <SpecialItemTab />
+                              <OurFeature />
+                              <VideoGallery />
+                              <Pricing />
+                        </MaxWidthWrapper>
+                        <div className="bg-gradient-to-t from-[transparent] to-[#cfe1ffa4] absolute top-0 left-0 right-0 md:h-[450px] h-[290px] w-full" />
+                        <TopCompanies />
+                        {/* <InterviewQuestions /> */}
+                        <Testimonial />
+                        <Sponsors />
+                        <DownloadOurMobileApp />
+                        <NesLetter />
+                        <DevelopmentAlert />
+                  </div>
+            </Fragment>
+      )
+}
+
+export default HomePage
