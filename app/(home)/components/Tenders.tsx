@@ -10,7 +10,7 @@ import PaginationController from './PaginationController';
 
 const Tenders: React.FC = () => {
   const [page, setPage] = useState(1);
-  const limit = 6;
+  const limit = 8;
 
   const { data, loading, error } = useApiRequest<any>(
     `jobs/get-featured-jobs?page=${page}&limit=${limit}`,
@@ -18,7 +18,7 @@ const Tenders: React.FC = () => {
   );
 
   const jobs = data?.data?.jobs || [];
-  const totalPages = data?.data?.pagination?.totalPages || 1;
+  const totalPages = data?.data?.total_pages || 1;
 
   if (loading) {
     return (
