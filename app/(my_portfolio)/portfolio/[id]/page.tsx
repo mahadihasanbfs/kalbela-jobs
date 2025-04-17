@@ -92,8 +92,6 @@ const ShareProfilePage: React.FC<ShareProfilePageProps> = ({ params: { id } }) =
             }
       }
 
-      console.log("profile data", userData);
-
       return (
             <div>
 

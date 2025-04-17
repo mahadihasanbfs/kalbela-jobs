@@ -204,7 +204,6 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({
       phone,
       address,
     }
-    console.log("reference data", obj)
   }
 
   return (

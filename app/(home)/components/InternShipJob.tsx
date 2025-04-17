@@ -21,45 +21,63 @@ const InternShipJob: React.FC = () => {
   const jobs = data?.data?.jobs || [];
   const totalPages = data?.data?.pagination?.totalPages || 1;
 
+  if (loading) {
+    return (
+      <div className="">
+        <JobTitleBar title="🔥 Internship" viewBtn={false} />
+        <div className="grid md:gap-4 pb-6 gap-2 grid-cols-2 lg:grid-cols-4">
+          {
+            new Array(limit).fill('.').map((_, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-start rounded-sm border p-4 md:flex-row"
+              >
+                <Skeleton className="mr-3 h-14 w-14 rounded-full" />
+                <div className="flex-grow">
+                  <Skeleton className="mb-2 h-5 w-24" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div>
+        <JobTitleBar title="🔥 Internship" viewBtn={false} />
+        <div className="md:h-[280px] h-[230px] flex items-center justify-center">
+          <NotFoundVector />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <JobTitleBar title="🔥 Internship" viewBtn={false} />
-
-      <div className="grid md:gap-4 pb-6 gap-2 grid-cols-2 lg:grid-cols-4">
-        {loading ? (
-          new Array(limit).fill('.').map((_, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-start rounded-sm border p-4 md:flex-row"
-            >
-              <Skeleton className="mr-3 h-14 w-14 rounded-full" />
-              <div className="flex-grow">
-                <Skeleton className="mb-2 h-5 w-24" />
-                <Skeleton className="h-4 w-32" />
-              </div>
-            </div>
-          ))
-        ) : error ? (
-          <div className="md:h-[400px] h-[230px] flex items-center justify-center">
-            <NotFoundVector />
-          </div>
-        ) : (
-          jobs.map((job: any) => (
-            <JobCard2 key={job?._id} job={job} />
-          ))
-        )}
-      </div>
-
-
-      {!loading && totalPages > 1 && (
-        <div className="flex justify-center pb-6">
-          <PaginationController
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
+      <div>
+        <JobTitleBar title="🔥 Internship" viewBtn={false} />
+        <div className="grid md:gap-4 pb-6 gap-2 grid-cols-2 lg:grid-cols-4">
+          {
+            jobs.map((job: any) => (
+              <JobCard2 key={job?._id} job={job} />
+            ))
+          }
         </div>
-      )}
+        {(
+          <div className="flex justify-center pb-6">
+            <PaginationController
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
+          </div>
+        )}
+
+      </div>
     </div>
   );
 };

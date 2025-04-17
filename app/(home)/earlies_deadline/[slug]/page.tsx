@@ -387,7 +387,6 @@ const NewlyPostPage = () => {
         router.back();
     };
 
-    console.log("object>>>", slug);
     return (
         <div className='bg-gray-50'>
             <MaxWidthWrapper className='py-8'>

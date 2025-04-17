@@ -138,8 +138,6 @@ const EmploymentHistoryForRetired = () => {
             type: currentTraining.type,
             arms: currentTraining.arms
         }
-
-        console.log("employee history--->", obj);
     };
 
     return (

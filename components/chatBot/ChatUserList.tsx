@@ -10,7 +10,6 @@ interface ChatUserListProps {
 }
 
 const ChatUserList: React.FC<ChatUserListProps> = ({ user, isSelected, hasHTML, onSelectUser }) => {
-    console.log('user......', user);
     return (
         <li
             onClick={() => onSelectUser(user)}

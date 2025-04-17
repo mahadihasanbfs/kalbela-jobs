@@ -87,9 +87,6 @@ function Message() {
             // }));
       };
 
-
-      console.log("testing..........");
-
       return (
             <div className="flex h-[calc(100vh-48px] w-full">
                   {/* <div className="bg-[#F5F7FB] w-[70%] overflow-y-auto">

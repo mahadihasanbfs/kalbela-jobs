@@ -72,7 +72,7 @@ const Sponsors: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center w-full h-full bg-transparent overflow-hidden relative z-7">
+    <div className="flex m-auto items-center justify-center w-full h-full bg-transparent overflow-hidden relative z-7">
       <div className="w-full flex items-center gap-6 bg-transparent h-full">
         <Marquee speed={20} pauseOnHover className="[--duration:30s]">
           {brands?.map((itm, index) => (

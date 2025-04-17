@@ -15,7 +15,6 @@ import Cookies from 'js-cookie';
 
 const PortfolioNav: React.FC = () => {
     const [user] = useUserData();
-    console.log("loremmmmm..............", user);
 
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
     const { theme } = useTheme()

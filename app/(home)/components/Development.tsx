@@ -47,7 +47,7 @@ const Development = ({ height }: any) => {
 
                         </div>
                         <div className="animate-fade-in max-w-md space-y-1 sm:space-y-2">
-                            <h3 className="md:text-4xl text-xl font-bold tracking-tight sm:text-2xl">
+                            <h3 className="md:text-2xl text-xl font-bold tracking-tight sm:text-2xl">
                                 Coming Soon
                             </h3>
                             <p className="text-sm text-muted-foreground sm:text-base">

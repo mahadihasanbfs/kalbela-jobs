@@ -42,14 +42,12 @@ const Career = ({
   })
 
   useEffect(() => {
-    console.log("Career Objective Data:", careerObjective)
   }, [careerObjective])
 
   const handleSave = () => {
     if (validateInputs()) {
       // Save data logic here
       setEditing(false)
-      console.log("Saved Data:", careerObjective)
     }
   }
 
@@ -138,7 +136,7 @@ const Career = ({
             ) : (
               <div className="">
                 {!careerObjective?.postalCode &&
-                careerObjective?.postalCode === "" ? (
+                  careerObjective?.postalCode === "" ? (
                   <div className="rounded border py-12 text-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

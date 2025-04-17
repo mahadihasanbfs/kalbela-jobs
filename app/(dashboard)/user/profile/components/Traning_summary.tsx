@@ -124,8 +124,6 @@ const TrainingSummary = () => {
             duration: currentTraining.duration,
             location: currentTraining.location
         }
-
-        console.log("--->", obj);
     };
 
     return (

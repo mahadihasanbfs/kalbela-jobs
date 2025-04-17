@@ -11,7 +11,6 @@ const SelaryRange: React.FC<SalaryRangeProps> = ({ setSalaryRange }) => {
         setValue(newValue);
 
         setSalaryRange(newValue.toString());
-        console.log("Selected Value:", newValue);
     };
 
     return (

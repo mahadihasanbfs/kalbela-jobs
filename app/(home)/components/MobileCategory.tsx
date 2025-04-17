@@ -186,7 +186,8 @@ const MobileCategory = ({
                         </button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px] overflow-hidden h-[70vh] overflow-y-auto">
-                        <div className="mt-8">
+                        <h1 className="font-semibold">Job By Section</h1>
+                        <div className="mt-4">
                             <Development height={'h-[300px]'} />
                         </div>
                     </DialogContent>
@@ -206,7 +207,8 @@ const MobileCategory = ({
                         </button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px] h-[70vh] overflow-y-auto">
-                        <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
+
+                        {/* <Accordion2 onClick={(e) => e.stopPropagation()} type="single" collapsible className="w-full grid grid-cols-1 gap-3">
                             {jobByLocation?.map((item: any, index: any) => <AccordionItem2 key={index} value={`item-${index + 1}`}>
                                 <AccordionTrigger2>{item?.location}</AccordionTrigger2>
                                 <AccordionContent2>
@@ -226,9 +228,15 @@ const MobileCategory = ({
                                             </li>)
                                         }
                                     </ul>
+                                  
                                 </AccordionContent2>
-                            </AccordionItem2>)}
-                        </Accordion2>
+                            </AccordionItem2>
+                            )}
+                        </Accordion2> */}
+                        <h1 className="font-semibold">Job By Location</h1>
+                        <div className="mt-4">
+                            <Development height={'h-[300px]'} />
+                        </div>
                     </DialogContent>
                 </Dialog>
 
@@ -247,7 +255,7 @@ const MobileCategory = ({
                         </button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px] h-[70vh] overflow-y-auto">
-                        <ul className="list-inside space-y-1">
+                        {/* <ul className="list-inside space-y-1">
                             {
                                 moreLinks?.map((items: any, i: any) => <li className="hover:text-primary_blue duration-150 hover:ml-2" key={i}>
                                     <Link href="#" key={i} className=" flex gap-2">
@@ -259,11 +267,14 @@ const MobileCategory = ({
                                         <span>
                                             {items}
                                         </span>
-                                    </Link>
+                               add      </Link>
                                 </li>)
                             }
-                        </ul>
-
+                        </ul> */}
+                        <h1 className="font-semibold">More Links</h1>
+                        <div className="mt-4">
+                            <Development height={'h-[300px]'} />
+                        </div>
                     </DialogContent>
                 </Dialog>
 

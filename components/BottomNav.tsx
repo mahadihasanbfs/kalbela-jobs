@@ -70,7 +70,6 @@ const BottomNav: React.FC = () => {
 
             setTimeout(() => {
                   const get_user = Cookies.get("kalbelajobs_user");
-                  console.log("get_user::::::::::::", get_user);
                   if (!get_user) {
                         toast({
                               title: "Successfully logged out",

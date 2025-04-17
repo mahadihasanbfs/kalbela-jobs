@@ -129,7 +129,6 @@ const ProfessionalCartifications = ({
       to: currentCertificationRef.current.to,
     }
 
-    console.log("cirtification : ", obj)
   }
   // colollecion
   const toggleEditMode = () => setIsDialogOpen(!isDialogOpen)

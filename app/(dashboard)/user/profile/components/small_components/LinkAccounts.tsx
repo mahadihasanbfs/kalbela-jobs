@@ -148,7 +148,6 @@ const LinkAccountCardComponent: React.FC<LinkAccountCardComponentProps> = ({
     setIsEditing(false)
 
     const obj = { accountType, url }
-    console.log("link data", obj)
   }
 
   return (

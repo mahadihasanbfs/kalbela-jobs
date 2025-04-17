@@ -117,7 +117,6 @@ const EducationTraining = () => {
       result: currentEducation.result,
       year: currentEducation.year,
     }
-    console.log("education data", obj)
   }
 
   return (

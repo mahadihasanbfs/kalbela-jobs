@@ -77,7 +77,6 @@ const UserIdentity = () => {
                   number: nidNumber,
                   issue_date: nidIssueDate,
             }
-            console.log(data);
       }
 
 

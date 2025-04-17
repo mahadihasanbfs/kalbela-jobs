@@ -4,7 +4,6 @@ import React from 'react';
 import Industries from '../local-jobs/_components/Industries';
 
 const JobByCategoryModal = ({ categoryData }: any) => {
-    console.log("categoryData : ", categoryData);
 
     let loading = categoryData[0]
     const functionalCategory = categoryData.length ? categoryData[1] : {};

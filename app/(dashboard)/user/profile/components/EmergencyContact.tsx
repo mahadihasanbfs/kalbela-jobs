@@ -26,7 +26,6 @@ const EmergencyContact = () => {
 
 
       const handleSave = () => {
-            console.log("Emergency Contact Data:", formData)
             update_contact()
             setEditContactOpen(false)
       }

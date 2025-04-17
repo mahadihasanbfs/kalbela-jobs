@@ -15,8 +15,6 @@ const DisplayTab = () => {
         "GET"
     )
 
-    console.log('---->>>> data :: ', data);
-
     const {
         data: certificationsData = [],
         isLoading: isLoadingCertifications,

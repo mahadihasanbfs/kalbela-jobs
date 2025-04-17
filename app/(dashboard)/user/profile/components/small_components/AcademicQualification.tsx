@@ -121,7 +121,6 @@ const AcademicQualification = ({
       result: currentEducation.result,
       year: currentEducation.year,
     }
-    console.log("education data", obj)
   }
 
   // fksdaf

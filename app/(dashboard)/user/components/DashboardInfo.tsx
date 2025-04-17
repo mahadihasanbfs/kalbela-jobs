@@ -5,8 +5,6 @@ import React from 'react';
 
 const DashboardInfo: React.FC = () => {
     const [user] = useUserData();
-    console.log("---->", user);
-
     return (
         <div className=' mt-3 mb-2 '>
             <div className="">

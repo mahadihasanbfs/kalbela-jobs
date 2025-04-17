@@ -182,7 +182,6 @@ const PreferredArea = ({
       return data.data
     },
   })
-  console.log(categoriesList, "location : ")
 
   const [checkedLocations, setCheckedLocations] = useState<string[]>([])
   const [checkedCategories, setCheckedCategories] = useState<string[]>([])
@@ -300,7 +299,6 @@ const PreferredArea = ({
       organizationTypes: selectedOrganizationTypes,
     }
 
-    console.log("data : ", data)
     setIsEditing(false)
   }
 

@@ -20,14 +20,13 @@ const Tenders: React.FC = () => {
   const jobs = data?.data?.jobs || [];
   const totalPages = data?.data?.pagination?.totalPages || 1;
 
-  return (
-    <div>
-      <div>
+  if (loading) {
+    return (
+      <div className="">
         <JobTitleBar title="🔥 Tenders" viewBtn={false} />
-
-        <div className="grid md:gap-4 gap-2 grid-cols-2 lg:grid-cols-4">
-          {loading ? (
-            new Array(8).fill('.').map((_, index) => (
+        <div className="grid md:gap-4 pb-6 gap-2 grid-cols-2 lg:grid-cols-4">
+          {
+            new Array(limit).fill('.').map((_, index) => (
               <div
                 key={index}
                 className="flex flex-col items-start rounded-sm border p-4 md:flex-row"
@@ -39,17 +38,34 @@ const Tenders: React.FC = () => {
                 </div>
               </div>
             ))
-          ) : error ? (
-            <div className="md:h-[400px] h-[230px] flex items-center justify-center">
-              <NotFoundVector />
-            </div>
-          ) : (
-            jobs?.slice(0, 8)?.map((job: any) => (
+          }
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div>
+        <JobTitleBar title="🔥 Tenders" viewBtn={false} />
+        <div className="md:h-[280px] h-[230px] flex items-center justify-center">
+          <NotFoundVector />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <div>
+        <JobTitleBar title="🔥 Tenders" viewBtn={false} />
+        <div className="grid md:gap-4 pb-6 gap-2 grid-cols-2 lg:grid-cols-4">
+          {
+            jobs.map((job: any) => (
               <JobCard2 key={job?._id} job={job} />
             ))
-          )}
+          }
         </div>
-
         {(
           <div className="flex justify-center pb-6">
             <PaginationController

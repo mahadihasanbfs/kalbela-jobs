@@ -166,7 +166,7 @@ const EmploymentHistory = () => {
         }
 
         const obj = { ...currentTraining, skills: selectedSkills.map(skill => skill.value) };
-        console.log("employee history--->", obj);
+
     };
 
     return (

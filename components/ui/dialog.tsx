@@ -19,7 +19,7 @@ const DialogOverlay = React.forwardRef<
       <DialogPrimitive.Overlay
             ref={ref}
             className={cn(
-                  "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out",
+                  "fixed inset-0 z-[9000] bg-black/50 backdrop-blur-sm transition-opacity data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out",
                   className
             )}
             {...props}
@@ -41,10 +41,10 @@ const DialogContent = React.forwardRef<
                   <DialogPrimitive.Content
                         ref={ref}
                         className={cn(
-                              "fixed w-full text-start z-50 bg-white p-6 shadow-lg transition-all duration-300",
+                              "fixed w-full text-start bg-white p-6 shadow-lg transition-all duration-300 ",
                               !hasWidthProps && "max-w-lg", // Apply max-w-lg if no width-related props are provided
                               "sm:rounded-lg", // Rounded corners on larger screens
-                              "bottom-0 z-50 left-1/2 -translate-x-1/2 rounded-t-[20px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2", // Bottom for mobile, centered for larger screens
+                              "bottom-0 z-[10000] left-1/2 -translate-x-1/2 rounded-t-[20px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2", // Bottom for mobile, centered for larger screens
                               className
                         )}
                         {...props}

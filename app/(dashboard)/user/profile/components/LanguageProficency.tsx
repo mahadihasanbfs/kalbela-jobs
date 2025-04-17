@@ -89,7 +89,6 @@ const LanguageCardComponent: React.FC<LanguageCardComponentProps> = ({ card, pro
         setIsEditing(false);
 
         const obj = { language, reading, writing, speaking }
-        console.log("language data", obj);
     };
 
     return (

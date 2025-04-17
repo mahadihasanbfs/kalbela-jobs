@@ -86,7 +86,6 @@ const SearchDetails: React.FC = () => {
       const { data: categories } = useApiRequest<any>("category", "GET")
       const handleCategoryChange = (key: string) => {
             setCategory(key)
-            console.log("category:::::", key);
       }
 
       const totalPages = Math.ceil(totalJobs / ITEMS_PER_PAGE)

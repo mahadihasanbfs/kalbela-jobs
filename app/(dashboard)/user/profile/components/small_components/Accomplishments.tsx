@@ -33,7 +33,6 @@ const Accomplishments = ({
   >([])
 
   const handleSaveAccomplishment = (data: AccomplishmentData) => {
-    console.log("Saving accomplishment:", data)
     // @ts-ignore
     if (activeDialog) {
       setAccomplishmentData([

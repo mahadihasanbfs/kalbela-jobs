@@ -1,6 +1,6 @@
 const NotFoundVector = ({ title = "No vacancies found" }) => {
     return (
-        <div className="md:w-[300px] w-[160px] m-auto ">
+        <div className="md:w-[200px] w-[160px] m-auto ">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"

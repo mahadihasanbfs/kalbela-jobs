@@ -35,7 +35,6 @@ export const googleLogin = async () => {
 
   try {
     const result = await signInWithPopup(auth, googleProvider);
-    console.log(result.user, 'result.user');
     if (result.user) {
       const data = {
         name: result.user.displayName,
@@ -43,7 +42,6 @@ export const googleLogin = async () => {
         profile_picture: result.user.photoURL,
       };
 
-      console.log(data, 'data');
 
       const response = await fetch(
         `${process.env.NEXT_APP_BASE_URL}/api/v1/auth/signin-user-with-google`,
@@ -57,9 +55,7 @@ export const googleLogin = async () => {
       );
 
       const responseData = await response.json();
-      console.log(responseData, 'responseData');
       if (responseData.error == false) {
-        console.log("test...........");
         set_user_data(responseData?.data);
         toast.success('Login Successfully');
       } else {

@@ -141,7 +141,6 @@ const TrainingSummarys = ({
       location: currentTraining.location,
     }
 
-    console.log("--->", obj)
   }
   const toggleEditMode = () => setIsDialogOpen(!isDialogOpen)
   return (

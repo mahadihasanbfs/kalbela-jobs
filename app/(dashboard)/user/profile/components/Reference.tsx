@@ -97,7 +97,6 @@ const ReferenceCardComponent: React.FC<ReferenceCardComponentProps> = ({ card, r
         setIsEditing(false);
 
         const obj = { name, designation, organization, email, relation, phone, address }
-        console.log("reference data", obj);
     };
 
     return (
